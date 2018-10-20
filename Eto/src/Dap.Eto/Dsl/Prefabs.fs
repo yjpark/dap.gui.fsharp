@@ -15,6 +15,6 @@ open Dap.Eto.Generator
 let compile segments =
     [
         G.PrefabFile (segments, ["_Gen" ; "Prefab" ; "InputField.fs"],
-            "LogViewer.Prefab.InputField", <@ InputField @>
+            "Dap.Eto.Prefab.InputField", <@ InputField @>
         )
     ]

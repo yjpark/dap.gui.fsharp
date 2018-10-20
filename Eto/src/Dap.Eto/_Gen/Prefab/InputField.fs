@@ -1,6 +1,6 @@
 [<AutoOpen>]
 [<RequireQualifiedAccess>]
-module LogViewer.Prefab.InputField
+module Dap.Eto.Prefab.InputField
 
 open Dap.Prelude
 open Dap.Context
