@@ -1,6 +1,5 @@
 #r "paket: groupref Build //"
 #load ".fake/build.fsx/intellisense.fsx"
-#load "../Local/src/Dap.Local/Dsl.fs"
 #load "src/Dap.Forms/Dsl.fs"
 
 open Fake.Core

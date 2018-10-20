@@ -10,7 +10,7 @@ open Dap.Prelude
 open Dap.Local
 
 type Bitmap with
-    static member FromAssembly (relPath : string, ?assembly : Assembly, ?logger : ILogger) =
+    static member FromAssembly (logger : ILogger, relPath : string, ?assembly : Assembly) =
         let assembly = assembly |> Option.defaultValue (Assembly.GetCallingAssembly ())
         let resourceName = EmbeddedResource.GetName (relPath, assembly)
         try
@@ -21,7 +21,7 @@ type Bitmap with
             raise e
 
 type Icon with
-    static member FromAssembly (relPath : string, ?assembly : Assembly, ?logger : ILogger) =
+    static member FromAssembly (logger : ILogger, relPath : string, ?assembly : Assembly) =
         let assembly = assembly |> Option.defaultValue (Assembly.GetCallingAssembly ())
         let resourceName = EmbeddedResource.GetName (relPath, assembly)
         try
