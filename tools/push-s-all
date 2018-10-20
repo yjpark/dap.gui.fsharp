@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+cd ../Gui ; fake build -t Push -s
+cd ../Eto ; fake build -t Push -s
+cd ../Forms ; fake build -t Push -s
+
+
+

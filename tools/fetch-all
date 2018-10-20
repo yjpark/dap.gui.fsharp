@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+cd ../Gui && fake build -t Fetch && \
+cd ../Eto && fake build -t Fetch && \
+cd ../Forms && fake build -t Fetch
+
+
