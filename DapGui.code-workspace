@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "Gui"
+		},
+		{
+			"path": "Eto"
+		},
+		{
+			"path": "Forms"
+		},
+	],
+    "settings": {
+        "files.exclude": {
+            "**/bin": true,
+            "**/obj": true,
+            "*.log": true,
+            "log" : true,
+            ".vs": true,
+            ".vscode": true,
+            ".gitignore": true,
+            ".paket": true,
+            "paket-files": true,
+            ".fake": true,
+        }
+    }
+}
