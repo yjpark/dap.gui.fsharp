@@ -56,7 +56,7 @@ let compile segments =
                     G.ComboInterface (<@ IControl @>)
                     G.ComboInterface (<@ IGroup @>)
                     G.ComboInterface (<@ IText @>)
-                    G.BaseClass (<@ Group @>)
+                    G.Class (<@ Group @>)
                     G.FinalClass (<@ Label @>)
                     G.FinalClass (<@ Button @>)
                     G.FinalClass (<@ TextField @>)

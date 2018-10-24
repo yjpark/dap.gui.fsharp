@@ -9,6 +9,9 @@ open Dap.Context.Builder
 open Dap.Platform
 open Dap.Local
 
+(*
+ * Generated: <Pack>
+ *)
 type IFormsPackArgs =
     inherit ILocalPackArgs
     abstract Temp : FileSystemArgs with get

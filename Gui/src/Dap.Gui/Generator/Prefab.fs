@@ -29,7 +29,7 @@ type Generator (gui : IGui, meta : IWidget) =
     let getJson (param : PrefabParam) =
         [
             sprintf "let Json = parseJson \"\"\""
-            E.encodeJson 4 meta
+            encodeJson 4 meta
             sprintf "\"\"\""
         ]
     let getClassHeader (param : PrefabParam) =

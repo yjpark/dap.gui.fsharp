@@ -44,7 +44,7 @@ type Group (owner : IOwner, key : Key) =
     let prefab = target'.AddVar<(* IWidget *) string> (E.string, D.string, "prefab", "", None)
     let styles = target'.AddList<(* IWidget *) string> (E.string, D.string, "styles", "", None)
     let layout = target'.AddVar<(* IGroup *) string> (E.string, D.string, "layout", "", None)
-    let children = target'.AddCombo (* IGroup *) ("children")
+    let children = target'.AddCombo(* IGroup *)  ("children")
     do (
         base.Setup (target')
     )
