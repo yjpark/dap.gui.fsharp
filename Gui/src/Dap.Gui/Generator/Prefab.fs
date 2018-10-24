@@ -65,7 +65,7 @@ type Generator (gui : IGui, meta : IWidget) =
     let getClassSetup (param : PrefabParam) =
         [
             yield sprintf "    do ("
-            yield sprintf "        base.Model.AsProperty.WithJson Json |> ignore"
+            yield sprintf "        base.Model.AsProperty.LoadJson Json"
             match meta with
             | :? IGroup as group ->
                 for prop in group.Children.Value do
