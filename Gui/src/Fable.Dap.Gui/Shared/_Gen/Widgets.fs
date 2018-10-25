@@ -36,7 +36,7 @@ type IText =
     abstract Text : IVarProperty<string> with get
 
 (*
- * Generated: <Class>
+ * Generated: <Combo>
  *)
 type Group (owner : IOwner, key : Key) =
     inherit WrapProperties<Group, IComboProperty> ()
@@ -69,7 +69,7 @@ type Group (owner : IOwner, key : Key) =
     member this.AsGroup = this :> IGroup
 
 (*
- * Generated: <Class>
+ * Generated: <Combo>
  *     IsFinal
  *)
 type Label (owner : IOwner, key : Key) =
@@ -101,7 +101,7 @@ type Label (owner : IOwner, key : Key) =
     member this.AsText = this :> IText
 
 (*
- * Generated: <Class>
+ * Generated: <Combo>
  *     IsFinal
  *)
 type Button (owner : IOwner, key : Key) =
@@ -138,7 +138,7 @@ type Button (owner : IOwner, key : Key) =
     member this.AsText = this :> IText
 
 (*
- * Generated: <Class>
+ * Generated: <Combo>
  *     IsFinal
  *)
 type TextField (owner : IOwner, key : Key) =

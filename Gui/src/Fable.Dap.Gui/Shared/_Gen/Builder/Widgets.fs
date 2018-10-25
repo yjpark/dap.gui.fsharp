@@ -29,7 +29,7 @@ type LabelBuilder () =
         target.Text.SetValue text
         target
 
-let label = LabelBuilder ()
+let label = new LabelBuilder ()
 
 (*
  * Generated: <ComboBuilder>
@@ -58,7 +58,7 @@ type ButtonBuilder () =
         target.Text.SetValue text
         target
 
-let button = ButtonBuilder ()
+let button = new ButtonBuilder ()
 
 (*
  * Generated: <ComboBuilder>
@@ -87,4 +87,4 @@ type TextFieldBuilder () =
         target.Text.SetValue text
         target
 
-let text_field = TextFieldBuilder ()
+let text_field = new TextFieldBuilder ()

@@ -1,4 +1,5 @@
-module Dap.Forms.Provider.FileSystem
+[<RequireQualifiedAccess>]
+module Dap.Forms.Feature.FileSystem
 
 open System.IO
 open Xamarin.Forms

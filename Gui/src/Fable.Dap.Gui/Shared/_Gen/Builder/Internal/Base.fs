@@ -33,4 +33,4 @@ type GroupBuilder () =
         target.Children.SyncWith children
         target
 
-let group = GroupBuilder ()
+let group = new GroupBuilder ()
