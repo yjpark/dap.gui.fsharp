@@ -10,6 +10,8 @@ open Dap.Gui
 open Dap.Gui.Generator
 open Dap.Forms.Generator.Gui
 
+let DapFormsFeature = "FEATURE_DAP_FORMS"
+
 type G with
     static member Prefab<'widget when 'widget :> IWidget> (expr : Expr<'widget>) =
         G.Prefab (Gui, expr)
@@ -18,7 +20,7 @@ type G with
 
 type G with
     static member FormsAppPack (?switch : string) =
-        let switch = defaultArg switch "FEATURE_DAP_FORMS"
+        let switch = defaultArg switch DapFormsFeature
         [
             sprintf "#if %s" switch
         ] @ G.AppPack (feature = "Dap.Forms.Feature")
