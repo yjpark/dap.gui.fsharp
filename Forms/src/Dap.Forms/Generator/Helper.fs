@@ -5,11 +5,11 @@ open Microsoft.FSharp.Quotations
 
 open Dap.Prelude
 open Dap.Context.Generator
-open Dap.Local.Generator
 open Dap.Gui
 open Dap.Gui.Generator
 open Dap.Forms.Generator.Gui
 
+[<Literal>]
 let DapFormsFeature = "Dap.Forms.Feature"
 
 type G with
