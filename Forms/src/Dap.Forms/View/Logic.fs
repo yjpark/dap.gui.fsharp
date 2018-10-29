@@ -20,7 +20,7 @@ let private doRun req (callback: Callback<unit>) : ActorOperate<'pack, 'model, '
             if runner.HasFormsRunner then
                 reply runner callback <| nak req "Already_Running" ()
             else
-                runner.RunUiFunc (fun _ ->
+                runner.RunFormsFunc (fun _ ->
                     model.Program
                     |> Program.runWithDynamicView runner.Actor.Args.Application
                     |> runner.SetFormsRunner'
