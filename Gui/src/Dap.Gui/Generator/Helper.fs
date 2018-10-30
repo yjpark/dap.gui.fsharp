@@ -23,7 +23,7 @@ type G with
 type G with
     static member PrefabFile<'widget when 'widget :> IWidget> (segments1 : string list, segments2 : string list, moduleName : string, gui : IGui, expr : Expr<'widget>) =
         G.File (segments1, segments2,
-            G.AutoOpenQualifiedModule (moduleName,
+            G.QualifiedModule (moduleName,
                 [
                     G.Prefab (gui, expr)
                 ]

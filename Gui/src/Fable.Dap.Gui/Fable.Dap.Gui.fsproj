@@ -18,6 +18,7 @@
     <Compile Include="Shared/Types.fs" />
     <Compile Include="Shared/Internal/BasePrefab.fs" />
     <Compile Include="Shared/Internal/Helper.fs" />
+    <Compile Include="Shared/BasePresenter.fs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="*.fsproj; **\*.fs; **\*.js" PackagePath="fable" />

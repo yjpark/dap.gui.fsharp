@@ -17,6 +17,7 @@
     <Compile Include="../Fable.Dap.Gui/Shared/Types.fs" />
     <Compile Include="../Fable.Dap.Gui/Shared/Internal/BasePrefab.fs" />
     <Compile Include="../Fable.Dap.Gui/Shared/Internal/Helper.fs" />
+    <Compile Include="../Fable.Dap.Gui/Shared/BasePresenter.fs" />
     <Compile Include="Generator/Types.fs" />
     <Compile Include="Generator/Prefab.fs" />
     <Compile Include="Generator/Helper.fs" />

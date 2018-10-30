@@ -14,3 +14,11 @@ type IPrefab<'model when 'model :> IWidget> =
 type IPrefab<'model, 'widget when 'model :> IWidget> =
     inherit IPrefab<'model>
     abstract Widget : 'widget with get
+
+type IPresenter =
+    inherit IOwner
+    abstract Prefab0 : IPrefab with get
+
+type IPresenter<'prefab when 'prefab :> IPrefab> =
+    inherit IPresenter
+    abstract Prefab : 'prefab with get
