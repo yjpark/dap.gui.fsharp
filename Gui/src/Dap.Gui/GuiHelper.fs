@@ -14,7 +14,7 @@ let mutable private guiContext : SynchronizationContext option = None
 let setupGuiContext' (logger : ILogger) =
     match guiContext with
     | Some guiContext' ->
-        failWith "guiContext_Already_Setup" guiContext'
+        logError logger "setupGuiContext'" "Already_Setup" guiContext'
     | None ->
         let guiContext' = SynchronizationContext.Current
         if guiContext' =? null then
@@ -27,7 +27,8 @@ let getGuiContext () = guiContext |> Option.get
 
 let getGuiTask (getTask : unit -> Task<'res>) : Task<'res> = task {
     return! async {
-        do! Async.SwitchToContext (getGuiContext ())
+        if guiContext.IsSome then
+            do! Async.SwitchToContext (getGuiContext ())
         return! Async.AwaitTask (getTask ())
     }
 }
