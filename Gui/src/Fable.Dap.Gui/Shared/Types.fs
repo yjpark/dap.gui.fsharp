@@ -18,7 +18,21 @@ type IPrefab<'model, 'widget when 'model :> IWidget> =
 type IPresenter =
     inherit IOwner
     abstract Prefab0 : IPrefab with get
+    abstract Attached : bool
 
-type IPresenter<'prefab when 'prefab :> IPrefab> =
+type IPresenter<'prefab, 'domain when 'prefab :> IPrefab> =
     inherit IPresenter
     abstract Prefab : 'prefab with get
+    abstract Domain : 'domain option with get
+    abstract Attach : 'domain -> unit
+
+type IDynamicPresenter =
+    inherit IPresenter
+    abstract Seal : unit -> unit
+    abstract Sealed : bool with get
+
+type IDynamicPresenter<'prefab, 'domain when 'prefab :> IPrefab> =
+    inherit IPresenter<'prefab, 'domain>
+    inherit IDynamicPresenter
+    abstract Detach : unit -> 'domain option
+    abstract AsPresenter : IPresenter<'prefab, 'domain> with get
