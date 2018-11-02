@@ -7,6 +7,7 @@ open Dap.Platform
 
 type IPrefab =
     inherit IFeature
+    abstract Widget0 : obj with get
 
 type IPrefab<'model when 'model :> IViewProps> =
     inherit IPrefab
@@ -49,6 +50,7 @@ type ITextField =
     inherit IPrefab<TextFieldProps>
 
 type IGroup =
+    abstract Widget1 : obj with get
     abstract Add<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> : Key -> (ILogging -> 'p) -> 'p
 
 type IGroup<'group when 'group :> IGroupProps> =
