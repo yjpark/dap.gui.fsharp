@@ -18,11 +18,13 @@ type BasePrefab<'prefab, 'model, 'widget when 'prefab :> IPrefab and 'model :> I
     member this.AsPrefab = this :> IPrefab<'model, 'widget>
 
 [<AbstractClass>]
-type BaseGroup<'prefab, 'model, 'widget when 'prefab :> IGroup and 'prefab :> IPrefab and 'model :> GroupProps> (kind, spawner, logging, widget) =
+type BaseGroup<'prefab, 'model, 'widget, 'child when 'prefab :> IGroup and 'prefab :> IPrefab and 'model :> GroupProps> (kind, spawner, logging, widget) =
     inherit BasePrefab<'prefab, 'model, 'widget> (kind, spawner, logging, widget)
+    abstract member AddChild : 'child -> unit
     interface IGroup with
         member this.Widget1 = this.Widget :> obj
         member this.Add<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> (key : Key) (spawner : ILogging -> 'p) =
             let prefab = spawner logging
             this.Model.Children.AddLink<'m> (prefab.Model, key) |> ignore
+            this.AddChild (prefab.Widget0 :?> 'child)
             prefab

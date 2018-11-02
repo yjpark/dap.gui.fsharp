@@ -48,7 +48,7 @@ interface IFallback
 # GROUP_HEADER(prefab) #
 ```F#
 type ${prefab} (logging : ILogging) =
-    inherit BaseGroup<${prefab}, ${prefab}Props, ${prefab}Widget>
+    inherit BaseGroup<${prefab}, ${prefab}Props, ${prefab}Widget, Control>
         (${prefab}Kind, ${prefab}Props.Create, logging, new ${prefab}Widget ())
 ```
 

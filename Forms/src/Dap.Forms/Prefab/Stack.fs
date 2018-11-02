@@ -15,7 +15,7 @@ type StackWidget = Xamarin.Forms.StackLayout
 
 //SILP: GROUP_HEADER_MIDDLE(Stack)
 type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseGroup<Stack, StackProps, StackWidget>                 //__SILP__
+    inherit BaseGroup<Stack, StackProps, StackWidget, View>           //__SILP__
         (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
     do (                                                              //__SILP__
         let kind = StackKind                                          //__SILP__
@@ -32,7 +32,7 @@ type Stack (logging : ILogging) =                                     //__SILP__
                 logError owner "Stack" "Invalid_Layout" evt.New
         )
     )
-    member this.AddChild (child : View) =
+    override this.AddChild (child : View) =
         this.Widget.Children.Add child
     //SILP: PREFAB_FOOTER(Stack)
     static member Create l = new Stack (l)                            //__SILP__

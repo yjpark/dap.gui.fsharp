@@ -15,7 +15,7 @@ type StackWidget = Eto.Forms.StackLayout
 
 //SILP: GROUP_HEADER_MIDDLE(Stack)
 type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseGroup<Stack, StackProps, StackWidget>                 //__SILP__
+    inherit BaseGroup<Stack, StackProps, StackWidget, Control>        //__SILP__
         (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
     do (                                                              //__SILP__
         let kind = StackKind                                          //__SILP__
@@ -32,9 +32,7 @@ type Stack (logging : ILogging) =                                     //__SILP__
                 logError owner "Stack" "Invalid_Layout" evt.New
         )
     )
-    member this.AddChild (child : Control, expand : bool) =
-        this.Widget.Items.Add <| new StackLayoutItem (child, expand)
-    member this.AddChild (child : Control) =
+    override this.AddChild (child : Control) =
         this.Widget.Items.Add <| new StackLayoutItem (child)
     //SILP: PREFAB_FOOTER(Stack)
     static member Create l = new Stack (l)                            //__SILP__
