@@ -8,21 +8,24 @@
     <Description>Gui Libs</Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../Fable.Dap.Gui/Shared/Dsl/Widgets.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/_Gen/Widgets.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/_Gen/Builder/Widgets.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/_Gen/Builder/Internal/Base.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/LayoutConst.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/Builder/Helper.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/Types.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/Internal/BasePrefab.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/Internal/Helper.fs" />
-    <Compile Include="../Fable.Dap.Gui/Shared/BasePresenter.fs" />
+    <Compile Include="Dsl/Models.fs" />
+    <Compile Include="_Gen/Models.fs" />
+    <Compile Include="_Gen/Builder/Models.fs" />
+    <Compile Include="_Gen/Builder/Internal/Base.fs" />
+    <Compile Include="LayoutConst.fs" />
+    <Compile Include="Builder/Helper.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="WrapGroup.fs" />
+    <Compile Include="Internal/BasePrefab.fs" />
+    <Compile Include="Internal/Helper.fs" />
+    <Compile Include="BasePresenter.fs" />
     <Compile Include="GuiHelper.fs" />
     <Compile Include="Generator/Types.fs" />
     <Compile Include="Generator/Prefab.fs" />
     <Compile Include="Generator/Helper.fs" />
-    <Compile Include="Dsl/Prefab/InputField.fs" />
+    <Compile Include="Dsl/Prefabs.fs" />
+    <Compile Include="Prefab/Const.fs" />
+    <Compile Include="_Gen/Prefab/InputField.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-62925-02" PrivateAssets="All" />

@@ -4,11 +4,6 @@ module Dap.Gui.Generator.Types
 open Dap.Context.Generator
 open Dap.Gui
 
-type IGui =
-    abstract Opens : Lines with get
-    abstract Aliases : (string * string) list with get
-    abstract GetPrefab : IWidget -> string -> string
-
 type PrefabParam = {
     Name : string
 } with

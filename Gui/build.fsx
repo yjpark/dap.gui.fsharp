@@ -1,6 +1,18 @@
 #r "paket: groupref Build //"
 #load ".fake/build.fsx/intellisense.fsx"
-#load "src/Fable.Dap.Gui/Shared/Dsl/Widgets.fs"
+
+#load "src/Dap.Gui/Dsl/Models.fs"
+//(*
+#load "src/Dap.Gui/_Gen/Models.fs"
+#load "src/Dap.Gui/_Gen/Builder/Models.fs"
+#load "src/Dap.Gui/_Gen/Builder/Internal/Base.fs"
+#load "src/Dap.Gui/LayoutConst.fs"
+#load "src/Dap.Gui/Builder/Helper.fs"
+#load "src/Dap.Gui/Generator/Types.fs"
+#load "src/Dap.Gui/Generator/Prefab.fs"
+#load "src/Dap.Gui/Generator/Helper.fs"
+#load "src/Dap.Gui/Dsl/Prefabs.fs"
+//*)
 
 open Fake.Core
 open Fake.Core.TargetOperators
@@ -18,15 +30,18 @@ let feed =
     )
 
 let projects =
-    !! "src/Fable.Dap.Gui/*.fsproj"
-    ++ "src/Dap.Gui/*.fsproj"
+    !! "src/Dap.Gui/*.fsproj"
 
 NuGet.create NuGet.release feed projects
 
 DotNet.createPrepares [
-    ["Fable.Dap.Gui"], fun _ ->
-        Dap.Gui.Dsl.Widgets.compile ["src" ; "Fable.Dap.Gui"]
+    ["Dap.Gui"], fun _ ->
+        Dap.Gui.Dsl.Models.compile ["src" ; "Dap.Gui"]
         |> List.iter traceSuccess
+        //(*
+        Dap.Gui.Dsl.Prefabs.compile ["src" ; "Dap.Gui"]
+        |> List.iter traceSuccess
+        //*)
 ]
 
 Target.runOrDefault DotNet.Build

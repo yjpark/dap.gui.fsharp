@@ -1,39 +1,38 @@
 [<AutoOpen>]
-[<RequireQualifiedAccess>]
 module Dap.Forms.Prefab.TextField
 
-open Dap.Prelude
-open Dap.Context
-open Dap.Gui
-open Dap.Gui.Internal
+//SILP: COMMON_OPENS
+open System                                                           //__SILP__
+open Xamarin.Forms                                                    //__SILP__
+open Dap.Prelude                                                      //__SILP__
+open Dap.Context                                                      //__SILP__
+open Dap.Platform                                                     //__SILP__
+open Dap.Gui                                                          //__SILP__
+open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Internal                                                 //__SILP__
 
-[<Literal>]
-let Kind = "Label"
+type TextFieldWidget = Xamarin.Forms.Entry
 
-type Model = Dap.Gui.Widgets.TextField
-type Widget = Xamarin.Forms.Entry
-
-//SILP: PREFAB_HEADER_MIDDLE
-type Prefab (logging : ILogging) =                                    //__SILP__
-    inherit BasePrefab<Prefab, Model, Widget>                         //__SILP__
-        (logging, Kind, Model.Create, new Widget ())                  //__SILP__
-    do (                                                              //__SILP__
-        let owner = base.AsOwner                                      //__SILP__
-        let model = base.Model                                        //__SILP__
-        let widget = base.Widget                                      //__SILP__
-        model.Text.OnChanged.AddWatcher owner Kind (fun evt ->
+//SILP: PREFAB_HEADER_MIDDLE(TextField)
+type TextField (logging : ILogging) =                                            //__SILP__
+    inherit BasePrefab<TextField, TextFieldProps, TextFieldWidget>               //__SILP__
+        (TextFieldKind, TextFieldProps.Create, logging, new TextFieldWidget ())  //__SILP__
+    do (                                                                         //__SILP__
+        let kind = TextFieldKind                                                 //__SILP__
+        let owner = base.AsOwner                                                 //__SILP__
+        let model = base.Model                                                   //__SILP__
+        let widget = base.Widget                                                 //__SILP__
+        model.Text.OnChanged.AddWatcher owner kind (fun evt ->
             widget.Text <- evt.New
         )
         widget.TextChanged.Add (fun _ ->
             model.Text.SetValue widget.Text
         )
     )
-    //SILP: PREFAB_FOOTER
-    static member Create l = new Prefab (l)                           //__SILP__
-    static member Create () = new Prefab (getLogging ())              //__SILP__
-    static member AddToGroup l key (group : IGroup) =                 //__SILP__
-        let prefab = Prefab.Create l                                  //__SILP__
-        group.Children.AddLink<Model> (prefab.Model, key) |> ignore   //__SILP__
-        prefab                                                        //__SILP__
+    //SILP: PREFAB_FOOTER(TextField)
+    static member Create l = new TextField (l)                        //__SILP__
+    static member Create () = new TextField (getLogging ())           //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Prefab.Create l                             //__SILP__
+    override __.Spawn l = TextField.Create l                          //__SILP__
+    interface IFallback                                               //__SILP__
+    interface ITextField

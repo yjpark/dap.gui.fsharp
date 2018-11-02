@@ -9,15 +9,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions.fs" />
-    <Compile Include="Builder/Helper.fs" />
-    <Compile Include="Generator/Gui.fs" />
-    <Compile Include="Generator/Helper.fs" />
-    <Compile Include="Dsl/Prefabs.fs" />
     <Compile Include="Prefab/Label.fs" />
     <Compile Include="Prefab/Button.fs" />
     <Compile Include="Prefab/TextField.fs" />
     <Compile Include="Prefab/Stack.fs" />
-    <Compile Include="_Gen/Prefab/InputField.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

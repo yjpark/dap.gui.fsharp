@@ -5,10 +5,14 @@ open Dap.Context
 open Dap.Gui
 module Base = Dap.Gui.Builder.Internal.Base
 
+let label = label_props
+let button = button_props
+let text_field = text_field_props
+
 type GroupBuilder () =
-    inherit Base.GroupBuilder ()
+    inherit Base.GroupPropsBuilder ()
     [<CustomOperation("child")>]
-    member __.Child (target : Group, key, prop : ICustomProperty) =
+    member __.Child (target : GroupProps, key, prop : ICustomProperty) =
         target.Children.AddAny key prop.Clone0 |> ignore
         target
 

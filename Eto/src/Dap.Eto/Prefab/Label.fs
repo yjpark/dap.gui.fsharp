@@ -1,38 +1,35 @@
 [<AutoOpen>]
-[<RequireQualifiedAccess>]
 module Dap.Eto.Prefab.Label
 
-open Eto.Forms
+//SILP: COMMON_OPENS
+open System                                                           //__SILP__
+open Eto.Forms                                                        //__SILP__
+open Dap.Prelude                                                      //__SILP__
+open Dap.Context                                                      //__SILP__
+open Dap.Platform                                                     //__SILP__
+open Dap.Gui                                                          //__SILP__
+open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Internal                                                 //__SILP__
 
-open Dap.Prelude
-open Dap.Context
-open Dap.Gui
-open Dap.Gui.Internal
+type LabelWidget = Eto.Forms.Label
 
-[<Literal>]
-let Kind = "Label"
-
-type Model = Dap.Gui.Widgets.Label
-type Widget = Eto.Forms.Label
-
-//SILP: PREFAB_HEADER_MIDDLE
-type Prefab (logging : ILogging) =                                    //__SILP__
-    inherit BasePrefab<Prefab, Model, Widget>                         //__SILP__
-        (logging, Kind, Model.Create, new Widget ())                  //__SILP__
+//SILP: PREFAB_HEADER_MIDDLE(Label)
+type Label (logging : ILogging) =                                     //__SILP__
+    inherit BasePrefab<Label, LabelProps, LabelWidget>                //__SILP__
+        (LabelKind, LabelProps.Create, logging, new LabelWidget ())   //__SILP__
     do (                                                              //__SILP__
+        let kind = LabelKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
-        model.Text.OnChanged.AddWatcher owner Kind (fun evt ->
+        model.Text.OnChanged.AddWatcher owner kind (fun evt ->
             widget.Text <- evt.New
         )
     )
-    //SILP: PREFAB_FOOTER
-    static member Create l = new Prefab (l)                           //__SILP__
-    static member Create () = new Prefab (getLogging ())              //__SILP__
-    static member AddToGroup l key (group : IGroup) =                 //__SILP__
-        let prefab = Prefab.Create l                                  //__SILP__
-        group.Children.AddLink<Model> (prefab.Model, key) |> ignore   //__SILP__
-        prefab                                                        //__SILP__
+    //SILP: PREFAB_FOOTER(Label)
+    static member Create l = new Label (l)                            //__SILP__
+    static member Create () = new Label (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Prefab.Create l                             //__SILP__
+    override __.Spawn l = Label.Create l                              //__SILP__
+    interface IFallback                                               //__SILP__
+    interface ILabel

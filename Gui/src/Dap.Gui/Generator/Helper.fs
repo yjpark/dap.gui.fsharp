@@ -9,23 +9,24 @@ open Dap.Context.Meta.Util
 open Dap.Gui
 
 type G with
-    static member Prefab (gui : IGui, param : PrefabParam, meta : IWidget) =
-        new Prefab.Generator (gui, meta)
+    static member Prefab (param : PrefabParam, meta : IViewProps) =
+        new Prefab.Generator (meta)
         :> IGenerator<PrefabParam>
         |> fun g -> g.Generate param
-    static member Prefab (gui : IGui, name, meta) =
+    static member Prefab (name, meta) =
         let param = PrefabParam.Create name
-        G.Prefab (gui, param, meta)
-    static member Prefab<'widget when 'widget :> IWidget> (gui : IGui, expr : Expr<'widget>) =
+        G.Prefab (param, meta)
+    static member Prefab<'widget when 'widget :> IViewProps> (expr : Expr<'widget>) =
         let (name, meta) = unquotePropertyGetExpr expr
-        G.Prefab (gui, name, meta)
+        G.Prefab (name, meta)
 
 type G with
-    static member PrefabFile<'widget when 'widget :> IWidget> (segments1 : string list, segments2 : string list, moduleName : string, gui : IGui, expr : Expr<'widget>) =
+    static member PrefabFile<'widget when 'widget :> IViewProps> (segments1 : string list, segments2 : string list, moduleName : string, expr : Expr<'widget>, ?lines : Lines) =
         G.File (segments1, segments2,
-            G.QualifiedModule (moduleName,
+            G.AutoOpenModule (moduleName,
                 [
-                    G.Prefab (gui, expr)
+                    defaultArg lines []
+                    G.Prefab (expr)
                 ]
             )
         )

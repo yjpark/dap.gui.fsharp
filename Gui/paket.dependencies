@@ -8,7 +8,6 @@ framework: auto-detect
 nuget FSharp.Core
 
 nuget Dap.Platform
-nuget Fable.Dap.Platform
 
 group Build
     source https://nuget.yjpark.org/nuget/dap

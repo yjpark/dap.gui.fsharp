@@ -1,30 +1,28 @@
 [<AutoOpen>]
-[<RequireQualifiedAccess>]
 module Dap.Eto.Prefab.Stack
 
-open System
-open Eto.Forms
+//SILP: COMMON_OPENS
+open System                                                           //__SILP__
+open Eto.Forms                                                        //__SILP__
+open Dap.Prelude                                                      //__SILP__
+open Dap.Context                                                      //__SILP__
+open Dap.Platform                                                     //__SILP__
+open Dap.Gui                                                          //__SILP__
+open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Internal                                                 //__SILP__
 
-open Dap.Prelude
-open Dap.Context
-open Dap.Gui
-open Dap.Gui.Internal
+type StackWidget = Eto.Forms.StackLayout
 
-[<Literal>]
-let Kind = "Stack"
-
-type Model = Dap.Gui.Widgets.Group
-type Widget = Eto.Forms.StackLayout
-
-//SILP: PREFAB_HEADER_MIDDLE
-type Prefab (logging : ILogging) =                                    //__SILP__
-    inherit BasePrefab<Prefab, Model, Widget>                         //__SILP__
-        (logging, Kind, Model.Create, new Widget ())                  //__SILP__
+//SILP: GROUP_HEADER_MIDDLE(Stack)
+type Stack (logging : ILogging) =                                     //__SILP__
+    inherit BaseGroup<Stack, StackProps, StackWidget>                 //__SILP__
+        (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
     do (                                                              //__SILP__
+        let kind = StackKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
-        model.Layout.OnChanged.AddWatcher owner Kind (fun evt ->
+        model.Layout.OnChanged.AddWatcher owner kind (fun evt ->
             match evt.New with
             | LayoutConst.Horizontal_Stack ->
                 widget.Orientation <- Orientation.Horizontal
@@ -38,12 +36,10 @@ type Prefab (logging : ILogging) =                                    //__SILP__
         this.Widget.Items.Add <| new StackLayoutItem (child, expand)
     member this.AddChild (child : Control) =
         this.Widget.Items.Add <| new StackLayoutItem (child)
-    //SILP: PREFAB_FOOTER
-    static member Create l = new Prefab (l)                           //__SILP__
-    static member Create () = new Prefab (getLogging ())              //__SILP__
-    static member AddToGroup l key (group : IGroup) =                 //__SILP__
-        let prefab = Prefab.Create l                                  //__SILP__
-        group.Children.AddLink<Model> (prefab.Model, key) |> ignore   //__SILP__
-        prefab                                                        //__SILP__
+    //SILP: PREFAB_FOOTER(Stack)
+    static member Create l = new Stack (l)                            //__SILP__
+    static member Create () = new Stack (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Prefab.Create l                             //__SILP__
+    override __.Spawn l = Stack.Create l                              //__SILP__
+    interface IFallback                                               //__SILP__
+    interface IStack

@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.Dsl.Prefab.InputField
+module Dap.Gui.Dsl.Prefabs
 
 open Dap.Prelude
 open Dap.Context
@@ -8,6 +8,7 @@ open Dap.Context.Generator
 open Dap.Platform
 open Dap.Gui
 open Dap.Gui.Builder
+open Dap.Gui.Generator
 
 let inputField labelText =
     h_stack {
@@ -26,3 +27,11 @@ let inputField labelText =
     }
 
 let InputField = inputField "Label"
+
+let compile segments =
+    [
+        G.PrefabFile (segments, ["_Gen" ; "Prefab" ; "InputField.fs"],
+            "Dap.Gui.Prefab.InputField", <@ InputField @>
+        )
+    ]
+
