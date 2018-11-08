@@ -10,4 +10,4 @@ open Dap.Platform
 open Dap.Gui
 
 let createEtoApplication (platform : Platform) =
-        new Application (platform)
+    new Application (platform)

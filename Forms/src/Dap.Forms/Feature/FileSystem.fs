@@ -7,7 +7,7 @@ open Xamarin.Forms
 open Dap.Prelude
 open Dap.Forms
 
-let getAppDataFolder () =
+let getDataFolder () =
     if hasEssentials () then
         Xamarin.Essentials.FileSystem.AppDataDirectory
     else

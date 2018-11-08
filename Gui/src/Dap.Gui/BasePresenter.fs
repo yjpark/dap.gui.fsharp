@@ -6,7 +6,7 @@ open Dap.Context
 open Dap.Gui
 
 [<AbstractClass>]
-type BasePresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefab, ?domain' : 'domain) =
+type BasePresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab, ?domain' : 'domain) =
     let mutable domain : 'domain option = domain'
     abstract member OnAttached : unit -> unit
     default __.OnAttached () = ()
@@ -18,7 +18,7 @@ type BasePresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefab, 
         domain <- Some domain'
         this.OnAttached ()
     member __.Attached = domain.IsSome
-    interface IPresenter<'prefab, 'domain> with
+    interface IPresenter<'domain, 'prefab> with
         member __.Prefab = prefab
         member __.Domain = domain
         member this.Attach (domain' : 'domain) = this.Attach domain'
@@ -30,14 +30,14 @@ type BasePresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefab, 
         member __.Disposed = prefab.Disposed
     interface ILogger with
         member __.Log m = prefab.Log m
-    member this.AsPresenter = this :> IPresenter<'prefab, 'domain>
+    member this.AsPresenter = this :> IPresenter<'domain, 'prefab>
 
 [<AbstractClass>]
-type DynamicPresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefab) =
+type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab) =
     let mutable sealed' : bool = false
     let mutable domain : 'domain option = None
     new (getPrefab : unit -> 'prefab) =
-        new DynamicPresenter<'prefab, 'domain> (getPrefab ())
+        new DynamicPresenter<'domain, 'prefab> (getPrefab ())
     abstract member OnSealed : unit -> unit
     abstract member OnWillAttach : 'domain -> unit
     abstract member OnWillDetach : 'domain option -> unit
@@ -62,7 +62,7 @@ type DynamicPresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefa
         domain <- None
         domain'
     member __.Attached = domain.IsSome
-    interface IDynamicPresenter<'prefab, 'domain> with
+    interface IDynamicPresenter<'domain, 'prefab> with
         member this.Detach () = this.Detach ()
         member this.AsPresenter = this.AsPresenter
     interface IDynamicPresenter with
@@ -71,7 +71,7 @@ type DynamicPresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefa
                 sealed' <- true
                 this.OnSealed ()
         member __.Sealed = sealed'
-    interface IPresenter<'prefab, 'domain> with
+    interface IPresenter<'domain, 'prefab> with
         member __.Prefab = prefab
         member __.Domain = domain
         member this.Attach (domain' : 'domain) = this.Attach domain'
@@ -83,5 +83,5 @@ type DynamicPresenter<'prefab, 'domain when 'prefab :> IPrefab> (prefab : 'prefa
         member __.Disposed = prefab.Disposed
     interface ILogger with
         member __.Log m = prefab.Log m
-    member this.AsPresenter = this :> IPresenter<'prefab, 'domain>
-    member this.AsDynamicPresenter = this :> IDynamicPresenter<'prefab, 'domain>
+    member this.AsPresenter = this :> IPresenter<'domain, 'prefab>
+    member this.AsDynamicPresenter = this :> IDynamicPresenter<'domain, 'prefab>
