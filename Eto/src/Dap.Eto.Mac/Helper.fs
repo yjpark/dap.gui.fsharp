@@ -1,5 +1,6 @@
 [<AutoOpen>]
 module Dap.Eto.Mac.Helper
 
-let etoPlatform () =
-    new Eto.Mac.Platform ()
+let etoPlatform (platform : Eto.Platform) =
+    platform
+    //new Eto.Mac.Platform ()
