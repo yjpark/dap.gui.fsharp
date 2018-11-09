@@ -15,6 +15,7 @@ let feed =
 let projects =
     !! "src/Dap.Eto/*.fsproj"
     ++ "src/Dap.Eto.Gtk/*.fsproj"
+    ++ "src/Dap.Eto.Mac/*.fsproj"
 
 NuGet.create NuGet.release feed projects
 

@@ -13,6 +13,8 @@ NUGET
     Eto.Platform.Gtk (2.4.1)
       Eto.Forms (2.4.1)
       GtkSharp (>= 3.22.24.29)
+    Eto.Platform.XamMac2 (2.4.1)
+      Eto.Forms (2.4.1)
     Fable.JsonConverter (1.0.8)
       FSharp.Core (>= 4.2.3)
       Newtonsoft.Json (>= 11.0.1)

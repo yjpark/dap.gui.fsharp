@@ -11,6 +11,7 @@ nuget Dap.Local
 nuget Dap.Gui
 nuget Eto.Forms
 nuget Eto.Platform.Gtk
+nuget Eto.Platform.XamMac2
 
 group Build
     source https://nuget.yjpark.org/nuget/dap
