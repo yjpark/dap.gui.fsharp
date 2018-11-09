@@ -18,7 +18,7 @@
     <Compile Include="View/Logic.fs" />
     <Compile Include="Meta.fs" />
     <Compile Include="Helper.fs" />
-    <Compile Include="FormsRuntime.fs" />
+    <Compile Include="FormsLoggingProvider.fs" />
     <Compile Include="Prefab/Label.fs" />
     <Compile Include="Prefab/Button.fs" />
     <Compile Include="Prefab/TextField.fs" />
