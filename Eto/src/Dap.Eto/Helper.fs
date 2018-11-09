@@ -9,5 +9,5 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let createEtoApplication (platform : Platform) =
+let createEtoApplication (platform : Eto.Platform) =
     new Application (platform)

@@ -1,7 +1,6 @@
 [<AutoOpen>]
 module Dap.Eto.Program
 
-open Eto
 open Eto.Forms
 
 open Dap.Prelude
@@ -9,8 +8,8 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-type EtoPack<'app, 'presenter when 'app :> IPack and 'presenter :> IPresenter<'app>> (platform : Platform, app : 'app, newPresenter : IEnv -> 'presenter) =
-    let application = new Application (platform)
+type EtoPack<'app, 'presenter when 'app :> IPack and 'presenter :> IPresenter<'app>> (platform : Eto.Platform, app : 'app, newPresenter : IEnv -> 'presenter) =
+    let application = new Eto.Forms.Application (platform)
     let view = new FormView<'presenter> (newPresenter app.Env)
     member __.Setup () =
         application.Invoke (fun () ->
