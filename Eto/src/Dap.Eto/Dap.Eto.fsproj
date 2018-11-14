@@ -13,6 +13,8 @@
     <Compile Include="Prefab/Button.fs" />
     <Compile Include="Prefab/TextField.fs" />
     <Compile Include="Prefab/Stack.fs" />
+    <Compile Include="Prefab/Table.fs" />
+    <Compile Include="Prefab/FullTable.fs" />
     <Compile Include="FormView.fs" />
     <Compile Include="EtoPack.fs" />
     <Compile Include="Helper.fs" />

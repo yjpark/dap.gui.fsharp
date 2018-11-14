@@ -13,9 +13,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type StackWidget = Xamarin.Forms.StackLayout
 
-//SILP: GROUP_HEADER_MIDDLE(Stack)
+//SILP: GROUP_HEADER_MIDDLE(Combo, Stack)
 type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseGroup<Stack, StackProps, StackWidget, View>           //__SILP__
+    inherit BaseCombo<Stack, StackProps, StackWidget, View>           //__SILP__
         (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
     do (                                                              //__SILP__
         let kind = StackKind                                          //__SILP__
@@ -24,9 +24,9 @@ type Stack (logging : ILogging) =                                     //__SILP__
         let widget = base.Widget                                      //__SILP__
         model.Layout.OnChanged.AddWatcher owner kind (fun evt ->
             match evt.New with
-            | LayoutConst.Horizontal_Stack ->
+            | LayoutConst.Combo_Horizontal_Stack ->
                 widget.Orientation <- StackOrientation.Horizontal
-            | LayoutConst.Vertical_Stack ->
+            | LayoutConst.Combo_Vertical_Stack ->
                 widget.Orientation <- StackOrientation.Vertical
             | _ ->
                 logError owner "Stack" "Invalid_Layout" evt.New

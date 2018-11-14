@@ -11,7 +11,7 @@ open Dap.Gui
  *)
 type LabelPropsBuilder () =
     inherit ObjBuilder<LabelProps> ()
-    override __.Zero () = LabelProps.Default ()
+    override __.Zero () = LabelProps.Create ()
     [<CustomOperation("prefab")>]
     member __.Prefab (target : LabelProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
@@ -36,7 +36,7 @@ let label_props = new LabelPropsBuilder ()
  *)
 type ButtonPropsBuilder () =
     inherit ObjBuilder<ButtonProps> ()
-    override __.Zero () = ButtonProps.Default ()
+    override __.Zero () = ButtonProps.Create ()
     [<CustomOperation("prefab")>]
     member __.Prefab (target : ButtonProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
@@ -65,7 +65,7 @@ let button_props = new ButtonPropsBuilder ()
  *)
 type TextFieldPropsBuilder () =
     inherit ObjBuilder<TextFieldProps> ()
-    override __.Zero () = TextFieldProps.Default ()
+    override __.Zero () = TextFieldProps.Create ()
     [<CustomOperation("prefab")>]
     member __.Prefab (target : TextFieldProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab

@@ -2,18 +2,47 @@
 [<RequireQualifiedAccess>]
 module Dap.Gui.LayoutConst
 
-[<Literal>]
-let Horizontal_Stack = "horizontal_stack"
+open Dap.Prelude
 
 [<Literal>]
-let Vertical_Stack = "vertical_stack"
+let List_Table = "table"
 
-type LayoutKind =
+[<Literal>]
+let List_Full_Table = "full_table"
+
+[<Literal>]
+let Combo_Horizontal_Stack = "horizontal_stack"
+
+[<Literal>]
+let Combo_Vertical_Stack = "vertical_stack"
+
+[<Literal>]
+let Combo_Panel = "panel"
+
+type ComboLayoutKind =
     | Stack
     | Panel
+with
+    static member Parse (layout : string) : ComboLayoutKind =
+        match layout with
+        | Combo_Horizontal_Stack -> Stack
+        | Combo_Vertical_Stack -> Stack
+        | Combo_Panel -> Panel
+        | _ -> Stack
+    static member ParseToPrefab (layout : string) : string =
+        (ComboLayoutKind.Parse layout) .ToPrefab ()
+    member this.ToPrefab () : string =
+        Union.getKind this
 
-let getKind layout : LayoutKind =
-    match layout with
-    | Horizontal_Stack -> Stack
-    | Vertical_Stack -> Stack
-    | _ -> Panel
+type ListLayoutKind =
+    | Table
+    | FullTable
+    static member Parse (layout : string) : ListLayoutKind =
+        match layout with
+        | List_Table -> Table
+        | List_Full_Table -> FullTable
+        | _ -> Table
+    static member ParseToPrefab (layout : string) : string =
+        (ListLayoutKind.Parse layout) .ToPrefab ()
+    member this.ToPrefab () : string =
+        Union.getKind this

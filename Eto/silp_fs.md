@@ -45,16 +45,16 @@ override __.Spawn l = ${prefab}.Create l
 interface IFallback
 ```
 
-# GROUP_HEADER(prefab) #
+# GROUP_HEADER(type, prefab) #
 ```F#
 type ${prefab} (logging : ILogging) =
-    inherit BaseGroup<${prefab}, ${prefab}Props, ${prefab}Widget, Control>
+    inherit Base${type}<${prefab}, ${prefab}Props, ${prefab}Widget, Control>
         (${prefab}Kind, ${prefab}Props.Create, logging, new ${prefab}Widget ())
 ```
 
-# GROUP_HEADER_MIDDLE(prefab) #
+# GROUP_HEADER_MIDDLE(type, prefab) #
 ```F#
-//SILP: GROUP_HEADER(${prefab})
+//SILP: GROUP_HEADER(${type}, ${prefab})
     do (
         let kind = ${prefab}Kind
         let owner = base.AsOwner

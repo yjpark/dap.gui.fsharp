@@ -24,12 +24,16 @@ let ITextProps =
 let IGroupProps =
     extend [ <@ IViewProps @> ] {
         var (M.string "layout")
-        prop (M.combo "children")
     }
 
-let GroupProps =
+let ListProps =
     extend [ <@ IGroupProps @> ] {
-        nothing ()
+        var (M.string "item_prefab")
+    }
+
+let ComboProps =
+    extend [ <@ IGroupProps @> ] {
+        prop (M.combo "children")
     }
 
 let LabelProps =
@@ -56,7 +60,8 @@ let compile segments =
                     G.ComboInterface (<@ IControlProps @>)
                     G.ComboInterface (<@ ITextProps @>)
                     G.ComboInterface (<@ IGroupProps @>)
-                    G.Combo (<@ GroupProps @>)
+                    G.Combo (<@ ListProps @>)
+                    G.Combo (<@ ComboProps @>)
                     G.Combo (<@ LabelProps @>)
                     G.Combo (<@ ButtonProps @>)
                     G.Combo (<@ TextFieldProps @>)
@@ -81,7 +86,8 @@ let compile segments =
                     [
                         "open Dap.Gui"
                     ]
-                    G.ComboBuilder <@ GroupProps @>
+                    G.ComboBuilder (<@ ListProps @>)
+                    G.ComboBuilder <@ ComboProps @>
                 ]
             )
         )

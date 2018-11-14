@@ -12,3 +12,9 @@ let TextFieldKind = "TextField"
 
 [<Literal>]
 let StackKind = "Stack"
+
+[<Literal>]
+let TableKind = "Table"
+
+[<Literal>]
+let FullTableKind = "FullTable"

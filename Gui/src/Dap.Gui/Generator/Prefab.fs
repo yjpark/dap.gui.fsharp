@@ -10,24 +10,51 @@ open Dap.Gui
 
 let private getPrefab (meta : IViewProps) =
     match meta with
-    | :? IGroupProps as group ->
-        LayoutConst.getKind group.Layout.Value
-        |> Union.getKind
+    | :? ComboProps as combo ->
+        ComboLayoutKind.ParseToPrefab combo.Layout.Value
+    | :? ListProps as list ->
+        ListLayoutKind.ParseToPrefab list.Layout.Value
     | _ ->
         (meta.GetType ()) .Name
             .Replace ("Props", "")
 
+let private getParentModel (meta : IViewProps) =
+    match meta with
+    | :? ComboProps as combo ->
+        ComboLayoutKind.ParseToPrefab combo.Layout.Value
+        |> sprintf "%sProps"
+    | :? ListProps as list ->
+        list.ItemPrefab.Value.AsCodeMemberName
+        |> sprintf "ListProps<%sProps>"
+    | _ ->
+        (meta.GetType ()) .Name
+
+let private getModelParam (meta : IViewProps) =
+    match meta with
+    | :? ListProps as list ->
+        list.ItemPrefab.Value.AsCodeMemberName
+        |> sprintf ", %sProps.Create"
+    | _ -> ""
+
+let private getParentClass (meta : IViewProps) (param : PrefabParam) =
+    match meta with
+    | :? ComboProps as combo ->
+        ComboLayoutKind.ParseToPrefab combo.Layout.Value
+        |> sprintf "WrapCombo<%s, %sProps, I%s>" param.Name param.Name
+    | :? ListProps as list ->
+        let item = list.ItemPrefab.Value.AsCodeMemberName
+        ListLayoutKind.ParseToPrefab list.Layout.Value
+        |> sprintf "WrapList<%s, %sProps, I%s, %sProps, I%s>" param.Name param.Name item item
+    | _ ->
+        "ToDo"
+
 type Generator (meta : IViewProps) =
     let getParentModel () =
-        getPrefab meta
+        getParentModel meta
+    let getModelParam () =
+        getModelParam meta
     let getParentClass (param : PrefabParam) =
-        match meta with
-        | :? IGroupProps as group ->
-            LayoutConst.getKind group.Layout.Value
-            |> Union.getKind
-            |> sprintf "WrapGroup<%s, %sProps, I%s>" param.Name param.Name
-        | _ ->
-            "ToDo"
+        getParentClass meta param
     let getChildPrefab (child : IViewProps) =
         if child.Prefab.Value <> "" then
             child.Prefab.Value.AsCodeMemberName
@@ -51,13 +78,13 @@ type Generator (meta : IViewProps) =
     let getInterface (param : PrefabParam) =
         let parentModel = getParentModel ()
         [
-            yield sprintf "type %sProps = %sProps" param.Name parentModel
+            yield sprintf "type %sProps = %s" param.Name parentModel
             yield sprintf ""
             yield sprintf "type I%s =" param.Name
             yield sprintf "    inherit IPrefab<%sProps>" param.Name
             match meta with
-            | :? IGroupProps as group ->
-                for prop in group.Children.Value do
+            | :? ComboProps as combo ->
+                for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
                         yield getInterfaceMember prop
@@ -70,17 +97,17 @@ type Generator (meta : IViewProps) =
         let parentClass = getParentClass param
         [
             sprintf "type %s (logging : ILogging) =" param.Name
-            sprintf "    inherit %s (%sKind, %sProps.Create, logging)" parentClass param.Name param.Name
+            sprintf "    inherit %s (%sKind, %s.CreateProps, logging)" parentClass param.Name param.Name
         ]
     let getChildAdder (child : IViewProps) =
         let key = child.Spec0.Key
         let prefab = getChildPrefab child
-        sprintf "    let %s : I%s = base.AsGroup.Add \"%s\" Feature.create<I%s>" key.AsCodeVariableName prefab key prefab
+        sprintf "    let %s : I%s = base.AsComboLayout.Add \"%s\" Feature.create<I%s>" key.AsCodeVariableName prefab key prefab
     let getClassFields (_param : PrefabParam) =
         [
             match meta with
-            | :? IGroupProps as group ->
-                for prop in group.Children.Value do
+            | :? ComboProps as combo ->
+                for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
                         yield getChildAdder prop
@@ -89,14 +116,14 @@ type Generator (meta : IViewProps) =
             | _ ->
                 ()
         ]
-    let getClassSetup (param : PrefabParam) =
-        [
-            sprintf "    do ("
-            sprintf "        base.Model.AsProperty.LoadJson %sJson" param.Name
-            sprintf "    )"
-        ]
     let getClassMiddle (param : PrefabParam) =
+        let modelParam = getModelParam ()
         [
+            sprintf "    static member CreateProps (o, k) ="
+            sprintf "        let props = %sProps.Create (o, k%s)" param.Name modelParam
+            sprintf "        props.AsProperty.LoadJson %sJson" param.Name
+            sprintf "        props"
+            sprintf "    static member CreateProps () = %s.CreateProps (noOwner, NoKey)" param.Name
             sprintf "    static member Create l = new %s (l)" param.Name
             sprintf "    static member Create () = new %s (getLogging ())" param.Name
             sprintf "    override this.Self = this"
@@ -109,8 +136,8 @@ type Generator (meta : IViewProps) =
     let getClassMembers (_param : PrefabParam) =
         [
             match meta with
-            | :? IGroupProps as group ->
-                for prop in group.Children.Value do
+            | :? ComboProps as combo ->
+                for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
                         yield getChildMember prop
@@ -121,8 +148,8 @@ type Generator (meta : IViewProps) =
         ]
     let hasChild () =
         match meta with
-        | :? IGroupProps as group ->
-            group.Children.Value
+        | :? ComboProps as combo ->
+            combo.Children.Value
             |> List.exists (fun prop ->
                 match prop with
                 | :? IViewProps -> true
@@ -136,8 +163,8 @@ type Generator (meta : IViewProps) =
             yield sprintf "    interface IFallback"
             yield sprintf "    interface I%s%s" param.Name (if hasChild () then " with" else "")
             match meta with
-            | :? IGroupProps as group ->
-                for prop in group.Children.Value do
+            | :? ComboProps as combo ->
+                for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
                         yield "    " + getChildMember prop
@@ -161,8 +188,61 @@ type Generator (meta : IViewProps) =
                 [""]
                 getClassHeader param
                 getClassFields param
-                getClassSetup param
                 getClassMiddle param
                 getClassMembers param
                 getClassFooter param
             ]|> List.concat
+
+type BuilderGenerator (meta : IViewProps) =
+    let getBuilderHeader (param : PrefabParam) =
+        let prefab = meta.Prefab.Value.AsCodeMemberName
+        [
+            yield sprintf "type %s () =" param.Name
+            yield sprintf "    inherit ComboPrefabBuilder (%s.CreateProps ())" prefab
+        ]
+    let getBuilderFooter (param : PrefabParam) =
+        [
+            sprintf ""
+            sprintf "let %s = new %s ()" meta.Prefab.Value.AsCodeJsonKey param.Name
+        ]
+    let getOperation (_param : PrefabParam) (prop : IViewProps) =
+        let memberName = prop.Key.AsCodeMemberName
+        let varName = prop.Key.AsCodeVariableName
+        let varType = (prop.GetType ()) .Name
+        [
+            yield sprintf "    [<CustomOperation(\"%s\")>]" prop.Key.AsCodeJsonKey
+
+            yield sprintf "    member __.%s (target : ComboProps, %s : %s) =" memberName varName varType
+            yield sprintf "        %s.SyncTo <| target.Target.Get<%s> \"%s\"" varName varType prop.Key
+            yield sprintf "        target"
+            yield sprintf "    [<CustomOperation(\"update_%s\")>]" prop.Key.AsCodeJsonKey
+
+            yield sprintf "    member __.Update%s (target : ComboProps, update : %s -> unit) =" memberName varType
+            yield sprintf "        update <| target.Target.Get<%s> \"%s\"" varType prop.Key
+            yield sprintf "        target"
+        ]
+    let getOperations (param : PrefabParam) =
+        match meta with
+        | :? ComboProps as combo ->
+            [
+                for prop in combo.Children.Value do
+                    match prop with
+                    | :? IViewProps as prop ->
+                        yield getOperation param prop
+                    | _ ->
+                        ()
+            ]|> List.concat
+        | _ -> []
+    interface IGenerator<PrefabParam> with
+        member this.Generate param =
+            [
+                ["open Dap.Platform"]
+                ["open Dap.Gui"]
+                ["open Dap.Gui.Builder"]
+                ["open Dap.Gui.Prefab"]
+                [""]
+                getBuilderHeader param
+                getOperations param
+                getBuilderFooter param
+            ]|> List.concat
+

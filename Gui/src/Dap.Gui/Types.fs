@@ -6,11 +6,12 @@ open Dap.Context
 open Dap.Platform
 
 type IPrefab =
-    inherit IFeature
+    inherit IContext
     abstract Widget0 : obj with get
 
 type IPrefab<'model when 'model :> IViewProps> =
     inherit IPrefab
+    inherit IFeature
     inherit IContext<'model>
 
 type IPrefab<'model, 'widget when 'model :> IViewProps> =
@@ -65,25 +66,3 @@ module Extensions =
         member this.Attached = this.Presenter0.Attached
         member this.Prefab0 = this.Presenter0.Prefab0
         member this.Widget0 = this.Presenter0.Prefab0.Widget0
-
-type ILabel =
-    inherit IPrefab<LabelProps>
-
-type IButton =
-    inherit IPrefab<ButtonProps>
-    abstract OnClick : IChannel<unit> with get
-
-type ITextField =
-    inherit IPrefab<TextFieldProps>
-
-type IGroup =
-    abstract Widget1 : obj with get
-    abstract Add<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> : Key -> (ILogging -> 'p) -> 'p
-
-type IGroup<'group when 'group :> IGroupProps> =
-    inherit IPrefab<'group>
-    inherit IGroup
-
-type StackProps = GroupProps
-type IStack =
-    inherit IGroup<StackProps>

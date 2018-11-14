@@ -10,13 +10,12 @@ open Dap.Gui
 open Dap.Gui.Builder
 open Dap.Gui.Generator
 
-let inputField labelText =
+let InputField =
     h_stack {
-        prefab "input_field"
         styles ["style3"]
         child "label" (
             label {
-                text labelText
+                text "Label"
             }
         )
         child "value" (
@@ -26,12 +25,20 @@ let inputField labelText =
         )
     }
 
-let InputField = inputField "Label"
-
 let compile segments =
     [
         G.PrefabFile (segments, ["_Gen" ; "Prefab" ; "InputField.fs"],
             "Dap.Gui.Prefab.InputField", <@ InputField @>
+        )
+        G.File (segments, ["_Gen" ; "Builder" ; "Prefabs.fs"],
+            G.BuilderModule ("Dap.Gui.Builder.Prefabs",
+                [
+                    [
+                        "open Dap.Gui"
+                    ]
+                    G.PrefabBuilder (<@ InputField @>)
+                ]
+            )
         )
     ]
 

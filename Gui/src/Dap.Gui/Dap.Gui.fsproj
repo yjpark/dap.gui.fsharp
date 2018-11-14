@@ -15,8 +15,14 @@
     <Compile Include="LayoutConst.fs" />
     <Compile Include="Builder/Helper.fs" />
     <Compile Include="Types.fs" />
-    <Compile Include="WrapGroup.fs" />
+    <Compile Include="Prefabs.fs" />
+    <Compile Include="Layouts.fs" />
+    <Compile Include="WrapCombo.fs" />
+    <Compile Include="WrapList.fs" />
     <Compile Include="Internal/BasePrefab.fs" />
+    <Compile Include="Internal/BaseCombo.fs" />
+    <Compile Include="Internal/BaseList.fs" />
+    <Compile Include="Internal/BaseFullList.fs" />
     <Compile Include="Internal/Helper.fs" />
     <Compile Include="BasePresenter.fs" />
     <Compile Include="GuiHelper.fs" />
@@ -26,6 +32,7 @@
     <Compile Include="Dsl/Prefabs.fs" />
     <Compile Include="Prefab/Const.fs" />
     <Compile Include="_Gen/Prefab/InputField.fs" />
+    <Compile Include="_Gen/Builder/Prefabs.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-62925-02" PrivateAssets="All" />

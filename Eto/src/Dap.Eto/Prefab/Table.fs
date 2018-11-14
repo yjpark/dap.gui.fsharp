@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Eto.Prefab.Stack
+module Dap.Eto.Prefab.Table
 
 //SILP: COMMON_OPENS
 open System                                                           //__SILP__
@@ -11,33 +11,32 @@ open Dap.Gui                                                          //__SILP__
 open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type StackWidget = Eto.Forms.StackLayout
+//TODO: Create real table based on GridView or ListControl
 
-//SILP: GROUP_HEADER_MIDDLE(Combo, Stack)
-type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseCombo<Stack, StackProps, StackWidget, Control>        //__SILP__
-        (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
+type TableWidget = Eto.Forms.StackLayout
+
+//SILP: GROUP_HEADER_MIDDLE(FullList, Table)
+type Table (logging : ILogging) =                                     //__SILP__
+    inherit BaseFullList<Table, TableProps, TableWidget, Control>     //__SILP__
+        (TableKind, TableProps.Create, logging, new TableWidget ())   //__SILP__
     do (                                                              //__SILP__
-        let kind = StackKind                                          //__SILP__
+        let kind = TableKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
-        model.Layout.OnChanged.AddWatcher owner kind (fun evt ->
-            match evt.New with
-            | LayoutConst.Combo_Horizontal_Stack ->
-                widget.Orientation <- Orientation.Horizontal
-            | LayoutConst.Combo_Vertical_Stack ->
-                widget.Orientation <- Orientation.Vertical
-            | _ ->
-                logError owner "Stack" "Invalid_Layout" evt.New
-        )
+        widget.Orientation <- Orientation.Vertical
     )
     override this.AddChild (child : Control) =
         this.Widget.Items.Add <| new StackLayoutItem (child)
-    //SILP: PREFAB_FOOTER(Stack)
-    static member Create l = new Stack (l)                            //__SILP__
-    static member Create () = new Stack (getLogging ())               //__SILP__
+    override this.RemoveChild (child : Control) =
+        this.Widget.Items
+        |> Seq.filter (fun item -> item.Control = child)
+        |> List.ofSeq
+        |> List.iter (this.Widget.Items.Remove >> ignore)
+    //SILP: PREFAB_FOOTER(Table)
+    static member Create l = new Table (l)                            //__SILP__
+    static member Create () = new Table (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Stack.Create l                              //__SILP__
+    override __.Spawn l = Table.Create l                              //__SILP__
     interface IFallback                                               //__SILP__
-    interface IStack
+    interface IFullTable
