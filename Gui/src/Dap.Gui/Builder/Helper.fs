@@ -3,8 +3,10 @@ module Dap.Gui.Builder.Helper
 
 open Microsoft.FSharp.Quotations
 
+open Dap.Prelude
 open Dap.Context
 open Dap.Context.Meta.Util
+open Dap.Context.Generator.Util
 open Dap.Gui
 module Base = Dap.Gui.Builder.Internal.Base
 
@@ -24,10 +26,22 @@ type ComboPropsBuilder (layout : string) =
         base.Zero ()
         |> fun t -> this.Layout (t, layout)
         |> fun t -> this.Prefab (t, ComboLayoutKind.ParseToPrefab layout)
-    [<CustomOperation("child")>]
-    member __.Child (target : ComboProps, key, prop : ICustomProperty) =
-        target.Children.AddAny key prop.Clone0 |> ignore
+    [<CustomOperation("child'")>]
+    member __.Child' (target : ComboProps, key, props : IViewProps) =
+        target.Children.AddAny key props.Clone0 |> ignore
         target
+    [<CustomOperation("child")>]
+    member this.Child (target : ComboProps, key, child : obj) =
+        match child with
+        | :? IViewProps as props ->
+            this.Child' (target, key, props)
+        | :? Expr<ComboProps> as expr ->
+            let (name, props) = unquotePropertyGetExpr expr
+            props.Prefab.SetValue name.AsCodeJsonKey
+            this.Child' (target, key, props)
+        | _ ->
+            failWith "Unsupported_Child" child
+            target
 
 let h_stack = new ComboPropsBuilder (LayoutConst.Combo_Horizontal_Stack)
 
