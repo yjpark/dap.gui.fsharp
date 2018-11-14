@@ -39,6 +39,10 @@ type ComboPropsBuilder (layout : string) =
             let (name, props) = unquotePropertyGetExpr expr
             props.Prefab.SetValue name.AsCodeJsonKey
             this.Child' (target, key, props)
+        | :? Expr<ListProps> as expr ->
+            let (name, props) = unquotePropertyGetExpr expr
+            props.Prefab.SetValue name.AsCodeJsonKey
+            this.Child' (target, key, props)
         | _ ->
             failWith "Unsupported_Child" child
             target
