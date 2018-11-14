@@ -243,4 +243,3 @@ type BuilderGenerator (meta : IViewProps) =
                 getOperations param
                 getBuilderFooter param
             ]|> List.concat
-
