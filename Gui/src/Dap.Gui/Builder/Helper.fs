@@ -12,9 +12,11 @@ let label = label_props
 let button = button_props
 let text_field = text_field_props
 
-type ComboPrefabBuilder (prefab : ComboProps) =
+type ComboPrefabBuilder (prefab : string, props : ComboProps) =
     inherit Base.ComboPropsBuilder ()
-    override this.Zero () = prefab
+    override this.Zero () =
+        props
+        |> fun t -> this.Prefab (t, prefab)
 
 type ComboPropsBuilder (layout : string) =
     inherit Base.ComboPropsBuilder ()

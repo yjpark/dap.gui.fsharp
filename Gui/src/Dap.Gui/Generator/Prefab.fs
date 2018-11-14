@@ -33,7 +33,7 @@ let private getModelParam (meta : IViewProps) =
     match meta with
     | :? ListProps as list ->
         list.ItemPrefab.Value.AsCodeMemberName
-        |> sprintf ", %sProps.Create"
+        |> sprintf "Of %sProps.Create"
     | _ -> ""
 
 let private getParentClass (meta : IViewProps) (param : PrefabParam) =
@@ -94,10 +94,11 @@ type Generator (meta : IViewProps) =
                 ()
         ]
     let getClassHeader (param : PrefabParam) =
+        let modelParam = getModelParam ()
         let parentClass = getParentClass param
         [
             sprintf "type %s (logging : ILogging) =" param.Name
-            sprintf "    inherit %s (%sKind, %s.CreateProps, logging)" parentClass param.Name param.Name
+            sprintf "    inherit %s (%sKind, %sProps.Create%s, logging)" parentClass param.Name param.Name modelParam
         ]
     let getChildAdder (child : IViewProps) =
         let key = child.Spec0.Key
@@ -117,13 +118,10 @@ type Generator (meta : IViewProps) =
                 ()
         ]
     let getClassMiddle (param : PrefabParam) =
-        let modelParam = getModelParam ()
         [
-            sprintf "    static member CreateProps (o, k) ="
-            sprintf "        let props = %sProps.Create (o, k%s)" param.Name modelParam
-            sprintf "        props.AsProperty.LoadJson %sJson" param.Name
-            sprintf "        props"
-            sprintf "    static member CreateProps () = %s.CreateProps (noOwner, NoKey)" param.Name
+            sprintf "    do ("
+            sprintf "        base.Model.AsProperty.LoadJson %sJson" param.Name
+            sprintf "    )"
             sprintf "    static member Create l = new %s (l)" param.Name
             sprintf "    static member Create () = new %s (getLogging ())" param.Name
             sprintf "    override this.Self = this"
@@ -195,17 +193,17 @@ type Generator (meta : IViewProps) =
 
 type BuilderGenerator (meta : IViewProps) =
     let getBuilderHeader (param : PrefabParam) =
-        let prefab = meta.Prefab.Value.AsCodeMemberName
+        let prefab = meta.Prefab.Value
         [
             yield sprintf "type %s () =" param.Name
-            yield sprintf "    inherit ComboPrefabBuilder (%s.CreateProps ())" prefab
+            yield sprintf "    inherit ComboPrefabBuilder (\"%s\", %s.Clone (noOwner, NoKey))" prefab.AsCodeJsonKey prefab.AsCodeMemberName
         ]
     let getBuilderFooter (param : PrefabParam) =
         [
             sprintf ""
             sprintf "let %s = new %s ()" meta.Prefab.Value.AsCodeJsonKey param.Name
         ]
-    let getOperation (_param : PrefabParam) (prop : IViewProps) =
+    let getComboOperation (_param : PrefabParam) (prop : IViewProps) =
         let memberName = prop.Key.AsCodeMemberName
         let varName = prop.Key.AsCodeVariableName
         let varType = (prop.GetType ()) .Name
@@ -213,12 +211,12 @@ type BuilderGenerator (meta : IViewProps) =
             yield sprintf "    [<CustomOperation(\"%s\")>]" prop.Key.AsCodeJsonKey
 
             yield sprintf "    member __.%s (target : ComboProps, %s : %s) =" memberName varName varType
-            yield sprintf "        %s.SyncTo <| target.Target.Get<%s> \"%s\"" varName varType prop.Key
+            yield sprintf "        %s.SyncTo <| target.Children.Get<%s> \"%s\"" varName varType prop.Key
             yield sprintf "        target"
             yield sprintf "    [<CustomOperation(\"update_%s\")>]" prop.Key.AsCodeJsonKey
 
             yield sprintf "    member __.Update%s (target : ComboProps, update : %s -> unit) =" memberName varType
-            yield sprintf "        update <| target.Target.Get<%s> \"%s\"" varType prop.Key
+            yield sprintf "        update <| target.Children.Get<%s> \"%s\"" varType prop.Key
             yield sprintf "        target"
         ]
     let getOperations (param : PrefabParam) =
@@ -228,7 +226,7 @@ type BuilderGenerator (meta : IViewProps) =
                 for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
-                        yield getOperation param prop
+                        yield getComboOperation param prop
                     | _ ->
                         ()
             ]|> List.concat
@@ -239,7 +237,7 @@ type BuilderGenerator (meta : IViewProps) =
                 ["open Dap.Platform"]
                 ["open Dap.Gui"]
                 ["open Dap.Gui.Builder"]
-                ["open Dap.Gui.Prefab"]
+                ["open Dap.Gui.Dsl.Prefabs"]
                 [""]
                 getBuilderHeader param
                 getOperations param

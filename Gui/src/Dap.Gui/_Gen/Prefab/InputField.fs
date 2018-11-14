@@ -41,14 +41,12 @@ type IInputField =
     abstract Value : ITextField with get
 
 type InputField (logging : ILogging) =
-    inherit WrapCombo<InputField, InputFieldProps, IStack> (InputFieldKind, InputField.CreateProps, logging)
+    inherit WrapCombo<InputField, InputFieldProps, IStack> (InputFieldKind, InputFieldProps.Create, logging)
     let label : ILabel = base.AsComboLayout.Add "label" Feature.create<ILabel>
     let value : ITextField = base.AsComboLayout.Add "value" Feature.create<ITextField>
-    static member CreateProps (o, k) =
-        let props = InputFieldProps.Create (o, k)
-        props.AsProperty.LoadJson InputFieldJson
-        props
-    static member CreateProps () = InputField.CreateProps (noOwner, NoKey)
+    do (
+        base.Model.AsProperty.LoadJson InputFieldJson
+    )
     static member Create l = new InputField (l)
     static member Create () = new InputField (getLogging ())
     override this.Self = this
