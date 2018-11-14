@@ -53,11 +53,14 @@ type ListPropsBuilder (layout : string) =
         base.Zero ()
         |> fun t -> this.Layout (t, LayoutConst.List_Table)
         |> fun t -> this.Prefab (t, ListLayoutKind.ParseToPrefab layout)
-    [<CustomOperation("item")>]
-    member __.Item<'props when 'props :> IViewProps> (target : ListProps, expr : Expr<'props>) =
-        let (_, meta) = unquotePropertyGetExpr expr
-        target.ItemPrefab.SetValue meta.Prefab.Value
+    [<CustomOperation("item'")>]
+    member __.Item' (target : ListProps, itemPrefab : string) =
+        target.ItemPrefab.SetValue itemPrefab
         target
+    [<CustomOperation("item")>]
+    member this.Item<'props when 'props :> IViewProps> (target : ListProps, expr : Expr<'props>) =
+        let (name, _meta) = unquotePropertyGetExpr expr
+        this.Item' (target, name.AsCodeJsonKey)
 
 let table = new ListPropsBuilder (LayoutConst.List_Table)
 let f_table = new ListPropsBuilder (LayoutConst.List_Full_Table)
