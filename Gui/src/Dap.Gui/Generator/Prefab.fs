@@ -102,6 +102,10 @@ type Generator (meta : IViewProps) =
                         yield getInterfaceMember prop
                     | _ ->
                         ()
+            | :? ListProps as list ->
+                let target = ListLayoutKind.ParseToPrefab list.Layout.Value
+                yield sprintf "    abstract Target : I%s with get" target
+                yield sprintf "    abstract ResizeItems : int -> unit"
             | _ ->
                 ()
         ]
@@ -165,6 +169,8 @@ type Generator (meta : IViewProps) =
                 | :? IViewProps -> true
                 | _ -> false
             )
+        | :? ListProps as _list ->
+            true
         | _ ->
             false
 
@@ -180,6 +186,9 @@ type Generator (meta : IViewProps) =
                         yield "    " + getChildMember prop
                     | _ ->
                         ()
+            | :? ListProps as _list ->
+                yield sprintf "        member this.Target = this.Target"
+                yield sprintf "        member this.ResizeItems size = this.ResizeItems size"
             | _ ->
                 ()
         ]

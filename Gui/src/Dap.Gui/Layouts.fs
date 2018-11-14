@@ -19,6 +19,7 @@ type IComboLayout<'model when 'model :> ComboProps> =
 
 type IListLayout =
     inherit ILayout
+    abstract Prefabs0 : IPrefab list
     abstract SetItems<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> : 'm list -> (ILogging -> 'p) -> unit
 
 type IListLayout<'model when 'model :> ListProps> =

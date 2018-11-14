@@ -54,6 +54,7 @@ type WrapList<'prefab, 'model, 'item_prefab, 'item_model, 'layout
     interface ILayout with
         member __.Widget1 = target.Widget1
     interface IListLayout with
+        member __.Prefabs0 = target.Prefabs0
         member __.SetItems<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> (items : 'm list) (spawner : ILogging -> 'p) =
             target.SetItems<'p, 'm> items spawner
     interface IListLayout<'model>
