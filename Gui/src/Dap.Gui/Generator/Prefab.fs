@@ -1,6 +1,8 @@
 [<AutoOpen>]
 module Dap.Gui.Generator.Prefab
 
+open Newtonsoft.Json.Linq
+
 open Dap.Prelude
 open Dap.Context
 open Dap.Context.Meta
@@ -46,7 +48,7 @@ let private getParentClass (meta : IViewProps) (param : PrefabParam) =
         ListLayoutKind.ParseToPrefab list.Layout.Value
         |> sprintf "WrapList<%s, %sProps, I%s, %sProps, I%s>" param.Name param.Name item item
     | _ ->
-        "ToDo"
+        "Unsupported_ParentClass"
 
 type Generator (meta : IViewProps) =
     let getParentModel () =
@@ -65,10 +67,20 @@ type Generator (meta : IViewProps) =
             sprintf "[<Literal>]"
             sprintf "let %sKind = \"%s\"" param.Name param.Name
         ]
+    let getMetaJson () : Json =
+        meta.ToJson ()
+        |> match meta with
+            | :? ListProps as _list ->
+                fun json ->
+                    let json = json.Value<JObject> ()
+                    json.Add ("items", E.emptyList)
+                    json :> Json
+            | _ -> id
+
     let getJson (param : PrefabParam) =
         [
             sprintf "let %sJson = parseJson \"\"\"" param.Name
-            encodeJson 4 meta
+            E.encode 4 <| getMetaJson ()
             sprintf "\"\"\""
         ]
     let getInterfaceMember (child : IViewProps) =
@@ -119,13 +131,13 @@ type Generator (meta : IViewProps) =
         ]
     let getClassMiddle (param : PrefabParam) =
         [
-            sprintf "    do ("
-            sprintf "        base.Model.AsProperty.LoadJson %sJson" param.Name
-            sprintf "    )"
-            sprintf "    static member Create l = new %s (l)" param.Name
-            sprintf "    static member Create () = new %s (getLogging ())" param.Name
-            sprintf "    override this.Self = this"
-            sprintf "    override __.Spawn l = %s.Create l" param.Name
+            yield sprintf "    do ("
+            yield sprintf "        base.Model.AsProperty.LoadJson %sJson" param.Name
+            yield sprintf "    )"
+            yield sprintf "    static member Create l = new %s (l)" param.Name
+            yield sprintf "    static member Create () = new %s (getLogging ())" param.Name
+            yield sprintf "    override this.Self = this"
+            yield sprintf "    override __.Spawn l = %s.Create l" param.Name
         ]
     let getChildMember (child : IViewProps) =
         let key = child.Spec0.Key
