@@ -35,7 +35,7 @@ type BaseList<'layout, 'model, 'widget, 'child
             this.SetPrefabs' <| List.truncate size this.Prefabs
         elif items.Length > size then
             let newPrefabs =
-                [this.Prefabs.Length .. size]
+                [this.Prefabs.Length .. size - 1]
                 |> List.map (fun _ ->
                     let prefab = spawner logging
                     prefab :> IPrefab

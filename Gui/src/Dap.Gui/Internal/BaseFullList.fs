@@ -21,7 +21,7 @@ type BaseFullList<'layout, 'model, 'widget, 'child
             )
         elif items.Length > this.Prefabs.Length then
             let newPrefabs =
-                [this.Prefabs.Length .. items.Length]
+                [this.Prefabs.Length .. items.Length - 1]
                 |> List.map (fun _ ->
                     let prefab = spawner logging
                     this.AddChild (prefab.Widget0 :?> 'child)

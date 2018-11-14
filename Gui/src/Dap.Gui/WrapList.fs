@@ -41,10 +41,8 @@ type WrapList<'prefab, 'model, 'item_prefab, 'item_model, 'layout
                 while size < items.Count do
                     items.Remove (items.Count - 1) |> ignore
             elif size > items.Count then
-                [items.Count .. size]
-                |> List.iter (fun _ ->
+                while size > items.Count do
                     items.Add () |> ignore
-                )
             setTargetItems items.Value
             batching <- false
     member __.Target = target
