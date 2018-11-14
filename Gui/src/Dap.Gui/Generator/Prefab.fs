@@ -20,7 +20,7 @@ let private getPrefab (meta : IViewProps) =
         (meta.GetType ()) .Name
             .Replace ("Props", "")
 
-let private getParentModel (meta : IViewProps) =
+let private getModelClass (meta : IViewProps) =
     match meta with
     | :? ComboProps as combo ->
         ComboLayoutKind.ParseToPrefab combo.Layout.Value
@@ -38,6 +38,13 @@ let private getModelParam (meta : IViewProps) =
         |> sprintf "Of %sProps.Create"
     | _ -> ""
 
+let private getParentInterface (meta : IViewProps) (param : PrefabParam) =
+    match meta with
+    | :? ListProps as list ->
+        sprintf "IListPrefab<%sProps, %sProps>" param.Name list.ItemPrefab.Value.AsCodeMemberName
+    | _ ->
+        sprintf "IPrefab<%sProps>" param.Name
+
 let private getParentClass (meta : IViewProps) (param : PrefabParam) =
     match meta with
     | :? ComboProps as combo ->
@@ -51,10 +58,12 @@ let private getParentClass (meta : IViewProps) (param : PrefabParam) =
         "Unsupported_ParentClass"
 
 type Generator (meta : IViewProps) =
-    let getParentModel () =
-        getParentModel meta
+    let getModelClass () =
+        getModelClass meta
     let getModelParam () =
         getModelParam meta
+    let getParentInterface (param : PrefabParam) =
+        getParentInterface meta param
     let getParentClass (param : PrefabParam) =
         getParentClass meta param
     let getChildPrefab (child : IViewProps) =
@@ -88,12 +97,12 @@ type Generator (meta : IViewProps) =
         let prefab = getChildPrefab child
         sprintf "    abstract %s : I%s with get" key.AsCodeMemberName prefab
     let getInterface (param : PrefabParam) =
-        let parentModel = getParentModel ()
+        let modelClass = getModelClass ()
         [
-            yield sprintf "type %sProps = %s" param.Name parentModel
+            yield sprintf "type %sProps = %s" param.Name modelClass
             yield sprintf ""
             yield sprintf "type I%s =" param.Name
-            yield sprintf "    inherit IPrefab<%sProps>" param.Name
+            yield sprintf "    inherit %s" <| getParentInterface param
             match meta with
             | :? ComboProps as combo ->
                 for prop in combo.Children.Value do
