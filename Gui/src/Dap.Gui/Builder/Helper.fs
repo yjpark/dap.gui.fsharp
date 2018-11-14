@@ -55,7 +55,7 @@ type ListPropsBuilder (layout : string) =
     inherit Base.ListPropsBuilder ()
     override this.Zero () =
         base.Zero ()
-        |> fun t -> this.Layout (t, LayoutConst.List_Table)
+        |> fun t -> this.Layout (t, layout)
         |> fun t -> this.Prefab (t, ListLayoutKind.ParseToPrefab layout)
     [<CustomOperation("item'")>]
     member __.Item' (target : ListProps, itemPrefab : string) =
