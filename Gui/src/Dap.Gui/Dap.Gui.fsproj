@@ -31,6 +31,7 @@
     <Compile Include="Generator/Helper.fs" />
     <Compile Include="Dsl/Prefabs.fs" />
     <Compile Include="Prefab/Const.fs" />
+    <Compile Include="Prefab/Dsl.fs" />
     <Compile Include="_Gen/Prefab/InputField.fs" />
     <Compile Include="_Gen/Builder/Prefabs.fs" />
   </ItemGroup>

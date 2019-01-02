@@ -4,10 +4,16 @@
 			"path": "Gui"
 		},
 		{
+			"path"**/: "Console"
+		},
+		{
 			"path": "Eto"
 		},
 		{
 			"path": "Forms"
+		},
+		{
+			"path": "Faker"
 		},
 	],
     "settings": {
@@ -15,7 +21,7 @@
             "**/bin": true,
             "**/obj": true,
             "*.log": true,
-            "log" : true,
+            "**/log" : true,
             ".vs": true,
             ".vscode": true,
             ".gitignore": true,

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Dsl/Prefabs.fs" />
+    <Compile Include="_Gen/Prefab/Project.fs" />
+    <Compile Include="_Gen/Prefab/Projects.fs" />
+    <Compile Include="_Gen/Prefab/Actions.fs" />
+    <Compile Include="_Gen/Prefab/HomePanel.fs" />
+    <Compile Include="Presenter/HomePanel.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Faker.App\Faker.App.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
