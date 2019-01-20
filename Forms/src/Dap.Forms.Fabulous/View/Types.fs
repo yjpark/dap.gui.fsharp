@@ -1,4 +1,4 @@
-module Dap.Forms.View.Types
+module Dap.Forms.Fabulous.View.Types
 
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2

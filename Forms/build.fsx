@@ -14,6 +14,7 @@ let feed =
 
 let projects =
     !! "src/Dap.Forms/*.fsproj"
+    ++ "src/Dap.Forms.Fabulous/*.fsproj"
 
 NuGet.create NuGet.release feed projects
 

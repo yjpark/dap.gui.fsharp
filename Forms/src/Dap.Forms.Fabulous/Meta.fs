@@ -1,4 +1,4 @@
-module Dap.Forms.Meta
+module Dap.Forms.Fabulous.Meta
 
 open Microsoft.FSharp.Quotations
 
@@ -10,10 +10,10 @@ open Dap.Platform.Meta
 
 type M with
     static member formsView (packModelMsg : string, args : string, ?kind : Kind, ?key : Key, ?aliases : ModuleAlias list) =
-        let kind = defaultArg kind Dap.Forms.View.Types.Kind
+        let kind = defaultArg kind Dap.Forms.Fabulous.View.Types.Kind
         let aliases = defaultArg aliases []
-        let alias = "FormsViewTypes", "Dap.Forms.View.Types"
+        let alias = "FormsViewTypes", "Dap.Forms.Fabulous.View.Types"
         let args = CodeArgs (sprintf "FormsViewTypes.Args<%s>" packModelMsg) args
         let type' = sprintf "FormsViewTypes.View<%s>" packModelMsg
-        let spec = "Dap.Forms.View.Logic.spec"
+        let spec = "Dap.Forms.Fabulous.View.Logic.spec"
         M.agent (args, type', spec, kind, ?key = key, aliases = alias :: aliases)
