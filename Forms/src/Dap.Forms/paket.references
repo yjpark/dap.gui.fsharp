@@ -1,5 +1,10 @@
 Dap.Local
 Dap.Gui
 
-Elmish.XamarinForms
+Fabulous.Core
+Fabulous.CustomControls
+Fabulous.LiveUpdate
+
+Xamarin.Forms
 Xamarin.Essentials
+

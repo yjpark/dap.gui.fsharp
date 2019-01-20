@@ -3,8 +3,8 @@ module Dap.Forms.View.Types
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2
 open Xamarin.Forms
-open Elmish.XamarinForms
-open Elmish.XamarinForms.DynamicViews
+open Fabulous.Core
+open Fabulous.DynamicViews
 
 open Dap.Prelude
 open Dap.Platform

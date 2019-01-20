@@ -34,12 +34,21 @@ NUGET
   remote: https://www.nuget.org/api/v2
     Elmish (2.0.3)
       FSharp.Core (>= 4.5.2)
-    Elmish.XamarinForms (0.17)
-      FSharp.Core (>= 4.5)
-      Xamarin.Forms (>= 3.0.0.482510)
     Fable.JsonConverter (1.0.8)
       FSharp.Core (>= 4.2.3)
       Newtonsoft.Json (>= 11.0.1)
+    Fabulous.Core (0.30)
+      Fabulous.CustomControls (>= 0.30)
+      FSharp.Core (>= 4.5.2)
+      Xamarin.Forms (>= 3.4.0.1009999)
+    Fabulous.CustomControls (0.30)
+      FSharp.Core (>= 4.5.2)
+      Xamarin.Forms (>= 3.4.0.1009999)
+    Fabulous.LiveUpdate (0.30)
+      Fabulous.Core (>= 0.30)
+      FSharp.Core (>= 4.5.2)
+      Newtonsoft.Json (>= 11.0.2)
+      Xamarin.Forms (>= 3.4.0.1009999)
     FSharp.Core (4.5.4)
     Microsoft.NETCore.Platforms (2.2)
     Microsoft.NETCore.Targets (2.1)
@@ -373,7 +382,7 @@ NUGET
       Newtonsoft.Json (>= 11.0.2)
     Xamarin.Essentials (1.0)
       System.Numerics.Vectors (>= 4.5)
-    Xamarin.Forms (3.4.0.1008975)
+    Xamarin.Forms (3.4.0.1009999)
 
 GROUP Build
 STORAGE: NONE

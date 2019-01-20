@@ -10,7 +10,9 @@ nuget FSharp.Core
 nuget Dap.Local
 nuget Dap.Gui
 
-nuget Elmish.XamarinForms
+nuget Fabulous.Core
+nuget Fabulous.CustomControls
+nuget Fabulous.LiveUpdate
 
 nuget Xamarin.Forms
 nuget Xamarin.Essentials

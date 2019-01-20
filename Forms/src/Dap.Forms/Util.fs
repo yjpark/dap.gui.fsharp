@@ -4,8 +4,8 @@ module Dap.Forms.Util
 open System.Threading.Tasks
 open Xamarin.Essentials
 open Xamarin.Forms
-open Elmish.XamarinForms
-open Elmish.XamarinForms.DynamicViews
+open Fabulous.Core
+open Fabulous.DynamicViews
 
 open Dap.Prelude
 open Dap.Platform
