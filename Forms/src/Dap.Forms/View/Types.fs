@@ -13,7 +13,7 @@ open Dap.Local
 [<Literal>]
 let Kind = "FormsView"
 
-type Widget = ViewElement
+type Widget = Fabulous.DynamicViews.ViewElement
 
 type Initer<'model, 'msg when 'model : not struct and 'msg :> IMsg> =
     IAgent<Msg<'model, 'msg>>
