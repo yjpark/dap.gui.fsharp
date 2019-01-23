@@ -25,9 +25,9 @@ type Terminal.Gui.TextField with
 
 type Terminal.Gui.ScrollView with
     static member Create () =
-        new ScrollView (new Rect (0, 0, 10, 10))
+        new ScrollView (new Rect (0, 0, 80, 8))
 
 type Panel(rect : Rect) =
     inherit Terminal.Gui.View (rect)
     static member Create () =
-        new Panel (new Rect (0, 0, 10, 10))
+        new Panel (new Rect (0, 0, 80, 8))

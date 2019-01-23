@@ -30,10 +30,13 @@ type FullTable (logging : ILogging) =                                           
         this.Widget.Add (child)
     override this.RemoveChild (child : View) =
         this.Widget.Remove child
-    //SILP: PREFAB_FOOTER(FullTable)
+    interface IFullTable
+//SILP: PREFAB_FOOTER(FullTable)
     static member Create l = new FullTable (l)                        //__SILP__
     static member Create () = new FullTable (getLogging ())           //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = FullTable.Create l                          //__SILP__
     interface IFallback                                               //__SILP__
-    interface IFullTable
+                                                                      //__SILP__
+type IFullTable with                                                  //__SILP__
+    member this.AsFullTable = this :?> FullTable                      //__SILP__

@@ -24,6 +24,7 @@ type ProjectsProps = ListProps<ProjectProps>
 
 type IProjects =
     inherit IListPrefab<ProjectsProps, ProjectProps>
+    inherit IListLayout<ProjectsProps, IProject>
     abstract Target : IFullTable with get
     abstract ResizeItems : int -> unit
 

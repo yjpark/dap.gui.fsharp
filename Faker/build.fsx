@@ -9,18 +9,12 @@ open Dap.Build
 #load "src/Faker.App/Dsl.fs"
 #load "src/Faker.Gui/Dsl/Prefabs.fs"
 
-let feed =
-    NuGet.Feed.Create (
-        server = NuGet.ProGet "https://nuget.yjpark.org/nuget/dap",
-        apiKey = NuGet.Environment "API_KEY_nuget_yjpark_org"
-    )
-
 let projects =
     !! "src/Faker.App/*.fsproj"
     ++ "src/Faker.Gui/*.fsproj"
     ++ "src/Faker.Console/*.fsproj"
 
-NuGet.create NuGet.release feed projects
+DotNet.create DotNet.debug projects
 
 DotNet.createPrepares [
     ["Faker.App"], fun _ ->

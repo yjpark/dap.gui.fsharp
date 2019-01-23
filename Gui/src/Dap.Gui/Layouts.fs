@@ -26,6 +26,10 @@ type IListLayout<'model when 'model :> ListProps> =
     inherit IPrefab<'model>
     inherit IListLayout
 
+type IListLayout<'model, 'item_prefab when 'model :> ListProps> =
+    inherit IListLayout<'model>
+    abstract Prefabs : 'item_prefab list
+
 type StackProps = ComboProps
 type IStack =
     inherit IComboLayout<StackProps>

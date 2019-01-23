@@ -4,10 +4,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dsl/Prefabs.fs" />
+    <Compile Include="_Gen/Prefab/Action.fs" />
+    <Compile Include="_Gen/Prefab/Actions.fs" />
     <Compile Include="_Gen/Prefab/Project.fs" />
     <Compile Include="_Gen/Prefab/Projects.fs" />
-    <Compile Include="_Gen/Prefab/Actions.fs" />
     <Compile Include="_Gen/Prefab/HomePanel.fs" />
+    <Compile Include="Presenter/Action.fs" />
+    <Compile Include="Presenter/Actions.fs" />
+    <Compile Include="Presenter/Project.fs" />
+    <Compile Include="Presenter/Projects.fs" />
     <Compile Include="Presenter/HomePanel.fs" />
   </ItemGroup>
   <ItemGroup>

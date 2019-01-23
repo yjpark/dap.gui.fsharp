@@ -9,7 +9,8 @@ open Faker.App
 type Context (logging : ILogging) =
     inherit BaseBuilder<Context> (logging)
     do (
-        // TODO
+        let builder = base.AsBuilder
+        Tasks.setupReloadAsync builder
     )
     override this.Self = this
     override __.Spawn l = new Context (l)

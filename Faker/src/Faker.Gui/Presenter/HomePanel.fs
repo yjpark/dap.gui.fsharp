@@ -13,17 +13,15 @@ type Prefab = IHomePanel
 
 type Presenter (env : IEnv) =
     inherit BasePresenter<IApp, Prefab> (Feature.create<Prefab> env.Logging)
-
-    override this.OnAttached () =
+    override this.OnDidAttach () =
         let prefab = this.Prefab
         let app = this.Domain.Value
-        (*
-        let linkStatus = new LinkStatus.Presenter (prefab.LinkStatus, app)
-        let history = new Clips.Presenter (prefab.History, app)
-        app.History.Actor.OnEvent.AddWatcher prefab "OnHistory" (fun _ ->
-            history.Attach (app.History.Actor.State.RecentItems)
+        let projects = app.Builder.Context.Properties.Projects
+        let projects' = new Projects.Presenter (prefab.Projects, app)
+        projects.OnAdded.AddWatcher prefab "ProjectsOnAdded" (fun _ ->
+            projects'.Attach projects
         )
-        *)
+        if projects.Count > 0 then
+            projects'.Attach projects
         ()
-
     static member Create e = new Presenter (e)

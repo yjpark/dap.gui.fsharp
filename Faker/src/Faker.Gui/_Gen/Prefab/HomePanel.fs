@@ -21,12 +21,6 @@ let HomePanelJson = parseJson """
             "styles": [],
             "layout": "full_table",
             "item_prefab": "project"
-        },
-        "actions": {
-            "prefab": "actions",
-            "styles": [],
-            "layout": "full_table",
-            "item_prefab": "button"
         }
     }
 }
@@ -36,13 +30,12 @@ type HomePanelProps = StackProps
 
 type IHomePanel =
     inherit IPrefab<HomePanelProps>
+    abstract Target : IStack with get
     abstract Projects : IProjects with get
-    abstract Actions : IActions with get
 
 type HomePanel (logging : ILogging) =
     inherit WrapCombo<HomePanel, HomePanelProps, IStack> (HomePanelKind, HomePanelProps.Create, logging)
     let projects : IProjects = base.AsComboLayout.Add "projects" Feature.create<IProjects>
-    let actions : IActions = base.AsComboLayout.Add "actions" Feature.create<IActions>
     do (
         base.Model.AsProperty.LoadJson HomePanelJson
     )
@@ -51,8 +44,7 @@ type HomePanel (logging : ILogging) =
     override this.Self = this
     override __.Spawn l = HomePanel.Create l
     member __.Projects : IProjects = projects
-    member __.Actions : IActions = actions
     interface IFallback
     interface IHomePanel with
+        member this.Target = this.Target
         member __.Projects : IProjects = projects
-        member __.Actions : IActions = actions

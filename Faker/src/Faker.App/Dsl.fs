@@ -8,21 +8,21 @@ open Dap.Platform.Meta
 open Dap.Platform.Generator
 open Dap.Platform.Dsl.Packs
 
-let Target =
+let Project =
     combo {
-        var (M.string "project")
-        var (M.string "action")
+        var (M.string "name")
+        var (M.list (M.string "actions"))
     }
 
 let BuilderProps =
     combo {
-        var (M.list (M.custom (<@ Target @>, "targets")))
+        var (M.list (M.custom (<@ Project @>, "projects")))
     }
 
 let Builder =
     context <@ BuilderProps @> {
         kind "Builder"
-        handler (M.unit "reload") (M.unit response)
+        async_handler (M.unit "reload") (M.unit response)
     }
 
 let ICorePack =
@@ -53,7 +53,7 @@ let compile segments =
             G.AutoOpenModule ("Faker.App.Types",
                 [
                     G.PackOpens
-                    G.JsonRecord (<@ Target @>)
+                    G.JsonRecord (<@ Project @>)
                     G.Combo (<@ BuilderProps @>)
                     G.Feature (<@ Builder @>)
                     G.Feature <@ AppGui @>

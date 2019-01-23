@@ -29,10 +29,13 @@ type Stack (logging : ILogging) =                                       //__SILP
     )
     override this.AddChild (child : View) =
         this.Widget.Add (child)
-    //SILP: PREFAB_FOOTER(Stack)
+    interface IStack
+//SILP: PREFAB_FOOTER(Stack)
     static member Create l = new Stack (l)                            //__SILP__
     static member Create () = new Stack (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = Stack.Create l                              //__SILP__
     interface IFallback                                               //__SILP__
-    interface IStack
+                                                                      //__SILP__
+type IStack with                                                      //__SILP__
+    member this.AsStack = this :?> Stack                              //__SILP__

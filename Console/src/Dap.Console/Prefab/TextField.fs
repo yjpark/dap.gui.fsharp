@@ -30,10 +30,13 @@ type TextField (logging : ILogging) =                                           
             model.Text.SetValue <| widget.Text.ToString ()
         ))
     )
-    //SILP: PREFAB_FOOTER(TextField)
+    interface ITextField
+//SILP: PREFAB_FOOTER(TextField)
     static member Create l = new TextField (l)                        //__SILP__
     static member Create () = new TextField (getLogging ())           //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = TextField.Create l                          //__SILP__
     interface IFallback                                               //__SILP__
-    interface ITextField
+                                                                      //__SILP__
+type ITextField with                                                  //__SILP__
+    member this.AsTextField = this :?> TextField                      //__SILP__

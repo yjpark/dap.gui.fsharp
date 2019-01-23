@@ -24,11 +24,14 @@ let private buildMenu (console : IConsolePack) =
         |])
     |])
 
-
 type ConsoleApp (loggingArgs : LoggingArgs, args : AppArgs) =
     inherit App (loggingArgs, args)
     let console = new ConsolePack<IApp, HomePanel>(base.AsApp, HomePanel.Create)
 
+    override this.SetupAsync' () = task {
+        console.Setup ()
+        Layout.fixHome console.View.Presenter.Prefab
+    }
     member __.Console = console
     interface IKeyboardDelegate with
         member __.ProcessKey = None
@@ -37,6 +40,9 @@ type ConsoleApp (loggingArgs : LoggingArgs, args : AppArgs) =
                 let ch = key.KeyValue
                 if ch = int('q') then
                     console.Quit ()
+                    true
+                elif ch = int('l') then
+                    Layout.fixHome console.View.Presenter.Prefab
                     true
                 else
                     false

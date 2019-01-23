@@ -15,47 +15,47 @@ module Context = Dap.Platform.Context
  * Generated: <Record>
  *     IsJson
  *)
-type Target = {
-    Project : (* Target *) string
-    Action : (* Target *) string
+type Project = {
+    Name : (* Project *) string
+    Actions : (* Project *) string list
 } with
     static member Create
         (
-            ?project : (* Target *) string,
-            ?action : (* Target *) string
-        ) : Target =
+            ?name : (* Project *) string,
+            ?actions : (* Project *) string list
+        ) : Project =
         {
-            Project = (* Target *) project
+            Name = (* Project *) name
                 |> Option.defaultWith (fun () -> "")
-            Action = (* Target *) action
-                |> Option.defaultWith (fun () -> "")
+            Actions = (* Project *) actions
+                |> Option.defaultWith (fun () -> [])
         }
-    static member SetProject ((* Target *) project : string) (this : Target) =
-        {this with Project = project}
-    static member SetAction ((* Target *) action : string) (this : Target) =
-        {this with Action = action}
-    static member JsonEncoder : JsonEncoder<Target> =
-        fun (this : Target) ->
+    static member SetName ((* Project *) name : string) (this : Project) =
+        {this with Name = name}
+    static member SetActions ((* Project *) actions : string list) (this : Project) =
+        {this with Actions = actions}
+    static member JsonEncoder : JsonEncoder<Project> =
+        fun (this : Project) ->
             E.object [
-                "project", E.string (* Target *) this.Project
-                "action", E.string (* Target *) this.Action
+                "name", E.string (* Project *) this.Name
+                "actions", (E.list E.string) (* Project *) this.Actions
             ]
-    static member JsonDecoder : JsonDecoder<Target> =
+    static member JsonDecoder : JsonDecoder<Project> =
         D.object (fun get ->
             {
-                Project = get.Required.Field (* Target *) "project" D.string
-                Action = get.Required.Field (* Target *) "action" D.string
+                Name = get.Required.Field (* Project *) "name" D.string
+                Actions = get.Required.Field (* Project *) "actions" (D.list D.string)
             }
         )
     static member JsonSpec =
-        FieldSpec.Create<Target> (Target.JsonEncoder, Target.JsonDecoder)
+        FieldSpec.Create<Project> (Project.JsonEncoder, Project.JsonDecoder)
     interface IJson with
-        member this.ToJson () = Target.JsonEncoder this
+        member this.ToJson () = Project.JsonEncoder this
     interface IObj
-    member this.WithProject ((* Target *) project : string) =
-        this |> Target.SetProject project
-    member this.WithAction ((* Target *) action : string) =
-        this |> Target.SetAction action
+    member this.WithName ((* Project *) name : string) =
+        this |> Project.SetName name
+    member this.WithActions ((* Project *) actions : string list) =
+        this |> Project.SetActions actions
 
 (*
  * Generated: <Combo>
@@ -63,7 +63,7 @@ type Target = {
 type BuilderProps (owner : IOwner, key : Key) =
     inherit WrapProperties<BuilderProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
-    let targets = target'.AddList<(* BuilderProps *) Target> (Target.JsonEncoder, Target.JsonDecoder, "targets", (Target.Create ()), None)
+    let projects = target'.AddList<(* BuilderProps *) Project> (Project.JsonEncoder, Project.JsonDecoder, "projects", (Project.Create ()), None)
     do (
         base.Setup (target')
     )
@@ -74,7 +74,7 @@ type BuilderProps (owner : IOwner, key : Key) =
     override this.Self = this
     override __.Spawn (o, k) = BuilderProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
-    member __.Targets (* BuilderProps *) : IListProperty<IVarProperty<Target>> = targets
+    member __.Projects (* BuilderProps *) : IListProperty<IVarProperty<Project>> = projects
 
 (*
  * Generated: <Context>
@@ -83,7 +83,7 @@ type IBuilder =
     inherit IFeature
     inherit IContext<BuilderProps>
     abstract BuilderProps : BuilderProps with get
-    abstract Reload : IHandler<unit, unit> with get
+    abstract ReloadAsync : IAsyncHandler<unit, unit> with get
 
 (*
  * Generated: <Context>
@@ -94,12 +94,12 @@ let BuilderKind = "Builder"
 [<AbstractClass>]
 type BaseBuilder<'context when 'context :> IBuilder> (logging : ILogging) =
     inherit CustomContext<'context, ContextSpec<BuilderProps>, BuilderProps> (logging, new ContextSpec<BuilderProps>(BuilderKind, BuilderProps.Create))
-    let reload = base.Handlers.Add<unit, unit> (E.unit, D.unit, E.unit, D.unit, "reload")
+    let reloadAsync = base.AsyncHandlers.Add<unit, unit> (E.unit, D.unit, E.unit, D.unit, "reload")
     member this.BuilderProps : BuilderProps = this.Properties
-    member __.Reload : IHandler<unit, unit> = reload
+    member __.ReloadAsync : IAsyncHandler<unit, unit> = reloadAsync
     interface IBuilder with
         member this.BuilderProps : BuilderProps = this.Properties
-        member __.Reload : IHandler<unit, unit> = reload
+        member __.ReloadAsync : IAsyncHandler<unit, unit> = reloadAsync
     interface IFeature
     member this.AsBuilder = this :> IBuilder
 

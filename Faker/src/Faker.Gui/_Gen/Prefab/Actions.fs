@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Faker.Gui.Prefab.LinkStatus
+module Faker.Gui.Prefab.Actions
 
 open Dap.Prelude
 open Dap.Context
@@ -15,20 +15,21 @@ let ActionsJson = parseJson """
     "prefab": "actions",
     "styles": [],
     "layout": "full_table",
-    "item_prefab": "button",
+    "item_prefab": "action",
     "items": []
 }
 """
 
-type ActionsProps = ListProps<ButtonProps>
+type ActionsProps = ListProps<ActionProps>
 
 type IActions =
-    inherit IListPrefab<ActionsProps, ButtonProps>
+    inherit IListPrefab<ActionsProps, ActionProps>
+    inherit IListLayout<ActionsProps, IAction>
     abstract Target : IFullTable with get
     abstract ResizeItems : int -> unit
 
 type Actions (logging : ILogging) =
-    inherit WrapList<Actions, ActionsProps, IButton, ButtonProps, IFullTable> (ActionsKind, ActionsProps.CreateOf ButtonProps.Create, logging)
+    inherit WrapList<Actions, ActionsProps, IAction, ActionProps, IFullTable> (ActionsKind, ActionsProps.CreateOf ActionProps.Create, logging)
     do (
         base.Model.AsProperty.LoadJson ActionsJson
     )

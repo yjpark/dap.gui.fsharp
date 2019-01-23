@@ -39,11 +39,14 @@ do (
 
 # PREFAB_FOOTER(prefab) #
 ```F#
-static member Create l = new ${prefab} (l)
-static member Create () = new ${prefab} (getLogging ())
-override this.Self = this
-override __.Spawn l = ${prefab}.Create l
-interface IFallback
+    static member Create l = new ${prefab} (l)
+    static member Create () = new ${prefab} (getLogging ())
+    override this.Self = this
+    override __.Spawn l = ${prefab}.Create l
+    interface IFallback
+
+type I${prefab} with
+    member this.As${prefab} = this :?> ${prefab}
 ```
 
 # GROUP_HEADER(type, prefab) #

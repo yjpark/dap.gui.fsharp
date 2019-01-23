@@ -5,6 +5,7 @@
   <ItemGroup>
     <Compile Include="Dsl.fs" />
     <Compile Include="_Gen/Types.fs" />
+    <Compile Include="Feature/Tasks.fs" />
     <Compile Include="Feature/Fake.fs" />
     <Compile Include="_Gen1/IApp.fs" />
     <Compile Include="_Gen1/App.fs" />

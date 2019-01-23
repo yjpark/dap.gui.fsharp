@@ -38,11 +38,14 @@ type Button (logging : ILogging) =                                         //__S
         widget.Clicked <- Action onClick.FireEvent
     )
     member __.OnClick : IChannel<unit> = onClick
-    //SILP: PREFAB_FOOTER(Button)
+    interface IButton with
+        member __.OnClick = onClick
+//SILP: PREFAB_FOOTER(Button)
     static member Create l = new Button (l)                           //__SILP__
     static member Create () = new Button (getLogging ())              //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = Button.Create l                             //__SILP__
     interface IFallback                                               //__SILP__
-    interface IButton with
-        member __.OnClick = onClick
+                                                                      //__SILP__
+type IButton with                                                     //__SILP__
+    member this.AsButton = this :?> Button                            //__SILP__

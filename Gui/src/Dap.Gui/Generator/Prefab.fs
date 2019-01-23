@@ -38,12 +38,15 @@ let private getModelParam (meta : IViewProps) =
         |> sprintf "Of %sProps.Create"
     | _ -> ""
 
-let private getParentInterface (meta : IViewProps) (param : PrefabParam) =
-    match meta with
-    | :? ListProps as list ->
-        sprintf "IListPrefab<%sProps, %sProps>" param.Name list.ItemPrefab.Value.AsCodeMemberName
-    | _ ->
-        sprintf "IPrefab<%sProps>" param.Name
+let private getParentInterfaces (meta : IViewProps) (param : PrefabParam) =
+    [
+        match meta with
+        | :? ListProps as list ->
+            yield sprintf "IListPrefab<%sProps, %sProps>" param.Name list.ItemPrefab.Value.AsCodeMemberName
+            yield sprintf "IListLayout<%sProps, I%s>" param.Name list.ItemPrefab.Value.AsCodeMemberName
+        | _ ->
+            yield sprintf "IPrefab<%sProps>" param.Name
+    ]
 
 let private getParentClass (meta : IViewProps) (param : PrefabParam) =
     match meta with
@@ -62,8 +65,8 @@ type Generator (meta : IViewProps) =
         getModelClass meta
     let getModelParam () =
         getModelParam meta
-    let getParentInterface (param : PrefabParam) =
-        getParentInterface meta param
+    let getParentInterfaces (param : PrefabParam) =
+        getParentInterfaces meta param
     let getParentClass (param : PrefabParam) =
         getParentClass meta param
     let getChildPrefab (child : IViewProps) =
@@ -102,7 +105,8 @@ type Generator (meta : IViewProps) =
             yield sprintf "type %sProps = %s" param.Name modelClass
             yield sprintf ""
             yield sprintf "type I%s =" param.Name
-            yield sprintf "    inherit %s" <| getParentInterface param
+            for parent in getParentInterfaces param do
+                yield sprintf "    inherit %s" parent
             match meta with
             | :? ComboProps as combo ->
                 for prop in combo.Children.Value do

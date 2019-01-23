@@ -7,21 +7,24 @@ open Dap.Gui
 
 [<AbstractClass>]
 type BasePresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab, ?domain' : 'domain) =
+    let onAttached = new Bus<IPresenter<'domain, 'prefab>> (prefab, sprintf "%s:OnAttached" prefab.Luid)
     let mutable domain : 'domain option = domain'
-    abstract member OnAttached : unit -> unit
-    default __.OnAttached () = ()
+    abstract member OnDidAttach : unit -> unit
+    default __.OnDidAttach () = ()
     member __.Prefab = prefab
     member __.Domain = domain
     member this.Attach (domain' : 'domain) =
         if domain.IsSome then
             logError this "Attach" "Already_Attached" (domain, domain')
         domain <- Some domain'
-        this.OnAttached ()
+        this.OnDidAttach ()
+        onAttached.Trigger <| this.AsPresenter
     member __.Attached = domain.IsSome
     interface IPresenter<'domain, 'prefab> with
         member __.Prefab = prefab
         member __.Domain = domain
         member this.Attach (domain' : 'domain) = this.Attach domain'
+        member this.OnAttached = onAttached.Publish
     interface IPresenter with
         member __.Prefab0 = prefab :> IPrefab
         member __.Attached = domain.IsSome
@@ -34,6 +37,8 @@ type BasePresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab, 
 
 [<AbstractClass>]
 type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab) =
+    let onAttached = new Bus<IPresenter<'domain, 'prefab>> (prefab, sprintf "%s:OnAttached" prefab.Luid)
+    let onDetached = new Bus<IDynamicPresenter<'domain, 'prefab>> (prefab, sprintf "%s:OnDetached" prefab.Luid)
     let mutable sealed' : bool = false
     let mutable domain : 'domain option = None
     new (getPrefab : unit -> 'prefab) =
@@ -53,6 +58,7 @@ type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefa
             this.OnWillDetach <| Some domain'
         this.OnWillAttach domain'
         domain <- Some domain'
+        onAttached.Trigger <| this.AsPresenter
     member this.Detach () =
         if sealed' then
             logError this "Detach" "Already_Sealed" (domain)
@@ -60,11 +66,13 @@ type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefa
             this.OnWillDetach None
         let domain' = domain
         domain <- None
+        onDetached.Trigger <| this.AsDynamicPresenter
         domain'
     member __.Attached = domain.IsSome
     interface IDynamicPresenter<'domain, 'prefab> with
         member this.Detach () = this.Detach ()
         member this.AsPresenter = this.AsPresenter
+        member this.OnDetached = onDetached.Publish
     interface IDynamicPresenter with
         member this.Seal () =
             if not sealed' then
@@ -75,6 +83,7 @@ type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefa
         member __.Prefab = prefab
         member __.Domain = domain
         member this.Attach (domain' : 'domain) = this.Attach domain'
+        member this.OnAttached = onAttached.Publish
     interface IPresenter with
         member __.Prefab0 = prefab :> IPrefab
         member __.Attached = domain.IsSome

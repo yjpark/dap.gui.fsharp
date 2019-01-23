@@ -31,6 +31,7 @@ type IPresenter<'domain> =
 type IPresenter<'domain, 'prefab when 'prefab :> IPrefab> =
     inherit IPresenter<'domain>
     abstract Prefab : 'prefab with get
+    abstract OnAttached : IBus<IPresenter<'domain, 'prefab>> with get
 
 type IDynamicPresenter =
     inherit IPresenter
@@ -45,6 +46,7 @@ type IDynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> =
     inherit IPresenter<'domain, 'prefab>
     inherit IDynamicPresenter<'domain>
     abstract AsPresenter : IPresenter<'domain, 'prefab> with get
+    abstract OnDetached : IBus<IDynamicPresenter<'domain, 'prefab>> with get
 
 type IView =
     abstract Display0 : obj with get

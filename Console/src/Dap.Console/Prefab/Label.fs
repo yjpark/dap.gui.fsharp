@@ -27,10 +27,13 @@ type Label (logging : ILogging) =                                       //__SILP
             widget.Text <- evt.New.ToUString ()
         )
     )
-    //SILP: PREFAB_FOOTER(Label)
+    interface ILabel
+//SILP: PREFAB_FOOTER(Label)
     static member Create l = new Label (l)                            //__SILP__
     static member Create () = new Label (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = Label.Create l                              //__SILP__
     interface IFallback                                               //__SILP__
-    interface ILabel
+                                                                      //__SILP__
+type ILabel with                                                      //__SILP__
+    member this.AsLabel = this :?> Label                              //__SILP__
