@@ -22,6 +22,7 @@ let private doRun req (callback: Callback<unit>) : ActorOperate<'pack, 'model, '
             else
                 runner.RunFormsFunc (fun _ ->
                     model.Program
+                    |> Program.withConsoleTrace
                     |> Program.runWithDynamicView runner.Actor.Args.Application
                     |> runner.SetFormsRunner'
                     reply runner callback <| ack req ()
