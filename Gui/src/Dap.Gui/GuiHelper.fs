@@ -9,6 +9,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
+let mutable private didSetupGuiContext : bool = false
 let mutable private guiContext : SynchronizationContext option = None
 
 let setupGuiContext' (logger : ILogger) =
@@ -22,13 +23,18 @@ let setupGuiContext' (logger : ILogger) =
         else
             guiContext <- Some guiContext'
             logInfo logger "setupGuiContext'" "Succeed" guiContext'
+    didSetupGuiContext <- true
 
 let getGuiContext () = guiContext |> Option.get
 
 let getGuiTask (getTask : unit -> Task<'res>) : Task<'res> = task {
     return! async {
+        while not didSetupGuiContext do
+            do! Async.Sleep 50
+        (*
         while guiContext.IsNone do
             do! Async.Sleep 50
+        *)
         if guiContext.IsSome then
             do! Async.SwitchToContext (getGuiContext ())
         return! Async.AwaitTask (getTask ())
