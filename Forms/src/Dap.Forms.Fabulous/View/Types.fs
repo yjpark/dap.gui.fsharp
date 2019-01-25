@@ -31,6 +31,8 @@ and Args<'pack, 'model, 'msg
     Logic : ViewLogic<'pack, 'model, 'msg>
     Render : Render<'pack, 'model, 'msg>
     Application : Application
+    UseLiveUpdate : bool
+    UseConsoleTrace : bool
 } with
     static member Create init update subscribe render application =
         {
@@ -42,6 +44,13 @@ and Args<'pack, 'model, 'msg
                 }
             Render = render
             Application = application
+#if DEBUG
+            UseLiveUpdate = true
+            UseConsoleTrace = true
+#else
+            UseLiveUpdate = false
+            UseConsoleTrace = false
+#endif
         }
 
 and Model<'model, 'msg
@@ -74,7 +83,11 @@ and View<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'ms
     member this.ViewState = this.Actor.State.View
     member this.Application = this.Actor.Args.Application
     member _this.HasFormsRunner = formsRunner.IsSome
-    member _this.SetFormsRunner' runner =
+    member this.SetFormsRunner' runner =
+#if DEBUG
+        if this.Actor.Args.UseLiveUpdate then
+            runner.EnableLiveUpdate ()
+#endif
         formsRunner <- Some runner
     member _this.SetReact' react' =
         react <- Some react'

@@ -20,9 +20,10 @@ let private doRun req (callback: Callback<unit>) : ActorOperate<'pack, 'model, '
             if runner.HasFormsRunner then
                 reply runner callback <| nak req "Already_Running" ()
             else
+                let args = runner.Actor.Args
                 runner.RunFormsFunc (fun _ ->
                     model.Program
-                    |> Program.withConsoleTrace
+                    |> if args.UseConsoleTrace then Program.withConsoleTrace else id
                     |> Program.runWithDynamicView runner.Actor.Args.Application
                     |> runner.SetFormsRunner'
                     reply runner callback <| ack req ()
@@ -58,8 +59,10 @@ let private initProgram (initer : Initer<'model, 'msg>) (args : Args<'pack, 'mod
         args.Render runner model
     let subscribe = fun (model : 'model) ->
         args.Logic.Subscribe runner model
-    Program.mkProgram init update view
-    |> Program.withSubscription subscribe
+    let program =
+        Program.mkProgram init update view
+        |> Program.withSubscription subscribe
+    program
 
 let private init : ActorInit<Args<'pack, 'model, 'msg>, Model<'model, 'msg>, Msg<'model, 'msg>> =
     fun initer args ->
