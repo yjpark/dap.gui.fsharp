@@ -35,8 +35,8 @@ type ProjectProps = StackProps
 
 type IProject =
     inherit IPrefab<ProjectProps>
-    abstract Name : ILabel with get
     abstract Target : IStack with get
+    abstract Name : ILabel with get
     abstract Actions : IActions with get
 
 type Project (logging : ILogging) =
