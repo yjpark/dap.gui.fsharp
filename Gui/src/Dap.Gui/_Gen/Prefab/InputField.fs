@@ -37,6 +37,7 @@ type InputFieldProps = StackProps
 
 type IInputField =
     inherit IPrefab<InputFieldProps>
+    abstract Target : IStack with get
     abstract Label : ILabel with get
     abstract Value : ITextField with get
 
@@ -55,5 +56,6 @@ type InputField (logging : ILogging) =
     member __.Value : ITextField = value
     interface IFallback
     interface IInputField with
+        member this.Target = this.Target
         member __.Label : ILabel = label
         member __.Value : ITextField = value

@@ -109,6 +109,8 @@ type Generator (meta : IViewProps) =
                 yield sprintf "    inherit %s" parent
             match meta with
             | :? ComboProps as combo ->
+                let target = ComboLayoutKind.ParseToPrefab combo.Layout.Value
+                yield sprintf "    abstract Target : I%s with get" target
                 for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
@@ -193,6 +195,7 @@ type Generator (meta : IViewProps) =
             yield sprintf "    interface I%s%s" param.Name (if hasChild () then " with" else "")
             match meta with
             | :? ComboProps as combo ->
+                yield "        member this.Target = this.Target"
                 for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
