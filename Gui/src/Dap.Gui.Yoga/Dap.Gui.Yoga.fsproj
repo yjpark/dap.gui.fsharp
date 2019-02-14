@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.6.0</Version>
+    <Description>Use yogalayout with Dap.Gui</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Adaptor.fs" />
+    <Compile Include="Style.fs" />
+    <Compile Include="Node.fs" />
+    <Compile Include="Helper.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-62925-02" PrivateAssets="All" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

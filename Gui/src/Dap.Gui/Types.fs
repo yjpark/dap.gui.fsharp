@@ -5,9 +5,21 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
-type IPrefab =
+type IStyle =
+    abstract Target0 : IPrefab with get
+    abstract OnChildAdded : IPrefab -> unit
+    abstract OnChildRemoved : IPrefab -> unit
+    abstract Apply : unit -> unit
+
+and IStyle<'prefab when 'prefab :> IPrefab> =
+    inherit IStyle
+    abstract Target : 'prefab with get
+
+and IPrefab =
     inherit IContext
     abstract Widget0 : obj with get
+    abstract Styles : IStyle list with get
+    abstract ApplyStyles : unit -> unit
 
 type IPrefab<'model when 'model :> IViewProps> =
     inherit IPrefab
@@ -62,6 +74,29 @@ type IView<'presenter, 'display when 'presenter :> IPresenter> =
 
 [<AutoOpen>]
 module Extensions =
+    type IPrefab with
+        member this.FilterStyles<'style when 'style :> IStyle> () : 'style list =
+            this.Styles
+            |> List.choose (fun style ->
+                match style with
+                | :? 'style as style -> Some style
+                | _ -> None
+            )
+        member this.TryFindStyle<'style when 'style :> IStyle> () : 'style option =
+            match this.FilterStyles<'style> () with
+            | [] -> None
+            | [ style ] -> Some style
+            | _ as styles ->
+                logWarn this (sprintf "TryFindStyle<%s>" typeof<'style>.Name) "Found_Multiple" styles
+                styles
+                |> List.head
+                |> Some
+        member this._StylesOnChildAdded (child : IPrefab) =
+            this.Styles
+            |> List.iter (fun style -> style.OnChildAdded child)
+        member this._StylesOnChildRemoved (child : IPrefab) =
+            this.Styles
+            |> List.iter (fun style -> style.OnChildRemoved child)
     type IPrefab<'model when 'model :> IViewProps> with
         member this.Model = this.Properties
     type IView with

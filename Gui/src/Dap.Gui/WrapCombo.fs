@@ -13,6 +13,8 @@ type WrapCombo<'prefab, 'model, 'layout when 'prefab :> IPrefab and 'model :> Co
     member this.Model = this.Properties
     interface IPrefab with
         member __.Widget0 = target.Widget1
+        member __.Styles = target.Styles
+        member __.ApplyStyles () = target.ApplyStyles ()
     interface ILayout with
         member __.Widget1 = target.Widget1
     interface IComboLayout with

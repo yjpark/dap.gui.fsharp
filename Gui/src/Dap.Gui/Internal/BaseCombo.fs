@@ -16,4 +16,5 @@ type BaseCombo<'layout, 'model, 'widget, 'child when 'layout :> IComboLayout and
             let prefab = spawner logging
             this.Model.Children.AddLink<'m> (prefab.Model, key) |> ignore
             this.AddChild (prefab.Widget0 :?> 'child)
+            this._StylesOnChildAdded prefab
             prefab

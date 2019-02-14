@@ -9,6 +9,8 @@ nuget FSharp.Core
 
 nuget Dap.Platform
 
+nuget Facebook.Yoga
+
 group Build
     source https://nuget.yjpark.org/nuget/dap
     source https://www.nuget.org/api/v2

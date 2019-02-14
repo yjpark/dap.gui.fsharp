@@ -32,6 +32,7 @@ let feed =
 
 let projects =
     !! "src/Dap.Gui/*.fsproj"
+    ++ "src/Dap.Gui.Yoga/*.fsproj"
 
 NuGet.create NuGet.release feed projects
 

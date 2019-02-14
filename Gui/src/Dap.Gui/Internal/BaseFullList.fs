@@ -17,6 +17,7 @@ type BaseFullList<'layout, 'model, 'widget, 'child
             this.SetPrefabs' toKeep
             toRemove
             |> List.iter (fun prefab ->
+                this._StylesOnChildRemoved prefab
                 this.RemoveChild (prefab.Widget0 :?> 'child)
             )
         elif items.Length > this.Prefabs.Length then
@@ -25,6 +26,7 @@ type BaseFullList<'layout, 'model, 'widget, 'child
                 |> List.map (fun _ ->
                     let prefab = spawner logging
                     this.AddChild (prefab.Widget0 :?> 'child)
+                    this._StylesOnChildAdded prefab
                     prefab :> IPrefab
                 )
             this.SetPrefabs' <| this.Prefabs @ newPrefabs

@@ -9,9 +9,13 @@ nuget FSharp.Core
 
 nuget Dap.Local
 nuget Dap.Gui
+nuget Dap.Gui.Yoga
+
 nuget Eto.Forms
 nuget Eto.Platform.Gtk
 nuget Eto.Platform.XamMac2
+
+nuget Facebook.Yoga
 
 group Build
     source https://nuget.yjpark.org/nuget/dap

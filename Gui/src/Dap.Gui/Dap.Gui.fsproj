@@ -19,6 +19,8 @@
     <Compile Include="Layouts.fs" />
     <Compile Include="WrapCombo.fs" />
     <Compile Include="WrapList.fs" />
+    <Compile Include="BaseStyle.fs" />
+    <Compile Include="Styles.fs" />
     <Compile Include="Internal/BasePrefab.fs" />
     <Compile Include="Internal/BaseCombo.fs" />
     <Compile Include="Internal/BaseList.fs" />
