@@ -12,7 +12,7 @@
 #load "src/Dap.Gui/Generator/Types.fs"
 #load "src/Dap.Gui/Generator/Prefab.fs"
 #load "src/Dap.Gui/Generator/Helper.fs"
-#load "src/Dap.Gui/Dsl/Prefabs.fs"
+#load "src/Dap.Gui/Dsl1/Prefabs.fs"
 //*)
 
 open Fake.Core
@@ -32,7 +32,7 @@ let feed =
 
 let projects =
     !! "src/Dap.Gui/*.fsproj"
-    ++ "src/Dap.Gui.Yoga/*.fsproj"
+    ++ "src/Dap.Gui.Myra/*.fsproj"
 
 NuGet.create NuGet.release feed projects
 

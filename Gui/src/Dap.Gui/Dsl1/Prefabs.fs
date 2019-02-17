@@ -27,10 +27,10 @@ let InputField =
 
 let compile segments =
     [
-        G.PrefabFile (segments, ["_Gen" ; "Prefab" ; "InputField.fs"],
+        G.PrefabFile (segments, ["_Gen1" ; "Prefab" ; "InputField.fs"],
             "Dap.Gui.Prefab.InputField", <@ InputField @>
         )
-        G.File (segments, ["_Gen" ; "Builder" ; "Prefabs.fs"],
+        G.File (segments, ["_Gen1" ; "Builder" ; "Prefabs.fs"],
             G.BuilderModule ("Dap.Gui.Builder.Prefabs",
                 [
                     [
