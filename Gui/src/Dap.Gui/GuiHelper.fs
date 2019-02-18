@@ -22,10 +22,12 @@ let setupGuiContext' (logger : ILogger) =
             logError logger "setupGuiContext'" "Failed" guiContext'
         else
             guiContext <- Some guiContext'
-            logInfo logger "setupGuiContext'" "Succeed" guiContext'
+            logWarn logger "setupGuiContext'" "Succeed" guiContext'
     didSetupGuiContext <- true
 
 let getGuiContext () = guiContext |> Option.get
+
+let hasGuiContext () = guiContext.IsSome
 
 let getGuiTask (getTask : unit -> Task<'res>) : Task<'res> = task {
     return! async {

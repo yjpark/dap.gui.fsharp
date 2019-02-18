@@ -16,6 +16,12 @@ open AppKit
 //SILP: COMMON_OPENS
 ```
 
+# MYRA_OPENS #
+```F#
+open Dap.Gui.Myra
+//SILP: COMMON_OPENS
+```
+
 # PREFAB_HEADER(prefab) #
 ```F#
 type ${prefab} (logging : ILogging) =

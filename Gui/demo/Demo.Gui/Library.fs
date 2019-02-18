@@ -1,4 +1,4 @@
-﻿namespace Dap.Gui.Myra
+﻿namespace Demo.Gui
 
 module Say =
     let hello name =
