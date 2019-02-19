@@ -13,12 +13,16 @@ let HomePanelKind = "HomePanel"
 let HomePanelJson = parseJson """
 {
     "prefab": "home_panel",
-    "styles": [],
-    "layout": "horizontal_stack",
+    "styles": [
+        "yoga:home-panel"
+    ],
+    "layout": "vertical_stack",
     "children": {
         "contacts": {
             "prefab": "contacts",
-            "styles": [],
+            "styles": [
+                "yoga:contacts"
+            ],
             "layout": "full_table",
             "item_prefab": "contact"
         }
@@ -37,7 +41,7 @@ type HomePanel (logging : ILogging) =
     inherit WrapCombo<HomePanel, HomePanelProps, IStack> (HomePanelKind, HomePanelProps.Create, logging)
     let contacts : IContacts = base.AsComboLayout.Add "contacts" Feature.create<IContacts>
     do (
-        base.Model.AsProperty.LoadJson HomePanelJson
+        base.LoadJson' HomePanelJson
     )
     static member Create l = new HomePanel (l)
     static member Create () = new HomePanel (getLogging ())

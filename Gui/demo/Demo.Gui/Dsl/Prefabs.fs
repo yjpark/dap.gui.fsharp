@@ -8,29 +8,35 @@ open Dap.Platform
 open Dap.Gui
 open Dap.Gui.Builder
 open Dap.Gui.Generator
+open Demo.Gui.StyleConst
 
 let Contact =
     h_stack {
         child "name" (
             label {
                 text "..."
+                styles [ Yoga_Leaf ]
             }
         )
         child "phone" (
             label {
                 text "..."
+                styles [ Yoga_Leaf ]
             }
         )
+        styles [ Yoga_Contact ]
     }
 
 let Contacts =
     f_table {
         item <@ Contact @>
+        styles [ Yoga_Contacts ]
     }
 
 let HomePanel =
-    h_stack {
+    v_stack {
         child "contacts" <@ Contacts @>
+        styles [ Yoga_HomePanel ]
     }
 
 let compile segments =

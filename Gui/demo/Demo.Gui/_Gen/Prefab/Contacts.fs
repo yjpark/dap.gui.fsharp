@@ -13,7 +13,9 @@ let ContactsKind = "Contacts"
 let ContactsJson = parseJson """
 {
     "prefab": "contacts",
-    "styles": [],
+    "styles": [
+        "yoga:contacts"
+    ],
     "layout": "full_table",
     "item_prefab": "contact",
     "items": []
@@ -31,7 +33,7 @@ type IContacts =
 type Contacts (logging : ILogging) =
     inherit WrapList<Contacts, ContactsProps, IContact, ContactProps, IFullTable> (ContactsKind, ContactsProps.CreateOf ContactProps.Create, logging)
     do (
-        base.Model.AsProperty.LoadJson ContactsJson
+        base.LoadJson' ContactsJson
     )
     static member Create l = new Contacts (l)
     static member Create () = new Contacts (getLogging ())

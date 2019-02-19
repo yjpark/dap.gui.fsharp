@@ -47,10 +47,15 @@ type WrapList<'prefab, 'model, 'item_prefab, 'item_model, 'layout
             batching <- false
     member __.Target = target
     member this.Model = this.Properties
+    member this.LoadJson' (json : Json) =
+        this.Model.AsProperty.LoadJson json
+        target.SetWrapper' this json
     interface IPrefab with
+        member __.Wrapper = None
         member __.Widget0 = target.Widget1
         member __.Styles = target.Styles
         member __.ApplyStyles () = target.ApplyStyles ()
+        member this.SetWrapper' w j = failWith "Already_Is_Wrapper" (this, w, j)
     interface ILayout with
         member __.Widget1 = target.Widget1
     interface IListLayout with

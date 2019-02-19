@@ -11,6 +11,9 @@ nuget Dap.Platform
 
 nuget Facebook.Yoga
 
+//Gtk
+nuget GtkSharp
+
 //Myra
 nuget MonoGame.Framework.DesktopGL.Core
 nuget Myra

@@ -13,17 +13,23 @@ let ContactKind = "Contact"
 let ContactJson = parseJson """
 {
     "prefab": "contact",
-    "styles": [],
+    "styles": [
+        "yoga:contact"
+    ],
     "layout": "horizontal_stack",
     "children": {
         "name": {
             "prefab": "",
-            "styles": [],
+            "styles": [
+                "yoga:leaf"
+            ],
             "text": "..."
         },
         "phone": {
             "prefab": "",
-            "styles": [],
+            "styles": [
+                "yoga:leaf"
+            ],
             "text": "..."
         }
     }
@@ -43,7 +49,8 @@ type Contact (logging : ILogging) =
     let name : ILabel = base.AsComboLayout.Add "name" Feature.create<ILabel>
     let phone : ILabel = base.AsComboLayout.Add "phone" Feature.create<ILabel>
     do (
-        base.Model.AsProperty.LoadJson ContactJson
+        base.LoadJson' ContactJson
+        logWip name "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" (encodeJson 4 name.Model)
     )
     static member Create l = new Contact (l)
     static member Create () = new Contact (getLogging ())

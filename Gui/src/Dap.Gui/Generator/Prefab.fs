@@ -151,7 +151,7 @@ type Generator (meta : IViewProps) =
     let getClassMiddle (param : PrefabParam) =
         [
             yield sprintf "    do ("
-            yield sprintf "        base.Model.AsProperty.LoadJson %sJson" param.Name
+            yield sprintf "        base.LoadJson' %sJson" param.Name
             yield sprintf "    )"
             yield sprintf "    static member Create l = new %s (l)" param.Name
             yield sprintf "    static member Create () = new %s (getLogging ())" param.Name

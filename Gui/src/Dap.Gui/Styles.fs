@@ -22,9 +22,24 @@ let create (prefab : IPrefab) (kind : string) : IStyle option =
 let init (prefab : IPrefab) (styles : IListProperty<IVarProperty<string>>) : IStyle list =
     styles.Value
     |> List.map (fun p -> p.Value)
-    |> List.choose (create prefab)
+    |> List.choose (fun kind ->
+        create prefab kind
+        |> Option.map (fun style -> (kind, style))
+    )|> List.map (fun (kind, style) ->
+        logWarn prefab "Styles.create" (sprintf "Created:%s" kind) style
+        style
+    )
 
-let register' (kind : string) (factory : IPrefab -> IStyle) : unit =
+let private _register<'style, 'prefab when 'style :> IStyle<'prefab>> (canOverride : bool) (kind : string) (param : obj list) : unit =
+    let factory = fun (prefab : IPrefab) ->
+        match prefab with
+        | :? 'prefab as p ->
+            Activator.CreateInstance (typeof<'style>, List.toArray ((p :> obj) :: param))
+            :?> IStyle
+        | _ ->
+            logWarn prefab "Styles.register" "Type_Mismatched"
+                (typeof<'style>.FullName, typeof<'prefab>.FullName, prefab.GetType().FullName)
+            new InvalidStyle (prefab) :> IStyle
     let logger =
         match registerLogger with
         | Some l -> l
@@ -35,19 +50,16 @@ let register' (kind : string) (factory : IPrefab -> IStyle) : unit =
     match Map.tryFind kind styles with
     | None ->
         logInfo logger "Registered" kind factory
-        styles <-
-            styles |> Map.add kind factory
+        styles <- styles |> Map.add kind factory
     | Some factory' ->
-        logError logger "Conflicted" kind (factory', factory)
+        if canOverride then
+            logWarn logger "Overridden" kind (factory', factory)
+            styles <- styles |> Map.add kind factory
+        else
+            logError logger "Conflicted" kind (factory', factory)
 
 let register<'style, 'prefab when 'style :> IStyle<'prefab>> (kind : string) (param : obj list) : unit =
-    fun (prefab : IPrefab) ->
-        match prefab with
-        | :? 'prefab as p ->
-            Activator.CreateInstance (typeof<'style>, List.toArray ((p :> obj) :: param))
-            :?> IStyle
-        | _ ->
-            logWarn prefab "Styles.register" "Type_Mismatched"
-                (typeof<'style>.FullName, typeof<'prefab>.FullName, prefab.GetType().FullName)
-            new InvalidStyle (prefab) :> IStyle
-    |> register' kind
+    _register<'style, 'prefab> false kind param
+
+let register'<'style, 'prefab when 'style :> IStyle<'prefab>> (kind : string) (param : obj list) : unit =
+    _register<'style, 'prefab> true kind param

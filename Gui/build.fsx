@@ -16,6 +16,7 @@
 //*)
 
 #load "demo/Demo.App/Dsl.fs"
+#load "demo/Demo.Gui/StyleConst.fs"
 #load "demo/Demo.Gui/Dsl/Prefabs.fs"
 
 open Fake.Core
@@ -35,6 +36,7 @@ let feed =
 
 let libProjects =
     !! "src/Dap.Gui/*.fsproj"
+    ++ "src/Dap.Gui.Gtk/*.fsproj"
     ++ "src/Dap.Gui.Myra/*.fsproj"
 
 let allProjects =

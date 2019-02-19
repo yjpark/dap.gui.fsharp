@@ -13,6 +13,7 @@ type HomePanel = Demo.Gui.Presenter.HomePanel.Presenter
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
+    Demo.Gui.YogaStyles.register ()
     App.Create ("demo.log")
     :> IApp
     |> runMyra HomePanel.Create

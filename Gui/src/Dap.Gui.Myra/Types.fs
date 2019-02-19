@@ -12,6 +12,7 @@ open Myra
 open Myra.Graphics2D.UI
 
 open Dap.Prelude
+open Dap.Gui
 
 type Color = Microsoft.Xna.Framework.Color
 type Vector2 = Microsoft.Xna.Framework.Vector2
@@ -32,9 +33,10 @@ type IApplication =
     abstract GraphicsManager : GraphicsDeviceManager with get
     abstract Graphics : GraphicsDevice with get
     abstract Desktop : Desktop with get
-    abstract Root : MyraWidget with get
+    abstract Presenter : IPresenter with get
     abstract Width : int with get
     abstract Height : int with get
+    abstract Quitting : bool with get
 
 and ApplicationParam = {
     Name : string

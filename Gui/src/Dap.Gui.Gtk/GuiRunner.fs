@@ -1,30 +1,24 @@
 ﻿[<AutoOpen>]
-module Dap.Gui.Myra.GuiRunner
-
-open Myra
-open Myra.Graphics2D.UI
+module Dap.Gui.Gtk.GuiRunner
 
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-open Dap.Gui.Myra.Internal
-
-[<Literal>]
-let ContentRoot = "Content"
+open Dap.Gui.Gtk.Internal
 
 let mutable param : ApplicationParam =
-    ApplicationParam.Create (name = "Myra Application", clearColor = Color.Black, exitKey = Keys.Escape)
+    ApplicationParam.Create (name = "Gtk Application")
 
 let internal setParam (param' : ApplicationParam) =
     param <- param'
 
 type GuiRunner (logging : ILogging) =
     inherit EmptyContext (logging, PlatformKind)
-    let application : Application = new Application (param)
+    let application : Application = new Application ()
     do (
-        application.Setup (ContentRoot)
+        application.Setup ()
     )
     member __.Application = application :> IApplication
     interface IGuiRunner with

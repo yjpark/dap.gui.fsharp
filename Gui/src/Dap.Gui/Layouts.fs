@@ -11,6 +11,7 @@ type ILayout =
 
 type IComboLayout =
     inherit ILayout
+    abstract Children : IPrefab list with get
     abstract Add<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> : Key -> (ILogging -> 'p) -> 'p
 
 type IComboLayout<'model when 'model :> ComboProps> =

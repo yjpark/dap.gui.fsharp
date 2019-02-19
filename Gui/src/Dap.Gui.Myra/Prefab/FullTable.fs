@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.Mac.Prefab.FullTable
+module Dap.Gui.Myra.Prefab.FullTable
 
 //SILP: MYRA_OPENS
 open Dap.Gui.Myra                                                     //__SILP__

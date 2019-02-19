@@ -52,17 +52,21 @@ let private measureView (widget : obj) (node : YogaNode) (width : float32) (widt
 
 //type MeasureFunctionDelegate = delegate of (YogaNode * float32 * YogaMeasureMode * float32 * YogaMeasureMode) -> YogaSize
 
-type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, createNode : unit -> YogaNode) =
+type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, template : YogaNode, setup : (YogaNode -> unit) option) =
     inherit BaseStyle<'prefab>(target)
-    let node = createNode ()
+    let node = new YogaNode (template)
     let mutable children : IYogaStyle list = []
     do (
+        node.Data <- (target :> IPrefab) .Wrapper |> Option.defaultValue (target :> IPrefab)
         node.SetMeasureFunction <| new MeasureFunction (measureView target.Widget0)
+        setup
+        |> Option.iter (fun setup -> setup node)
     )
     override __.OnChildAdded (child' : IPrefab) =
         node.SetMeasureFunction (null)
         child'.TryFindStyle<IYogaStyle> ()
         |> Option.iter (fun child ->
+            logWarn target "TEST" "AAAAAAAAAAAAAAAAAAAAAAA" (child.Node.Data, child.Node)
             node.AddChild (child.Node)
             children <- children @ [ child ]
         )
@@ -80,8 +84,9 @@ type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, createNode : 
         node.Width <- YogaValue.Point width
         node.Height <- YogaValue.Point height
         node.CalculateLayout ()
+        logWip target "Apply" (node.Data, node, width, height)
         this.ApplyWithoutCalc' adaptor
-    member this.ApplyWithoutCalc' (adaptor : IAdaptor) =
+    member __.ApplyWithoutCalc' (adaptor : IAdaptor) =
         adaptor.ApplyLayout (target.Widget0, node)
         children
         |> List.iter (fun child ->
@@ -91,5 +96,5 @@ type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, createNode : 
         member __.Node = node
         member this.ApplyWithoutCalc' adaptor = this.ApplyWithoutCalc' adaptor
 
-type YogaStyle (target : IPrefab, createNode : unit -> YogaNode) =
-    inherit YogaStyle<IPrefab>(target, createNode)
+type YogaStyle (target : IPrefab, template : YogaNode, setup : (YogaNode -> unit) option) =
+    inherit YogaStyle<IPrefab>(target, template, setup)

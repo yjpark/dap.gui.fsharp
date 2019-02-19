@@ -3,10 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="StyleConst.fs" />
     <Compile Include="Dsl/Prefabs.fs" />
     <Compile Include="_Gen/Prefab/Contact.fs" />
     <Compile Include="_Gen/Prefab/Contacts.fs" />
     <Compile Include="_Gen/Prefab/HomePanel.fs" />
+    <Compile Include="YogaStyles.fs" />
     <Compile Include="Presenter/Contact.fs" />
     <Compile Include="Presenter/Contacts.fs" />
     <Compile Include="Presenter/HomePanel.fs" />

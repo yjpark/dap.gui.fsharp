@@ -46,7 +46,7 @@ type InputField (logging : ILogging) =
     let label : ILabel = base.AsComboLayout.Add "label" Feature.create<ILabel>
     let value : ITextField = base.AsComboLayout.Add "value" Feature.create<ITextField>
     do (
-        base.Model.AsProperty.LoadJson InputFieldJson
+        base.LoadJson' InputFieldJson
     )
     static member Create l = new InputField (l)
     static member Create () = new InputField (getLogging ())

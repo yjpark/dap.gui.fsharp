@@ -1,8 +1,8 @@
 [<AutoOpen>]
-module Dap.Gui.Myra.Prefab.Button
+module Dap.Gui.Gtk.Prefab.Button
 
-//SILP: MYRA_OPENS
-open Dap.Gui.Myra                                                     //__SILP__
+//SILP: GTK_OPENS
+open Dap.Gui.Gtk                                                      //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
 open Dap.Context                                                      //__SILP__
@@ -11,7 +11,7 @@ open Dap.Gui                                                          //__SILP__
 open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type ButtonWidget = Myra.Graphics2D.UI.TextButton
+type ButtonWidget = Gtk.Button
 
 //SILP: PREFAB_HEADER(Button)
 type Button (logging : ILogging) =                                      //__SILP__
@@ -25,9 +25,9 @@ type Button (logging : ILogging) =                                      //__SILP
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            widget.Text <- evt.New
+            widget.Label <- evt.New
         )
-        widget.Click.Add (fun _ ->
+        widget.Clicked.Add (fun _ ->
             onClick.FireEvent ()
         )
     )

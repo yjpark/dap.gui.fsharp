@@ -36,4 +36,3 @@ type EtoAdaptor (logging : ILogging) =
             //TODO
             ()
         )
-    interface IFallback

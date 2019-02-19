@@ -17,9 +17,11 @@ and IStyle<'prefab when 'prefab :> IPrefab> =
 
 and IPrefab =
     inherit IContext
+    abstract Wrapper : IPrefab option with get
     abstract Widget0 : obj with get
     abstract Styles : IStyle list with get
     abstract ApplyStyles : unit -> unit
+    abstract SetWrapper' : IPrefab -> Json -> unit
 
 type IPrefab<'model when 'model :> IViewProps> =
     inherit IPrefab
@@ -84,7 +86,9 @@ module Extensions =
             )
         member this.TryFindStyle<'style when 'style :> IStyle> () : 'style option =
             match this.FilterStyles<'style> () with
-            | [] -> None
+            | [] ->
+                logWarn this (sprintf "TryFindStyle<%s>" typeof<'style>.Name) "Not_Found" this.Styles
+                None
             | [ style ] -> Some style
             | _ as styles ->
                 logWarn this (sprintf "TryFindStyle<%s>" typeof<'style>.Name) "Found_Multiple" styles

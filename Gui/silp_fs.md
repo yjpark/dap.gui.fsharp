@@ -16,6 +16,12 @@ open AppKit
 //SILP: COMMON_OPENS
 ```
 
+# GTK_OPENS #
+```F#
+open Dap.Gui.Gtk
+//SILP: COMMON_OPENS
+```
+
 # MYRA_OPENS #
 ```F#
 open Dap.Gui.Myra
