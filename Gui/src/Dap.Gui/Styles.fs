@@ -14,7 +14,9 @@ let mutable private registerLogger : ILogger option = None
 let create (prefab : IPrefab) (kind : string) : IStyle option =
     match Map.tryFind kind styles with
     | Some factory ->
-        Some <| factory prefab
+        let style = factory prefab
+        logWarn prefab "Styles.create" (sprintf "Created:%s" kind) style
+        Some style
     | None ->
         logWarn prefab "Styles.create" "Not_Exist" kind
         None
@@ -22,24 +24,18 @@ let create (prefab : IPrefab) (kind : string) : IStyle option =
 let init (prefab : IPrefab) (styles : IListProperty<IVarProperty<string>>) : IStyle list =
     styles.Value
     |> List.map (fun p -> p.Value)
-    |> List.choose (fun kind ->
-        create prefab kind
-        |> Option.map (fun style -> (kind, style))
-    )|> List.map (fun (kind, style) ->
-        logWarn prefab "Styles.create" (sprintf "Created:%s" kind) style
-        style
-    )
+    |> List.choose (create prefab)
 
 let private _register<'style, 'prefab when 'style :> IStyle<'prefab>> (canOverride : bool) (kind : string) (param : obj list) : unit =
     let factory = fun (prefab : IPrefab) ->
         match prefab with
         | :? 'prefab as p ->
-            Activator.CreateInstance (typeof<'style>, List.toArray ((p :> obj) :: param))
+            Activator.CreateInstance (typeof<'style>, List.toArray ((kind :> obj) :: (p :> obj) :: param))
             :?> IStyle
         | _ ->
             logWarn prefab "Styles.register" "Type_Mismatched"
                 (typeof<'style>.FullName, typeof<'prefab>.FullName, prefab.GetType().FullName)
-            new InvalidStyle (prefab) :> IStyle
+            new InvalidStyle (kind, prefab) :> IStyle
     let logger =
         match registerLogger with
         | Some l -> l

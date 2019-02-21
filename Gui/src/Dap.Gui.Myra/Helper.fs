@@ -19,3 +19,8 @@ let runMyra<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
 
 let setMyraParam (param : ApplicationParam) =
     setParam param
+
+let updateMyraParam (update : ApplicationParam -> ApplicationParam) =
+    param
+    |> update
+    |> setParam

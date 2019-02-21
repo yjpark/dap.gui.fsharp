@@ -11,10 +11,7 @@ let ButtonKind = "Button"
 let TextFieldKind = "TextField"
 
 [<Literal>]
-let StackKind = "Stack"
+let ComboKind = "Combo"
 
 [<Literal>]
-let TableKind = "Table"
-
-[<Literal>]
-let FullTableKind = "FullTable"
+let ListKind = "List"

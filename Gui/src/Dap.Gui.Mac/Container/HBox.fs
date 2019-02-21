@@ -10,18 +10,18 @@ open Dap.Context                                                      //__SILP__
 open Dap.Platform                                                     //__SILP__
 open Dap.Gui                                                          //__SILP__
 open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
 type StackWidget = NSStackView
 
-//SILP: GROUP_HEADER_MIDDLE(Combo, Stack, NSView)
+//SILP: CONTAINER_HEADER_MIDDLE(Stack, NSView)
 type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseCombo<Stack, StackProps, StackWidget, NSView>         //__SILP__
-        (StackKind, StackProps.Create, logging, new StackWidget ())   //__SILP__
+    inherit BaseContainer<Stack, StackWidget, NSView>                 //__SILP__
+        (StackKind, logging, new StackWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = StackKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
-        let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         model.Layout.OnChanged.AddWatcher owner kind (fun evt ->
             match evt.New with
@@ -41,7 +41,7 @@ type Stack (logging : ILogging) =                                     //__SILP__
             this.Widget.AddView (child, NSStackViewGravity.Bottom)
         | _ as layout ->
             logError this "Stack" "Invalid_Layout" layout
-    //SILP: PREFAB_FOOTER(Stack)
+    //SILP: CONTAINER_FOOTER(Stack)
     static member Create l = new Stack (l)                            //__SILP__
     static member Create () = new Stack (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__

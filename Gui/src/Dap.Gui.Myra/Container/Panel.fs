@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.Mac.Prefab.Table
+module Dap.Gui.Myra.Container.Panel
 
 //SILP: MYRA_OPENS
 open Dap.Gui.Myra                                                     //__SILP__
@@ -9,18 +9,18 @@ open Dap.Context                                                      //__SILP__
 open Dap.Platform                                                     //__SILP__
 open Dap.Gui                                                          //__SILP__
 open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type TableWidget = MyraPanel
+type PanelWidget = MyraPanel
 
-//SILP: GROUP_HEADER_MIDDLE(FullList, Table, MyraWidget)
-type Table (logging : ILogging) =                                     //__SILP__
-    inherit BaseFullList<Table, TableProps, TableWidget, MyraWidget>  //__SILP__
-        (TableKind, TableProps.Create, logging, new TableWidget ())   //__SILP__
+//SILP: CONTAINER_HEADER_MIDDLE(Panel, MyraWidget)
+type Panel (logging : ILogging) =                                     //__SILP__
+    inherit BaseContainer<Panel, PanelWidget, MyraWidget>             //__SILP__
+        (PanelKind, logging, new PanelWidget ())                      //__SILP__
     do (                                                              //__SILP__
-        let kind = TableKind                                          //__SILP__
+        let kind = PanelKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
-        let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
@@ -28,10 +28,10 @@ type Table (logging : ILogging) =                                     //__SILP__
         this.Widget.Widgets.Add child
     override this.RemoveChild (child : MyraWidget) =
         this.Widget.RemoveChild child
-    //SILP: PREFAB_FOOTER(Table)
-    static member Create l = new Table (l)                            //__SILP__
-    static member Create () = new Table (getLogging ())               //__SILP__
+    //SILP: CONTAINER_FOOTER(Panel)
+    static member Create l = new Panel (l)                            //__SILP__
+    static member Create () = new Panel (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Table.Create l                              //__SILP__
+    override __.Spawn l = Panel.Create l                              //__SILP__
     interface IFallback                                               //__SILP__
-    interface IFullTable
+    interface IPanel

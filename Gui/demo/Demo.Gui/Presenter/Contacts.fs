@@ -15,9 +15,9 @@ type Model = IListProperty<IVarProperty<Demo.App.Types.Contact>>
 
 type Presenter (prefab : Prefab, app : IApp) =
     inherit DynamicPresenter<Model, Prefab> (prefab)
-    override this.OnWillAttach (items: Model) =
+    override __.OnWillAttach (items: Model) =
         prefab.ResizeItems items.Value.Length
-        (items.Value, prefab.Prefabs)
+        (items.Value, prefab.Items)
         ||> List.iter2 (fun item itemPrefab ->
             new Contact.Presenter(itemPrefab, app, item.Value) |> ignore
         )

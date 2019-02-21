@@ -1,6 +1,7 @@
 [<AutoOpen>]
 module Dap.Gui.Yoga.Helper
 
+open System.Runtime.InteropServices
 open Facebook.Yoga
 
 open Dap.Prelude
@@ -37,3 +38,10 @@ let logYoga (prefab : IPrefab) =
         logWip prefab "Yoga" info
     )
 
+//TODO: after got yoga supported on all platform, this can be removed
+let registerYoga (register : unit -> unit) =
+    fun () ->
+        if RuntimeInformation.IsOSPlatform (OSPlatform.OSX) then
+            register ()
+        else
+            ()

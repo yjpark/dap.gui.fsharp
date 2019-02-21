@@ -14,12 +14,3 @@ type IButton =
 
 type ITextField =
     inherit IPrefab<TextFieldProps>
-
-type ListProps<'item when 'item :> IViewProps> (owner : IOwner, key : Key, spawner : PropertySpawner<'item>) =
-    inherit ListProps (owner, key)
-    let items = base.Target.AddList<'item> (spawner, "items")
-    static member CreateOf s (o, k) = new ListProps<'item> (o, k, s)
-    member __.Items : IListProperty<'item> = items
-
-type IListPrefab<'model, 'item when 'model :> ListProps<'item> and 'item :> IViewProps> =
-    inherit IPrefab<'model>

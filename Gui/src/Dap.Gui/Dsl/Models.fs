@@ -23,7 +23,7 @@ let ITextProps =
 
 let IGroupProps =
     extend [ <@ IViewProps @> ] {
-        var (M.string "layout")
+        var (M.string "container")
     }
 
 let ListProps =

@@ -1,6 +1,7 @@
 module Demo.Gui.YogaStyles
 
 open System
+open System.Runtime.InteropServices
 open Facebook.Yoga
 
 open Dap.Prelude
@@ -11,7 +12,7 @@ open Dap.Gui.Yoga
 
 open Demo.Gui.Prefab
 
-let register () =
+let register' () =
     Styles.register<YogaStyle, IPrefab> Yoga_Leaf [
         node {
             flex_direction YogaFlexDirection.Row
@@ -39,3 +40,5 @@ let register () =
         }
         None
     ]
+
+let register = registerYoga register'

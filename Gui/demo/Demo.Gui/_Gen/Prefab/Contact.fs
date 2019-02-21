@@ -16,7 +16,7 @@ let ContactJson = parseJson """
     "styles": [
         "yoga:contact"
     ],
-    "layout": "horizontal_stack",
+    "container": "h_box",
     "children": {
         "name": {
             "prefab": "",
@@ -36,21 +36,20 @@ let ContactJson = parseJson """
 }
 """
 
-type ContactProps = StackProps
+type ContactProps = ComboProps
 
 type IContact =
-    inherit IPrefab<ContactProps>
-    abstract Target : IStack with get
+    inherit IComboPrefab<ContactProps>
+    inherit IGroupPrefab<IHBox>
     abstract Name : ILabel with get
     abstract Phone : ILabel with get
 
 type Contact (logging : ILogging) =
-    inherit WrapCombo<Contact, ContactProps, IStack> (ContactKind, ContactProps.Create, logging)
-    let name : ILabel = base.AsComboLayout.Add "name" Feature.create<ILabel>
-    let phone : ILabel = base.AsComboLayout.Add "phone" Feature.create<ILabel>
+    inherit BaseCombo<Contact, ContactProps, IHBox> (ContactKind, ContactProps.Create, logging)
+    let name : ILabel = base.AsComboPrefab.Add "name" Feature.create<ILabel>
+    let phone : ILabel = base.AsComboPrefab.Add "phone" Feature.create<ILabel>
     do (
         base.LoadJson' ContactJson
-        logWip name "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK" (encodeJson 4 name.Model)
     )
     static member Create l = new Contact (l)
     static member Create () = new Contact (getLogging ())
@@ -60,6 +59,6 @@ type Contact (logging : ILogging) =
     member __.Phone : ILabel = phone
     interface IFallback
     interface IContact with
-        member this.Target = this.Target
+        member this.Container = this.AsGroupPrefab.Container
         member __.Name : ILabel = name
         member __.Phone : ILabel = phone

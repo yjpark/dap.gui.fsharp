@@ -16,7 +16,7 @@ let InputFieldJson = parseJson """
     "styles": [
         "style3"
     ],
-    "layout": "horizontal_stack",
+    "container": "h_box",
     "children": {
         "label": {
             "prefab": "",
@@ -33,18 +33,18 @@ let InputFieldJson = parseJson """
 }
 """
 
-type InputFieldProps = StackProps
+type InputFieldProps = ComboProps
 
 type IInputField =
-    inherit IPrefab<InputFieldProps>
-    abstract Target : IStack with get
+    inherit IComboPrefab<InputFieldProps>
+    inherit IGroupPrefab<IHBox>
     abstract Label : ILabel with get
     abstract Value : ITextField with get
 
 type InputField (logging : ILogging) =
-    inherit WrapCombo<InputField, InputFieldProps, IStack> (InputFieldKind, InputFieldProps.Create, logging)
-    let label : ILabel = base.AsComboLayout.Add "label" Feature.create<ILabel>
-    let value : ITextField = base.AsComboLayout.Add "value" Feature.create<ITextField>
+    inherit BaseCombo<InputField, InputFieldProps, IHBox> (InputFieldKind, InputFieldProps.Create, logging)
+    let label : ILabel = base.AsComboPrefab.Add "label" Feature.create<ILabel>
+    let value : ITextField = base.AsComboPrefab.Add "value" Feature.create<ITextField>
     do (
         base.LoadJson' InputFieldJson
     )
@@ -56,6 +56,6 @@ type InputField (logging : ILogging) =
     member __.Value : ITextField = value
     interface IFallback
     interface IInputField with
-        member this.Target = this.Target
+        member this.Container = this.AsGroupPrefab.Container
         member __.Label : ILabel = label
         member __.Value : ITextField = value

@@ -11,7 +11,7 @@ open Dap.Gui.Builder
 open Dap.Gui.Generator
 
 let InputField =
-    h_stack {
+    combo_h_box {
         styles ["style3"]
         child "label" (
             label {

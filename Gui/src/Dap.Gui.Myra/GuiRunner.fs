@@ -11,9 +11,6 @@ open Dap.Gui
 
 open Dap.Gui.Myra.Internal
 
-[<Literal>]
-let ContentRoot = "Content"
-
 let mutable param : ApplicationParam =
     ApplicationParam.Create (name = "Myra Application", clearColor = Color.Black, exitKey = Keys.Escape)
 
@@ -22,10 +19,7 @@ let internal setParam (param' : ApplicationParam) =
 
 type GuiRunner (logging : ILogging) =
     inherit EmptyContext (logging, PlatformKind)
-    let application : Application = new Application (param)
-    do (
-        application.Setup (ContentRoot)
-    )
+    let application : Application = Application.Init (param)
     member __.Application = application :> IApplication
     interface IGuiRunner with
         member __.CreateView<'presenter when 'presenter :> IPresenter> (presenter : 'presenter) : IView<'presenter> =

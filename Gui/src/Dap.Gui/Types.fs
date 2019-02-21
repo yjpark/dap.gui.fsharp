@@ -6,6 +6,7 @@ open Dap.Context
 open Dap.Platform
 
 type IStyle =
+    abstract Kind : string with get
     abstract Target0 : IPrefab with get
     abstract OnChildAdded : IPrefab -> unit
     abstract OnChildRemoved : IPrefab -> unit
@@ -17,20 +18,59 @@ and IStyle<'prefab when 'prefab :> IPrefab> =
 
 and IPrefab =
     inherit IContext
-    abstract Wrapper : IPrefab option with get
     abstract Widget0 : obj with get
     abstract Styles : IStyle list with get
     abstract ApplyStyles : unit -> unit
-    abstract SetWrapper' : IPrefab -> Json -> unit
 
 type IPrefab<'model when 'model :> IViewProps> =
     inherit IPrefab
     inherit IFeature
     inherit IContext<'model>
+    abstract Model : 'model with get
 
 type IPrefab<'model, 'widget when 'model :> IViewProps> =
     inherit IPrefab<'model>
     abstract Widget : 'widget with get
+
+type IContainer =
+    inherit IFeature
+    abstract Widget0 : obj with get
+    abstract Wrapper : IPrefab option with get
+    abstract SetWrapper' : IPrefab -> unit
+    abstract AddChild : obj -> unit
+    abstract RemoveChild : obj -> unit
+
+type IContainer<'widget> =
+    inherit IContainer
+    abstract Widget : 'widget with get
+
+type IGroupPrefab =
+    inherit IPrefab
+    abstract Container0 : IContainer with get
+    abstract Children : IPrefab list
+
+type IGroupPrefab<'container when 'container :> IContainer> =
+    abstract Container : 'container with get
+
+type IComboPrefab =
+    inherit IGroupPrefab
+    abstract Add<'p, 'm when 'p :> IPrefab<'m> and 'm :> IViewProps> : Key -> (ILogging -> 'p) -> 'p
+
+type IComboPrefab<'model when 'model :> ComboProps> =
+    inherit IPrefab<'model>
+    inherit IComboPrefab
+
+type IListPrefab =
+    inherit IGroupPrefab
+    abstract ResizeItems : int -> unit
+
+type IListPrefab<'model when 'model :> ListProps> =
+    inherit IPrefab<'model>
+    inherit IListPrefab
+
+type IListPrefab<'model, 'item_prefab when 'model :> ListProps and 'item_prefab :> IPrefab> =
+    inherit IListPrefab<'model>
+    abstract Items : 'item_prefab list
 
 type IPresenter =
     inherit IOwner

@@ -52,12 +52,12 @@ let private measureView (widget : obj) (node : YogaNode) (width : float32) (widt
 
 //type MeasureFunctionDelegate = delegate of (YogaNode * float32 * YogaMeasureMode * float32 * YogaMeasureMode) -> YogaSize
 
-type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, template : YogaNode, setup : (YogaNode -> unit) option) =
-    inherit BaseStyle<'prefab>(target)
+type YogaStyle<'prefab when 'prefab :> IPrefab> (kind : string, target : 'prefab, template : YogaNode, setup : (YogaNode -> unit) option) =
+    inherit BaseStyle<'prefab>(kind, target)
     let node = new YogaNode (template)
     let mutable children : IYogaStyle list = []
     do (
-        node.Data <- (target :> IPrefab) .Wrapper |> Option.defaultValue (target :> IPrefab)
+        node.Data <- target
         node.SetMeasureFunction <| new MeasureFunction (measureView target.Widget0)
         setup
         |> Option.iter (fun setup -> setup node)
@@ -96,5 +96,5 @@ type YogaStyle<'prefab when 'prefab :> IPrefab> (target : 'prefab, template : Yo
         member __.Node = node
         member this.ApplyWithoutCalc' adaptor = this.ApplyWithoutCalc' adaptor
 
-type YogaStyle (target : IPrefab, template : YogaNode, setup : (YogaNode -> unit) option) =
-    inherit YogaStyle<IPrefab>(target, template, setup)
+type YogaStyle (kind : string, target : IPrefab, template : YogaNode, setup : (YogaNode -> unit) option) =
+    inherit YogaStyle<IPrefab>(kind, target, template, setup)

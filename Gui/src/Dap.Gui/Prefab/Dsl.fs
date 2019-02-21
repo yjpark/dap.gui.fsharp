@@ -8,8 +8,6 @@ let Button = ButtonProps.Create ()
 
 let TextField = TextFieldProps.Create ()
 
-let Stack = StackProps.Create ()
+let Combo = ComboProps.Create ()
 
-let Table = TableProps.Create ()
-
-let FullTable = FullTableProps.Create ()
+let List = ListProps.Create ()

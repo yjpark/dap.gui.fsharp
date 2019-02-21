@@ -9,6 +9,7 @@ open Dap.Context                                                      //__SILP__
 open Dap.Platform                                                     //__SILP__
 open Dap.Gui                                                          //__SILP__
 open Dap.Gui.Prefab                                                   //__SILP__
+open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
 type TextFieldWidget = Myra.Graphics2D.UI.TextField

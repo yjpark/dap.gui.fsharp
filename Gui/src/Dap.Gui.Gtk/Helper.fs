@@ -19,3 +19,8 @@ let runGtk<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPac
 
 let setGtkParam (param : ApplicationParam) =
     setParam param
+
+let updateGtkParam (update : ApplicationParam -> ApplicationParam) =
+    param
+    |> update
+    |> setParam

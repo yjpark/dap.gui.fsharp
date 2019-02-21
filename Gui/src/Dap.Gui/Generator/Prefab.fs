@@ -11,6 +11,9 @@ open Dap.Context.Generator.Util
 open Dap.Gui
 
 let private getPrefab (meta : IViewProps) =
+    (meta.GetType ()) .Name
+        .Replace ("Props", "")
+    (*
     match meta with
     | :? ComboProps as combo ->
         ComboLayoutKind.ParseToPrefab combo.Layout.Value
@@ -19,31 +22,32 @@ let private getPrefab (meta : IViewProps) =
     | _ ->
         (meta.GetType ()) .Name
             .Replace ("Props", "")
+    *)
 
 let private getModelClass (meta : IViewProps) =
     match meta with
-    | :? ComboProps as combo ->
-        ComboLayoutKind.ParseToPrefab combo.Layout.Value
-        |> sprintf "%sProps"
-    | :? ListProps as list ->
-        list.ItemPrefab.Value.AsCodeMemberName
-        |> sprintf "ListProps<%sProps>"
+    | :? ComboProps as _combo ->
+        "ComboProps"
+    | :? ListProps as _list ->
+        "ListProps"
     | _ ->
         (meta.GetType ()) .Name
 
 let private getModelParam (meta : IViewProps) =
     match meta with
-    | :? ListProps as list ->
-        list.ItemPrefab.Value.AsCodeMemberName
-        |> sprintf "Of %sProps.Create"
+    | :? ListProps as _list ->
+        ""
     | _ -> ""
 
 let private getParentInterfaces (meta : IViewProps) (param : PrefabParam) =
     [
         match meta with
+        | :? ComboProps as combo ->
+            yield sprintf "IComboPrefab<%sProps>" param.Name
+            yield sprintf "IGroupPrefab<I%s>" combo.Container.Value.AsCodeMemberName
         | :? ListProps as list ->
-            yield sprintf "IListPrefab<%sProps, %sProps>" param.Name list.ItemPrefab.Value.AsCodeMemberName
-            yield sprintf "IListLayout<%sProps, I%s>" param.Name list.ItemPrefab.Value.AsCodeMemberName
+            yield sprintf "IListPrefab<%sProps, I%s>" param.Name list.ItemPrefab.Value.AsCodeMemberName
+            yield sprintf "IGroupPrefab<I%s>" list.Container.Value.AsCodeMemberName
         | _ ->
             yield sprintf "IPrefab<%sProps>" param.Name
     ]
@@ -51,12 +55,10 @@ let private getParentInterfaces (meta : IViewProps) (param : PrefabParam) =
 let private getParentClass (meta : IViewProps) (param : PrefabParam) =
     match meta with
     | :? ComboProps as combo ->
-        ComboLayoutKind.ParseToPrefab combo.Layout.Value
-        |> sprintf "WrapCombo<%s, %sProps, I%s>" param.Name param.Name
+        sprintf "BaseCombo<%s, %sProps, I%s>" param.Name param.Name combo.Container.Value.AsCodeMemberName
     | :? ListProps as list ->
         let item = list.ItemPrefab.Value.AsCodeMemberName
-        ListLayoutKind.ParseToPrefab list.Layout.Value
-        |> sprintf "WrapList<%s, %sProps, I%s, %sProps, I%s>" param.Name param.Name item item
+        sprintf "BaseList<%s, %sProps, I%s, %sProps, I%s>" param.Name param.Name item item list.Container.Value.AsCodeMemberName
     | _ ->
         "Unsupported_ParentClass"
 
@@ -109,18 +111,14 @@ type Generator (meta : IViewProps) =
                 yield sprintf "    inherit %s" parent
             match meta with
             | :? ComboProps as combo ->
-                let target = ComboLayoutKind.ParseToPrefab combo.Layout.Value
-                yield sprintf "    abstract Target : I%s with get" target
                 for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
                         yield getInterfaceMember prop
                     | _ ->
                         ()
-            | :? ListProps as list ->
-                let target = ListLayoutKind.ParseToPrefab list.Layout.Value
-                yield sprintf "    abstract Target : I%s with get" target
-                yield sprintf "    abstract ResizeItems : int -> unit"
+            | :? ListProps as _list ->
+                ()
             | _ ->
                 ()
         ]
@@ -134,7 +132,7 @@ type Generator (meta : IViewProps) =
     let getChildAdder (child : IViewProps) =
         let key = child.Spec0.Key
         let prefab = getChildPrefab child
-        sprintf "    let %s : I%s = base.AsComboLayout.Add \"%s\" Feature.create<I%s>" key.AsCodeVariableName prefab key prefab
+        sprintf "    let %s : I%s = base.AsComboPrefab.Add \"%s\" Feature.create<I%s>" key.AsCodeVariableName prefab key prefab
     let getClassFields (_param : PrefabParam) =
         [
             match meta with
@@ -195,7 +193,7 @@ type Generator (meta : IViewProps) =
             yield sprintf "    interface I%s%s" param.Name (if hasChild () then " with" else "")
             match meta with
             | :? ComboProps as combo ->
-                yield "        member this.Target = this.Target"
+                yield "        member this.Container = this.AsGroupPrefab.Container"
                 for prop in combo.Children.Value do
                     match prop with
                     | :? IViewProps as prop ->
@@ -203,8 +201,7 @@ type Generator (meta : IViewProps) =
                     | _ ->
                         ()
             | :? ListProps as _list ->
-                yield sprintf "        member this.Target = this.Target"
-                yield sprintf "        member this.ResizeItems size = this.ResizeItems size"
+                yield "        member this.Container = this.AsGroupPrefab.Container"
             | _ ->
                 ()
         ]

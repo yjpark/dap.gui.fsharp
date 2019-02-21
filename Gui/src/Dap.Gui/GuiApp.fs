@@ -41,6 +41,8 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
                     view.Value.Presenter.Attach app
                 )
         )
+        if not <| hasGuiContext () then
+            logError runner.Value "GuiApp.Run" "GuiContext_Not_Created" ()
         runner.Value.RunGuiLoop ()
     member __.Runner = runner.Value
     member __.View = view.Value

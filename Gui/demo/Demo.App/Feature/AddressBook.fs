@@ -20,9 +20,10 @@ let private setupReloadAsync (addressBook : IAddressBook) =
     handler.SetupHandler (fun () -> task {
         contacts.Clear ()
         contacts
-        |> addContact "YJ Park" "12345678"
-        |> addContact "John Doe" "12345678"
-        |> addContact "Jane Doe" "12345678"
+        |> addContact "Dad" "111111111"
+        |> addContact "Mom" "222222222"
+        |> addContact "John Doe" "333333333"
+        |> addContact "Jane Doe" "444444444"
         |> ignore
         return ()
     })

@@ -9,17 +9,14 @@ open Dap.Gui
 open Dap.Gui.Gtk.Internal
 
 let mutable param : ApplicationParam =
-    ApplicationParam.Create (name = "Gtk Application")
+    ApplicationParam.Create (name = "Dap.Gui.Gtk")
 
 let internal setParam (param' : ApplicationParam) =
     param <- param'
 
 type GuiRunner (logging : ILogging) =
     inherit EmptyContext (logging, PlatformKind)
-    let application : Application = new Application ()
-    do (
-        application.Setup ()
-    )
+    let application : Application = Application.Init (param)
     member __.Application = application :> IApplication
     interface IGuiRunner with
         member __.CreateView<'presenter when 'presenter :> IPresenter> (presenter : 'presenter) : IView<'presenter> =

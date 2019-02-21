@@ -16,22 +16,20 @@ let ContactsJson = parseJson """
     "styles": [
         "yoga:contacts"
     ],
-    "layout": "full_table",
+    "container": "table",
     "item_prefab": "contact",
     "items": []
 }
 """
 
-type ContactsProps = ListProps<ContactProps>
+type ContactsProps = ListProps
 
 type IContacts =
-    inherit IListPrefab<ContactsProps, ContactProps>
-    inherit IListLayout<ContactsProps, IContact>
-    abstract Target : IFullTable with get
-    abstract ResizeItems : int -> unit
+    inherit IListPrefab<ContactsProps, IContact>
+    inherit IGroupPrefab<ITable>
 
 type Contacts (logging : ILogging) =
-    inherit WrapList<Contacts, ContactsProps, IContact, ContactProps, IFullTable> (ContactsKind, ContactsProps.CreateOf ContactProps.Create, logging)
+    inherit BaseList<Contacts, ContactsProps, IContact, ContactProps, ITable> (ContactsKind, ContactsProps.Create, logging)
     do (
         base.LoadJson' ContactsJson
     )
@@ -41,5 +39,4 @@ type Contacts (logging : ILogging) =
     override __.Spawn l = Contacts.Create l
     interface IFallback
     interface IContacts with
-        member this.Target = this.Target
-        member this.ResizeItems size = this.ResizeItems size
+        member this.Container = this.AsGroupPrefab.Container

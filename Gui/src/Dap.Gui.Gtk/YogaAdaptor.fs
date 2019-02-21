@@ -9,16 +9,22 @@ open Dap.Platform
 open Dap.Gui.Yoga
 
 type Adaptor (logging : ILogging) =
-    inherit BaseAdaptor<GtkWidget> (logging)
-    (*
-    override __.GetSize (widget : MyraWidget) =
-        ((float32) widget.Bounds.Width, (float32) widget.Bounds.Height)
-    override __.MeasureSize (widget : MyraWidget, constrainWidth : float32,  constrainHeight : float32) =
-        let result = widget.Measure (new Point ((int) constrainWidth, (int) constrainHeight))
-        ((float32) result.X, (float32) result.Y)
-    override __.ApplyLayout (widget : MyraWidget, node : YogaNode) =
-        widget.Left <- (int) node.LayoutX
-        widget.Top <- (int) node.LayoutY
-        widget.Width <- Nullable <| (int) node.LayoutWidth
-        widget.Height <- Nullable <| (int) node.LayoutHeight
-    *)
+    inherit BaseAdaptor<Gtk.Widget> (logging)
+    let logger = logging.GetLogger "GtkYoga"
+    override __.GetSize (widget : Gtk.Widget) =
+        ((float32) widget.AllocatedWidth, (float32) widget.AllocatedHeight)
+    override __.MeasureSize (widget : Gtk.Widget, constrainWidth : float32,  constrainHeight : float32) =
+        let mutable constrainSize = new Gtk.Requisition ()
+        constrainSize.Width <- (int) constrainWidth
+        constrainSize.Height <- (int) constrainHeight
+        let mutable result : Gtk.Requisition = Gtk.Requisition.Zero
+        widget.GetPreferredSize (ref constrainSize, ref result)
+        ((float32) result.Width, (float32) result.Height)
+    override __.ApplyLayout (widget : Gtk.Widget, node : YogaNode) =
+        match widget.Parent with
+        | :? Gtk.Fixed as container ->
+            container.Move (widget, (int) node.LayoutX, (int) node.LayoutY)
+        | _ ->
+            logWarn logger "ApplyLayout" "Not_Support_Parent" (widget.Parent)
+            ()
+        widget.SetSizeRequest ((int) node.LayoutWidth, (int) node.LayoutHeight)

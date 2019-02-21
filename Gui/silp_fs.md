@@ -6,6 +6,7 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 open Dap.Gui.Prefab
+open Dap.Gui.Container
 open Dap.Gui.Internal
 ```
 
@@ -63,19 +64,28 @@ override __.Spawn l = ${prefab}.Create l
 interface IFallback
 ```
 
-# GROUP_HEADER(type, prefab, widget) #
+# CONTAINER_HEADER(container, widget) #
 ```F#
-type ${prefab} (logging : ILogging) =
-    inherit Base${type}<${prefab}, ${prefab}Props, ${prefab}Widget, ${widget}>
-        (${prefab}Kind, ${prefab}Props.Create, logging, new ${prefab}Widget ())
+type ${container} (logging : ILogging) =
+    inherit BaseContainer<${container}, ${container}Widget, ${widget}>
+        (${container}Kind, logging, new ${container}Widget ())
 ```
 
-# GROUP_HEADER_MIDDLE(type, prefab, widget) #
+# CONTAINER_HEADER_MIDDLE(container, widget) #
 ```F#
-//SILP: GROUP_HEADER(${type}, ${prefab}, ${widget})
+//SILP: CONTAINER_HEADER(${container}, ${widget})
     do (
-        let kind = ${prefab}Kind
+        let kind = ${container}Kind
         let owner = base.AsOwner
-        let model = base.Model
         let widget = base.Widget
 ```
+
+# CONTAINER_FOOTER(container) #
+```F#
+static member Create l = new ${container} (l)
+static member Create () = new ${container} (getLogging ())
+override this.Self = this
+override __.Spawn l = ${container}.Create l
+interface IFallback
+```
+

@@ -24,9 +24,9 @@ type ListPropsBuilder () =
             prop.SetValue v
         )
         target
-    [<CustomOperation("layout")>]
-    member __.Layout (target : ListProps, (* IGroupProps *) layout : string) =
-        target.Layout.SetValue layout
+    [<CustomOperation("container")>]
+    member __.Container (target : ListProps, (* IGroupProps *) container : string) =
+        target.Container.SetValue container
         target
     [<CustomOperation("item_prefab")>]
     member __.ItemPrefab (target : ListProps, (* ListProps *) itemPrefab : string) =
@@ -53,9 +53,9 @@ type ComboPropsBuilder () =
             prop.SetValue v
         )
         target
-    [<CustomOperation("layout")>]
-    member __.Layout (target : ComboProps, (* IGroupProps *) layout : string) =
-        target.Layout.SetValue layout
+    [<CustomOperation("container")>]
+    member __.Container (target : ComboProps, (* IGroupProps *) container : string) =
+        target.Container.SetValue container
         target
     [<CustomOperation("children")>]
     member __.Children (target : ComboProps, (* ComboProps *) children : IComboProperty) =

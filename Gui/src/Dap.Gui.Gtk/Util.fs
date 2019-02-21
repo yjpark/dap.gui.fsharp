@@ -6,20 +6,20 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let rec calcLayoutInfo (prefix : string) (widget : GtkWidget) : string list =
+let rec calcLayoutInfo (prefix : string) (widget : Gtk.Widget) : string list =
     let viewType = (widget.GetType ()) .Name
     [
         yield sprintf "%s%s %A" prefix viewType widget
         match widget with
-        | :? GtkPanel as panel ->
-            for sub in panel.Children do
-                for line in calcLayoutInfo (prefix + "\t") sub do
+        | :? Gtk.Container as container ->
+            for child in container.Children do
+                for line in calcLayoutInfo (prefix + "\t") child do
                     yield line
         | _ -> ()
     ]
 
 let logLayout (prefab : IPrefab) =
-    let widget = prefab.Widget0 :?> GtkWidget
+    let widget = prefab.Widget0 :?> Gtk.Widget
     let info =
         calcLayoutInfo "" widget
         |> String.concat "\n"

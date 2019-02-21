@@ -11,7 +11,7 @@ open Dap.Gui.Generator
 open Demo.Gui.StyleConst
 
 let Contact =
-    h_stack {
+    combo_h_box {
         child "name" (
             label {
                 text "..."
@@ -28,13 +28,26 @@ let Contact =
     }
 
 let Contacts =
-    f_table {
+    list_table {
         item <@ Contact @>
         styles [ Yoga_Contacts ]
     }
 
 let HomePanel =
-    v_stack {
+    combo_v_box {
+        child "title" (
+            label {
+                text "Address Book"
+                styles [ Yoga_Leaf ]
+            }
+        )
+        child "account" <@ Contact @>
+        child "contacts_title" (
+            label {
+                text "Contacts:"
+                styles [ Yoga_Leaf ]
+            }
+        )
         child "contacts" <@ Contacts @>
         styles [ Yoga_HomePanel ]
     }

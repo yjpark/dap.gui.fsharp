@@ -20,12 +20,11 @@ type ComboPrefabBuilder (prefab : string, props : ComboProps) =
         props
         |> fun t -> this.Prefab (t, prefab)
 
-type ComboPropsBuilder (layout : string) =
+type ComboPropsBuilder (container : string) =
     inherit Base.ComboPropsBuilder ()
     override this.Zero () =
         base.Zero ()
-        |> fun t -> this.Layout (t, layout)
-        |> fun t -> this.Prefab (t, ComboLayoutKind.ParseToPrefab layout)
+        |> fun t -> this.Container (t, container)
     [<CustomOperation("child'")>]
     member __.Child' (target : ComboProps, key, props : IViewProps) =
         target.Children.AddAny key props.Clone0 |> ignore
@@ -47,16 +46,11 @@ type ComboPropsBuilder (layout : string) =
             failWith "Unsupported_Child" child
             target
 
-let h_stack = new ComboPropsBuilder (LayoutConst.Combo_Horizontal_Stack)
-
-let v_stack = new ComboPropsBuilder (LayoutConst.Combo_Vertical_Stack)
-
-type ListPropsBuilder (layout : string) =
+type ListPropsBuilder (container : string) =
     inherit Base.ListPropsBuilder ()
     override this.Zero () =
         base.Zero ()
-        |> fun t -> this.Layout (t, layout)
-        |> fun t -> this.Prefab (t, ListLayoutKind.ParseToPrefab layout)
+        |> fun t -> this.Container (t, container)
     [<CustomOperation("item'")>]
     member __.Item' (target : ListProps, itemPrefab : string) =
         target.ItemPrefab.SetValue itemPrefab
@@ -66,5 +60,12 @@ type ListPropsBuilder (layout : string) =
         let (name, _meta) = unquotePropertyGetExpr expr
         this.Item' (target, name.AsCodeJsonKey)
 
-let table = new ListPropsBuilder (LayoutConst.List_Table)
-let f_table = new ListPropsBuilder (LayoutConst.List_Full_Table)
+let combo_panel = new ComboPropsBuilder (ContainerKind.Panel)
+let combo_h_box = new ComboPropsBuilder (ContainerKind.HBox)
+let combo_v_box = new ComboPropsBuilder (ContainerKind.VBox)
+let combo_table = new ComboPropsBuilder (ContainerKind.Table)
+
+let list_panel = new ListPropsBuilder (ContainerKind.Panel)
+let list_h_box = new ListPropsBuilder (ContainerKind.HBox)
+let list_v_box = new ListPropsBuilder (ContainerKind.VBox)
+let list_table = new ListPropsBuilder (ContainerKind.Table)

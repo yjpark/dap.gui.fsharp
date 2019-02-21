@@ -25,6 +25,9 @@ type Keys = Microsoft.Xna.Framework.Input.Keys
 type MyraWidget = Myra.Graphics2D.UI.Widget
 type MyraPanel = Myra.Graphics2D.UI.Panel
 
+type Proportion = Myra.Graphics2D.UI.Grid.Proportion
+type ProportionType = Myra.Graphics2D.UI.Grid.ProportionType
+
 type IApplication =
     inherit IDisposable
     inherit ILogger
@@ -40,15 +43,17 @@ type IApplication =
 
 and ApplicationParam = {
     Name : string
+    Title : string
     Width : int
     Height : int
     ClearColor : Color option
     ExitKey : Keys option
     Initializers : (IApplication -> unit) list
 } with
-    static member Create (name : string, ?width : int, ?height : int, ?clearColor : Color, ?exitKey : Keys) : ApplicationParam =
+    static member Create (name : string, ?title : string, ?width : int, ?height : int, ?clearColor : Color, ?exitKey : Keys) : ApplicationParam =
         {
             Name = name
+            Title = defaultArg title name
             Width = defaultArg width 1280
             Height = defaultArg height 720
             ClearColor = clearColor

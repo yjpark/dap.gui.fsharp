@@ -16,6 +16,11 @@ type Presenter (env : IEnv) =
     override this.OnDidAttach () =
         let prefab = this.Prefab
         let app = this.Domain.Value
+
+        //TODO: add into app model
+        let account = Contact.Model.Create ("YJ Park", "123456789")
+        new Contact.Presenter(prefab.Account, app, account) |> ignore
+
         let contacts = app.AddressBook.Context.Properties.Contacts
         let contacts' = new Contacts.Presenter (prefab.Contacts, app)
         contacts.OnAdded.AddWatcher prefab "ContactsOnAdded" (fun _ ->

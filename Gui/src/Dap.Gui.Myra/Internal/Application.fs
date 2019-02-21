@@ -14,6 +14,9 @@ open Dap.Gui
 open Dap.Gui.Yoga
 open Dap.Gui.Myra
 
+[<Literal>]
+let ContentRoot = "Content"
+
 type internal Application (param : ApplicationParam) =
     inherit Microsoft.Xna.Framework.Game ()
     let logger : ILogger = getLogger param.Name
@@ -24,12 +27,11 @@ type internal Application (param : ApplicationParam) =
     let inspectKey = Keys.Space
     let mutable quitting : bool = false
     let mutable inspecting : bool = false
-    member __.SetPresenter (presenter' : IPresenter) =
-        presenter <- Some presenter'
-        if desktop.IsSome then
-            desktop.Value.Widgets.Clear ()
-            desktop.Value.Widgets.Add (presenter.Value.Prefab0.Widget0 :?> MyraWidget)
-    member this.Setup (contentRoot : string) =
+    static member Init p =
+        let app = new Application (p)
+        app.Setup (ContentRoot)
+        app
+    member private this.Setup (contentRoot : string) =
         this.Content.RootDirectory <- contentRoot
         let graphics = new GraphicsDeviceManager (this)
         graphics.PreferredBackBufferWidth <- param.Width
@@ -37,13 +39,15 @@ type internal Application (param : ApplicationParam) =
         graphics.HardwareModeSwitch <- true
         graphics.ApplyChanges ()
         graphicsManager <- Some graphics
+        MyraEnvironment.Game <- this :> Microsoft.Xna.Framework.Game
+        desktop <- Some <| new Desktop ()
+    member __.SetPresenter (presenter' : IPresenter) =
+        presenter <- Some presenter'
+        desktop.Value.Widgets.Clear ()
+        desktop.Value.Widgets.Add (presenter.Value.Prefab0.Widget0 :?> MyraWidget)
     override this.Initialize () =
         base.IsMouseVisible <- true
         base.Initialize ()
-        MyraEnvironment.Game <- this :> Microsoft.Xna.Framework.Game
-        desktop <- Some <| new Desktop ()
-        if presenter.IsSome then
-            desktop.Value.Widgets.Add (presenter.Value.Prefab0.Widget0 :?> MyraWidget)
         param.Initializers
         |> List.iter (fun initializer -> initializer this)
     override this.Update (gameTime : GameTime) =

@@ -32,7 +32,7 @@ type ITextProps =
  *)
 type IGroupProps =
     inherit IViewProps
-    abstract Layout : IVarProperty<string> with get
+    abstract Container : IVarProperty<string> with get
 
 (*
  * Generated: <Combo>
@@ -42,7 +42,7 @@ type ListProps (owner : IOwner, key : Key) =
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
-    let layout = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "layout", "", None)
+    let container = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "container", "", None)
     let itemPrefab = target'.AddVar<(* ListProps *) string> (E.string, D.string, "item_prefab", "", None)
     do (
         base.Setup (target')
@@ -56,14 +56,14 @@ type ListProps (owner : IOwner, key : Key) =
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
-    member __.Layout (* IGroupProps *) : IVarProperty<string> = layout
+    member __.Container (* IGroupProps *) : IVarProperty<string> = container
     member __.ItemPrefab (* ListProps *) : IVarProperty<string> = itemPrefab
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IGroupProps with
-        member this.Layout (* IGroupProps *) : IVarProperty<string> = this.Layout
+        member this.Container (* IGroupProps *) : IVarProperty<string> = this.Container
     member this.AsGroupProps = this :> IGroupProps
 
 (*
@@ -74,7 +74,7 @@ type ComboProps (owner : IOwner, key : Key) =
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
-    let layout = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "layout", "", None)
+    let container = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "container", "", None)
     let children = target'.AddCombo(* ComboProps *)  ("children")
     do (
         base.Setup (target')
@@ -88,14 +88,14 @@ type ComboProps (owner : IOwner, key : Key) =
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
-    member __.Layout (* IGroupProps *) : IVarProperty<string> = layout
+    member __.Container (* IGroupProps *) : IVarProperty<string> = container
     member __.Children (* ComboProps *) : IComboProperty = children
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IGroupProps with
-        member this.Layout (* IGroupProps *) : IVarProperty<string> = this.Layout
+        member this.Container (* IGroupProps *) : IVarProperty<string> = this.Container
     member this.AsGroupProps = this :> IGroupProps
 
 (*

@@ -67,9 +67,10 @@
     <Compile Include="Prefab/Label.fs" />
     <Compile Include="Prefab/Button.fs" />
     <Compile Include="Prefab/TextField.fs" />
-    <Compile Include="Prefab/Stack.fs" />
-    <Compile Include="Prefab/Table.fs" />
-    <Compile Include="Prefab/FullTable.fs" />
+    <Compile Include="Container/Panel.fs" />
+    <Compile Include="Container/HBox.fs" />
+    <Compile Include="Container/VBox.fs" />
+    <Compile Include="Container/Table.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dap.Platform">
