@@ -35,10 +35,6 @@
     <Compile Include="Container/Const.fs" />
     <Compile Include="_Gen1/Prefab/InputField.fs" />
     <Compile Include="_Gen1/Builder/Prefabs.fs" />
-    <Compile Include="Yoga/Adaptor.fs" />
-    <Compile Include="Yoga/Style.fs" />
-    <Compile Include="Yoga/Updater.fs" />
-    <Compile Include="Yoga/Helper.fs" />
     <Compile Include="GuiHelper.fs" />
     <Compile Include="GuiApp.fs" />
   </ItemGroup>

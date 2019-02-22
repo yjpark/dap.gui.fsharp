@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.Mac.Prefab.Stack
+module Dap.Gui.Mac.Prefab.HBox
 
 //SILP: MAC_OPENS
 open Foundation                                                       //__SILP__
@@ -13,38 +13,26 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type StackWidget = NSStackView
+type HBoxWidget = NSStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(Stack, NSView)
-type Stack (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Stack, StackWidget, NSView>                 //__SILP__
-        (StackKind, logging, new StackWidget ())                      //__SILP__
+//SILP: CONTAINER_HEADER_MIDDLE(HBox, NSView)
+type HBox (logging : ILogging) =                                      //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, NSView>                   //__SILP__
+        (HBoxKind, logging, new HBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
-        let kind = StackKind                                          //__SILP__
+        let kind = HBoxKind                                           //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
-        model.Layout.OnChanged.AddWatcher owner kind (fun evt ->
-            match evt.New with
-            | LayoutConst.Combo_Horizontal_Stack ->
-                widget.Orientation <- NSUserInterfaceLayoutOrientation.Horizontal
-            | LayoutConst.Combo_Vertical_Stack ->
-                widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
-            | _ ->
-                logError owner "Stack" "Invalid_Layout" evt.New
-        )
+        widget.Orientation <- NSUserInterfaceLayoutOrientation.Horizontal
     )
     override this.AddChild (child : NSView) =
-        match this.Model.Layout.Value with
-        | LayoutConst.Combo_Horizontal_Stack ->
-            this.Widget.AddView (child, NSStackViewGravity.Trailing)
-        | LayoutConst.Combo_Vertical_Stack ->
-            this.Widget.AddView (child, NSStackViewGravity.Bottom)
-        | _ as layout ->
-            logError this "Stack" "Invalid_Layout" layout
-    //SILP: CONTAINER_FOOTER(Stack)
-    static member Create l = new Stack (l)                            //__SILP__
-    static member Create () = new Stack (getLogging ())               //__SILP__
+        this.Widget.AddArrangedSubview (child)
+    override this.RemoveChild (child : NSView) =
+        child.RemoveFromSuperview ()
+    //SILP: CONTAINER_FOOTER(HBox)
+    static member Create l = new HBox (l)                             //__SILP__
+    static member Create () = new HBox (getLogging ())                //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Stack.Create l                              //__SILP__
+    override __.Spawn l = HBox.Create l                               //__SILP__
     interface IFallback                                               //__SILP__
-    interface IStack
+    interface IHBox

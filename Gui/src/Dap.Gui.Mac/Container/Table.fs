@@ -28,9 +28,9 @@ type Table (logging : ILogging) =                                     //__SILP__
         widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
     )
     override this.AddChild (child : NSView) =
-        this.Widget.AddView (child, NSStackViewGravity.Bottom)
+        this.Widget.AddArrangedSubview (child)
     override this.RemoveChild (child : NSView) =
-        this.Widget.RemoveView (child)
+        child.RemoveFromSuperview ()
     //SILP: CONTAINER_FOOTER(Table)
     static member Create l = new Table (l)                            //__SILP__
     static member Create () = new Table (getLogging ())               //__SILP__

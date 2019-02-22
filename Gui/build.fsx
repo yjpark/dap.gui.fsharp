@@ -37,6 +37,9 @@ let libProjects =
     !! "src/Dap.Gui/*.fsproj"
     ++ "src/Dap.Gui.Gtk/*.fsproj"
     ++ "src/Dap.Gui.Myra/*.fsproj"
+    ++ "src/Dap.Gui.Yoga/*.fsproj"
+    ++ "src/Dap.Gui.Yoga.Gtk/*.fsproj"
+    ++ "src/Dap.Gui.Yoga.Myra/*.fsproj"
 
 let allProjects =
     libProjects

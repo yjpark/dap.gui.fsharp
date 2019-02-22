@@ -27,11 +27,11 @@ type Panel (logging : ILogging) =                                     //__SILP__
     override this.AddChild (child : Gtk.Widget) =
         this.Widget.Put(child, 0, 0)
     //SILP: PREFAB_FOOTER(Panel)
-    override this.RemoveChild (child : Gtk.Widget) =
-        child.Parent <- null
     static member Create l = new Panel (l)                            //__SILP__
     static member Create () = new Panel (getLogging ())               //__SILP__
     override this.Self = this                                         //__SILP__
     override __.Spawn l = Panel.Create l                              //__SILP__
     interface IFallback                                               //__SILP__
+    override this.RemoveChild (child : Gtk.Widget) =
+        child.Parent <- null
     interface IPanel

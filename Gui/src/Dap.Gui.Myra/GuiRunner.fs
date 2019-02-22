@@ -11,8 +11,11 @@ open Dap.Gui
 
 open Dap.Gui.Myra.Internal
 
-let mutable param : ApplicationParam =
-    ApplicationParam.Create (name = "Myra Application", clearColor = Color.Black, exitKey = Keys.Escape)
+let mutable private param : ApplicationParam =
+    ApplicationParam.Create (name = "Dap.Gui.Myra", title = "Myra Application", clearColor = Color.Black, exitKey = Keys.Escape)
+
+let internal getParam () =
+    param
 
 let internal setParam (param' : ApplicationParam) =
     param <- param'

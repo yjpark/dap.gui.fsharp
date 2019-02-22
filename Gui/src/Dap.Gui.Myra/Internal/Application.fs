@@ -11,7 +11,6 @@ open Myra.Graphics2D.UI
 
 open Dap.Prelude
 open Dap.Gui
-open Dap.Gui.Yoga
 open Dap.Gui.Myra
 
 [<Literal>]
@@ -68,7 +67,7 @@ type internal Application (param : ApplicationParam) =
                     inspecting <- true
                     presenter.Value.Prefab0.ApplyStyles ()
                     logLayout presenter.Value.Prefab0
-                    logYoga presenter.Value.Prefab0
+                    //logYoga presenter.Value.Prefab0
             base.Update (gameTime)
     override this.Draw (gameTime : GameTime) =
         if not quitting then

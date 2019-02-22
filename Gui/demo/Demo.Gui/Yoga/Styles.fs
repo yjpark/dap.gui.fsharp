@@ -1,4 +1,4 @@
-module Demo.Gui.YogaStyles
+module Demo.Gui.Yoga.Styles
 
 open System
 open System.Runtime.InteropServices

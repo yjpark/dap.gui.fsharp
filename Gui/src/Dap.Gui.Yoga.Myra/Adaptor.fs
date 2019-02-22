@@ -1,4 +1,4 @@
-module Dap.Gui.Myra.YogaAdaptor
+module Dap.Gui.Yoga.Myra.Adaptor
 
 open System
 open Microsoft.Xna.Framework;

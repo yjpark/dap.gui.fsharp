@@ -8,13 +8,14 @@ open Dap.Gui
 
 // Need to call at lease one function in main()
 // otherwise the dll might not be included in AppDomain
-let initMyra () =
-    ()
 
-let setMyraParam (param : ApplicationParam) =
-    setParam param
+let getMyraParam () =
+    getParam ()
+
+let setMyraParam (param' : ApplicationParam) =
+    setParam param'
 
 let updateMyraParam (update : ApplicationParam -> ApplicationParam) =
-    param
+    getParam ()
     |> update
     |> setParam

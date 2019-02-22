@@ -1,4 +1,4 @@
-module Dap.Gui.Gtk.YogaAdaptor
+module Dap.Gui.Yoga.Gtk.Adaptor
 
 open System
 open Facebook.Yoga

@@ -13,5 +13,5 @@ open Demo.Gui
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    initGtk ()
+    updateGtkParam id
     App.RunGui ("demo.log")

@@ -6,10 +6,13 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-open Dap.Gui.Gtk.Internal
+open Dap.Gui.Mac.Internal
 
-let mutable param : ApplicationParam =
-    ApplicationParam.Create (name = "Dap.Gui.Gtk")
+let mutable private param : ApplicationParam =
+    ApplicationParam.Create (name = "Dap.Gui.Mac", title = "Mac Application")
+
+let internal getParam () =
+    param
 
 let internal setParam (param' : ApplicationParam) =
     param <- param'

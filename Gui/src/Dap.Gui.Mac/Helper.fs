@@ -8,13 +8,14 @@ open Dap.Gui
 
 // Need to call at lease one function in main()
 // otherwise the dll might not be included in AppDomain
-let initGtk () =
-    ()
 
-let setGtkParam (param : ApplicationParam) =
-    setParam param
+let getMacParam () =
+    getParam ()
 
-let updateGtkParam (update : ApplicationParam -> ApplicationParam) =
-    param
+let setMacParam (param' : ApplicationParam) =
+    setParam param'
+
+let updateMacParam (update : ApplicationParam -> ApplicationParam) =
+    getParam ()
     |> update
     |> setParam

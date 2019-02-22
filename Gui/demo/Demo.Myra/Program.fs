@@ -13,5 +13,7 @@ open Demo.Gui
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    initMyra ()
+    //initYogaGtk ()
+    //YogaStyles.register ()
+    updateMyraParam id
     App.RunGui ("demo.log")
