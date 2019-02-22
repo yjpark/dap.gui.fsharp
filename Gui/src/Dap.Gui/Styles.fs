@@ -11,9 +11,7 @@ open Dap.Platform
 let private typeIPrefab = typeof<IPrefab>
 
 let private isPrefabInterface (type' : Type) =
-    if not type'.IsInterface then
-        false
-    elif type' = typeIPrefab then
+    if type' = typeIPrefab then
         false
     else
         typeIPrefab.IsAssignableFrom(type')
@@ -49,8 +47,8 @@ let init (prefab : IPrefab) : IStyle list =
     type'.GetInterfaces ()
     |> Array.toList
     |> List.filter isPrefabInterface
-    |> List.map (fun class' ->
-        create prefab class'.FullName
+    |> List.map (fun type' ->
+        create prefab type'.FullName
     )|> List.concat
 
 (*
@@ -94,4 +92,6 @@ let addForce<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind
     register<'prefab, 'style> false true kind param
 
 let addClass<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (param : obj list) : unit =
+    if not typeof<'prefab>.IsInterface then
+        failWith "Must_Be_Interface" (typeof<'prefab>.FullName)
     register<'prefab, 'style> true false (typeof<'prefab>.FullName) param
