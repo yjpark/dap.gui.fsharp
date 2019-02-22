@@ -17,8 +17,14 @@ type BaseGroup<'prefab, 'model, 'container
     do (
         (container :> IContainer) .SetWrapper' self
     )
+    override this.OnSetup () =
+        children
+        |> List.iter (fun child ->
+            //logWip this "OnSetup_Child" (encodeJson 4 child.Properties0)
+            this._StylesOnChildAdded child
+        )
     member this.AddChild' (key : string) (child : IPrefab) =
-        child.SetParent' (Some (this :> IPrefab)) key
+        child.Setup' (Some (this :> IPrefab)) key
         this._StylesOnChildAdded child
         children <- children @ [child]
         container0.AddChild (child.Widget0)

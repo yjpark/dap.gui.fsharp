@@ -21,7 +21,7 @@ and IPrefab =
     abstract Parent : IPrefab option with get
     abstract Path : string with get
     abstract Key : string with get
-    abstract SetParent' : IPrefab option -> string -> unit
+    abstract Setup' : IPrefab option -> string -> unit
     abstract Widget0 : obj with get
     abstract Extras : Map<string, obj> with get
     abstract SetExtras' : Map<string, obj> -> unit

@@ -15,6 +15,9 @@ type IGuiRunner =
     abstract RunGuiLoop : unit -> int
 
 type View<'presenter, 'display when 'presenter :> IPresenter> (presenter : 'presenter, display : 'display) =
+    do (
+        presenter.Prefab0.Setup' None ""
+    )
     member this.AsView = this :> IView<'presenter, 'display>
     member this.AsView1 = this :> IView<'presenter>
     member this.AsView0 = this :> IView

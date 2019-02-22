@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <None Include="packages.config" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Util.fs" />
     <Compile Include="Prefab/Label.fs" />
     <Compile Include="Prefab/Button.fs" />
     <Compile Include="Prefab/TextField.fs" />
@@ -71,6 +73,9 @@
     <Compile Include="Container/HBox.fs" />
     <Compile Include="Container/VBox.fs" />
     <Compile Include="Container/Table.fs" />
+    <Compile Include="GuiRunner.fs" />
+    <Compile Include="YogaAdaptor.fs" />
+    <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dap.Platform">

@@ -41,8 +41,6 @@ type BaseList<'prefab, 'model, 'item_prefab, 'item_model, 'container
             new Contact.Presenter(itemPrefab, app, item.Value) |> ignore
         )
     *)
-    member this.LoadJson' (json : Json) =
-        this.Model.AsProperty.LoadJson json
     interface IListPrefab with
         member this.ResizeItems size =
             this.ResizeChildren' Feature.create<'item_prefab> size

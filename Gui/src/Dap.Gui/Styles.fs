@@ -43,6 +43,7 @@ let create (prefab : IPrefab) (kind : string) : IStyle list =
         []
 
 let init (prefab : IPrefab) : IStyle list =
+    //TODO: Also check parent and key for more complex rules
     let type' = prefab.GetType ()
     type'.GetInterfaces ()
     |> Array.toList

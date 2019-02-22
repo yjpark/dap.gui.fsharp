@@ -40,3 +40,4 @@ type BaseContainer<'container, 'widget, 'child when 'container :> IContainer>
                 logError this "RemoveChild" "Type_Mismatched"
                     (typeof<'child>.FullName, child.GetType().FullName, child)
     member this.AsContainer = this :> IContainer<'widget>
+    member this.AsContainer0 = this :> IContainer

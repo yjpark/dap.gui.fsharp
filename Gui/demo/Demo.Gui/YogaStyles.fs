@@ -16,6 +16,7 @@ let register () =
     Styles.addClass<ILabel, YogaStyle> [
         yoga {
             flex_direction YogaFlexDirection.Row
+            margin_horizontal (point 20.0f)
         }
     ]
     Styles.addClass<IContact, YogaStyle> [
