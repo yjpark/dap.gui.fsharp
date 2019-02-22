@@ -8,11 +8,10 @@ open Dap.Platform
 open Dap.Gui.Gtk
 
 open Demo.App
-type HomePanel = Demo.Gui.Presenter.HomePanel.Presenter
+open Demo.Gui
 
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    App.Create ("demo.log")
-    :> IApp
-    |> runGtk HomePanel.Create
+    initGtk ()
+    App.RunGui ("demo.log")

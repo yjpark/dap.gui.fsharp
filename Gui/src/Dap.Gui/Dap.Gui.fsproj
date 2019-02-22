@@ -26,7 +26,6 @@
     <Compile Include="BaseCombo.fs" />
     <Compile Include="BaseList.fs" />
     <Compile Include="BasePresenter.fs" />
-    <Compile Include="GuiHelper.fs" />
     <Compile Include="Generator/Types.fs" />
     <Compile Include="Generator/Prefab.fs" />
     <Compile Include="Generator/Helper.fs" />
@@ -38,8 +37,9 @@
     <Compile Include="_Gen1/Builder/Prefabs.fs" />
     <Compile Include="Yoga/Adaptor.fs" />
     <Compile Include="Yoga/Style.fs" />
-    <Compile Include="Yoga/Node.fs" />
+    <Compile Include="Yoga/Updater.fs" />
     <Compile Include="Yoga/Helper.fs" />
+    <Compile Include="GuiHelper.fs" />
     <Compile Include="GuiApp.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ type BaseCombo<'prefab, 'model, 'container
             let prefab = spawner logging
             this.Model.Children.AddLink<'m> (prefab.Model, key)
             |> ignore
-            this.AddChild' prefab
+            this.AddChild' key prefab
             prefab
     interface IComboPrefab<'model>
     member this.AsComboPrefab = this :> IComboPrefab<'model>

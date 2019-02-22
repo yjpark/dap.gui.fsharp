@@ -6,16 +6,10 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-type AssemblyKeeper (logging : ILogging) =
-    inherit EmptyContext (logging, "AssemblyKeeper")
-    static member Keep l =
-        new AssemblyKeeper (l) |> ignore
-
-let runMyra<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPack and 'app :> INeedSetupAsync>
-    (newPresenter : IEnv -> 'presenter) (app : 'app) =
-    //Needed, otherwise the dll might not be included in AppDomain
-    AssemblyKeeper.Keep (app.Env.Logging)
-    GuiApp<'presenter, 'app>.Run newPresenter app
+// Need to call at lease one function in main()
+// otherwise the dll might not be included in AppDomain
+let initMyra () =
+    ()
 
 let setMyraParam (param : ApplicationParam) =
     setParam param

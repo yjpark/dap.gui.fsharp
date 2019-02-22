@@ -8,12 +8,10 @@ open Dap.Platform
 open Dap.Gui.Myra
 
 open Demo.App
-type HomePanel = Demo.Gui.Presenter.HomePanel.Presenter
+open Demo.Gui
 
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    Demo.Gui.YogaStyles.register ()
-    App.Create ("demo.log")
-    :> IApp
-    |> runMyra HomePanel.Create
+    initMyra ()
+    App.RunGui ("demo.log")

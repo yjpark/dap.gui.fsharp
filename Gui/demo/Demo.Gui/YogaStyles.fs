@@ -12,33 +12,26 @@ open Dap.Gui.Yoga
 
 open Demo.Gui.Prefab
 
-let register' () =
-    Styles.register<YogaStyle, IPrefab> Yoga_Leaf [
-        node {
+let register () =
+    Styles.addClass<ILabel, YogaStyle> [
+        yoga {
             flex_direction YogaFlexDirection.Row
         }
-        None
     ]
-
-    Styles.register<YogaStyle, IPrefab> Yoga_Contact [
-        node {
+    Styles.addClass<IContact, YogaStyle> [
+        yoga {
             flex_direction YogaFlexDirection.Row
         }
-        None
     ]
 
-    Styles.register<YogaStyle, IPrefab> Yoga_Contacts [
-        node {
+    Styles.addClass<IContacts, YogaStyle> [
+        yoga {
             flex_direction YogaFlexDirection.Column
         }
-        None
     ]
 
-    Styles.register<YogaStyle, IPrefab> Yoga_HomePanel [
-        node {
+    Styles.addClass<IHomePanel, YogaStyle> [
+        yoga {
             flex_direction YogaFlexDirection.Column
         }
-        None
     ]
-
-let register = registerYoga register'

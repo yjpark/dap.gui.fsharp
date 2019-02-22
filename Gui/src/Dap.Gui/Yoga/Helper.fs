@@ -16,10 +16,7 @@ let percent (v : float32) = YogaValue.Percent v
 
 let auto = YogaValue.Auto ()
 
-let node = new Node.Builder ()
-
-let yoga (kind : string) (createNode : unit -> YogaNode) =
-    Styles.register<YogaStyle, IPrefab> kind [ createNode :> obj ]
+let yoga = new Updater.Builder ()
 
 let rec calcLayoutInfo (prefix : string) (yoga : YogaNode) : string list =
     [
@@ -30,18 +27,10 @@ let rec calcLayoutInfo (prefix : string) (yoga : YogaNode) : string list =
     ]
 
 let logYoga (prefab : IPrefab) =
-    prefab.TryFindStyle<IYogaStyle> ()
+    prefab.TryGetYogaNode ()
     |> Option.iter (fun yoga ->
         let info =
-            "" :: calcLayoutInfo "" yoga.Node
+            "" :: calcLayoutInfo "" yoga
             |> String.concat "\n"
         logWip prefab "Yoga" info
     )
-
-//TODO: after got yoga supported on all platform, this can be removed
-let registerYoga (register : unit -> unit) =
-    fun () ->
-        if RuntimeInformation.IsOSPlatform (OSPlatform.OSX) then
-            register ()
-        else
-            ()

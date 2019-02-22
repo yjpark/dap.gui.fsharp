@@ -8,29 +8,24 @@ open Dap.Platform
 open Dap.Gui
 open Dap.Gui.Builder
 open Dap.Gui.Generator
-open Demo.Gui.StyleConst
 
 let Contact =
     combo_h_box {
         child "name" (
             label {
                 text "..."
-                styles [ Yoga_Leaf ]
             }
         )
         child "phone" (
             label {
                 text "..."
-                styles [ Yoga_Leaf ]
             }
         )
-        styles [ Yoga_Contact ]
     }
 
 let Contacts =
     list_table {
         item <@ Contact @>
-        styles [ Yoga_Contacts ]
     }
 
 let HomePanel =
@@ -38,18 +33,15 @@ let HomePanel =
         child "title" (
             label {
                 text "Address Book"
-                styles [ Yoga_Leaf ]
             }
         )
         child "account" <@ Contact @>
         child "contacts_title" (
             label {
                 text "Contacts:"
-                styles [ Yoga_Leaf ]
             }
         )
         child "contacts" <@ Contacts @>
-        styles [ Yoga_HomePanel ]
     }
 
 let compile segments =
@@ -64,5 +56,3 @@ let compile segments =
             "Demo.Gui.Prefab.HomePanel", <@ HomePanel @>
         )
     ]
-
-

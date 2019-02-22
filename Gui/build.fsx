@@ -15,7 +15,6 @@
 #load "src/Dap.Gui/Dsl1/Prefabs.fs"
 
 #load "demo/Demo.App/Dsl.fs"
-#load "demo/Demo.Gui/StyleConst.fs"
 #load "demo/Demo.Gui/Dsl/Prefabs.fs"
 //*)
 

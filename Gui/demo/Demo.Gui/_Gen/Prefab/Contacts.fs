@@ -13,9 +13,7 @@ let ContactsKind = "Contacts"
 let ContactsJson = parseJson """
 {
     "prefab": "contacts",
-    "styles": [
-        "yoga:contacts"
-    ],
+    "styles": [],
     "container": "table",
     "item_prefab": "contact",
     "items": []

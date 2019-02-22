@@ -17,10 +17,11 @@ type BaseGroup<'prefab, 'model, 'container
     do (
         (container :> IContainer) .SetWrapper' self
     )
-    member this.AddChild' (child : IPrefab) =
-        container0.AddChild (child.Widget0)
-        children <- children @ [child]
+    member this.AddChild' (key : string) (child : IPrefab) =
+        child.SetParent' (Some (this :> IPrefab)) key
         this._StylesOnChildAdded child
+        children <- children @ [child]
+        container0.AddChild (child.Widget0)
 
     member this.ResizeChildren'<'p when 'p :> IPrefab> (spawner : ILogging -> 'p) (size : int) =
         if size < 0 then
@@ -37,9 +38,9 @@ type BaseGroup<'prefab, 'model, 'container
             )
         elif size > children.Length then
             [children.Length .. size - 1]
-            |> List.iter (fun _ ->
+            |> List.iter (fun index ->
                 spawner logging
-                |> this.AddChild'
+                |> this.AddChild' (index.ToString ())
             )
     member __.Children = children
     interface IGroupPrefab<'container> with

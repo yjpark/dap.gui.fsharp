@@ -8,54 +8,90 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
-let mutable private styles : Map<string, IPrefab -> IStyle> = Map.empty
+let private typeIPrefab = typeof<IPrefab>
+
+let private isPrefabInterface (type' : Type) =
+    if not type'.IsInterface then
+        false
+    elif type' = typeIPrefab then
+        false
+    else
+        typeIPrefab.IsAssignableFrom(type')
+
+type Factory = IPrefab -> IStyle
+
+let mutable private styles : Map<string, Factory list> = Map.empty
 let mutable private registerLogger : ILogger option = None
-
-let create (prefab : IPrefab) (kind : string) : IStyle option =
-    match Map.tryFind kind styles with
-    | Some factory ->
-        let style = factory prefab
-        logWarn prefab "Styles.create" (sprintf "Created:%s" kind) style
-        Some style
+let private getRegisterLogger () =
+    match registerLogger with
+    | Some l -> l
     | None ->
-        logWarn prefab "Styles.create" "Not_Exist" kind
-        None
+        let l = getLogger "Styles.register"
+        registerLogger <- Some l
+        l
 
-let init (prefab : IPrefab) (styles : IListProperty<IVarProperty<string>>) : IStyle list =
-    styles.Value
-    |> List.map (fun p -> p.Value)
-    |> List.choose (create prefab)
+let create (prefab : IPrefab) (kind : string) : IStyle list =
+    match Map.tryFind kind styles with
+    | Some factories ->
+        factories
+        |> List.rev
+        |> List.map (fun factory ->
+            let style = factory prefab
+            logWarn prefab "Styles.create" (sprintf "Created:%s" kind) style
+            style
+        )
+    | None ->
+        //logWarn prefab "Styles.create" (sprintf "Not_Registered:%s" kind) ()
+        []
 
-let private _register<'style, 'prefab when 'style :> IStyle<'prefab>> (canOverride : bool) (kind : string) (param : obj list) : unit =
+let init (prefab : IPrefab) : IStyle list =
+    let type' = prefab.GetType ()
+    type'.GetInterfaces ()
+    |> Array.toList
+    |> List.filter isPrefabInterface
+    |> List.map (fun class' ->
+        create prefab class'.FullName
+    )|> List.concat
+
+(*
+ * Note: Not have 'style :> IStyle<'prefab> on purpose
+ * so IStyle<IPrefab> can be apply to any 'prefab :> IPrefab
+*)
+let private register<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle>
+        (allowMultiple : bool) (clearExists : bool) (kind : string) (param : obj list) : unit =
     let factory = fun (prefab : IPrefab) ->
         match prefab with
-        | :? 'prefab as p ->
-            Activator.CreateInstance (typeof<'style>, List.toArray ((kind :> obj) :: (p :> obj) :: param))
+        | :? 'prefab ->
+            Activator.CreateInstance (typeof<'style>, List.toArray ((kind :> obj) :: (prefab :> obj) :: param))
             :?> IStyle
         | _ ->
             logWarn prefab "Styles.register" "Type_Mismatched"
                 (typeof<'style>.FullName, typeof<'prefab>.FullName, prefab.GetType().FullName)
             new InvalidStyle (kind, prefab) :> IStyle
-    let logger =
-        match registerLogger with
-        | Some l -> l
-        | None ->
-            let l = getLogger "Styles.register"
-            registerLogger <- Some l
-            l
+    let logger = getRegisterLogger ()
     match Map.tryFind kind styles with
     | None ->
         logInfo logger "Registered" kind factory
-        styles <- styles |> Map.add kind factory
-    | Some factory' ->
-        if canOverride then
-            logWarn logger "Overridden" kind (factory', factory)
-            styles <- styles |> Map.add kind factory
+        styles <- styles |> Map.add kind [ factory ]
+    | Some factories ->
+        if clearExists then
+            logWarn logger "Overridden" kind (factories, factory)
+            styles <- styles |> Map.add kind [ factory ]
         else
-            logError logger "Conflicted" kind (factory', factory)
+            if allowMultiple  then
+                logInfo logger "Registered" kind factory
+                styles <- styles |> Map.add kind (factory :: factories)
+            else
+                logError logger "Not_Allow_Multiple" kind (factories, factory)
 
-let register<'style, 'prefab when 'style :> IStyle<'prefab>> (kind : string) (param : obj list) : unit =
-    _register<'style, 'prefab> false kind param
+let add<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+    register<'prefab, 'style> true false kind param
 
-let register'<'style, 'prefab when 'style :> IStyle<'prefab>> (kind : string) (param : obj list) : unit =
-    _register<'style, 'prefab> true kind param
+let addNew<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+    register<'prefab, 'style> false false kind param
+
+let addForce<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+    register<'prefab, 'style> false true kind param
+
+let addClass<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (param : obj list) : unit =
+    register<'prefab, 'style> true false (typeof<'prefab>.FullName) param

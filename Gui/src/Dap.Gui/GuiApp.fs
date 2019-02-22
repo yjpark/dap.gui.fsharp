@@ -86,5 +86,6 @@ type GuiSynchronizationContext (logger : ILogger) =
                 count <- count + 1
         )
 
-
-
+let runGuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPack and 'app :> INeedSetupAsync>
+    (newPresenter : IEnv -> 'presenter) (app : 'app) =
+    GuiApp<'presenter, 'app>.Run newPresenter app

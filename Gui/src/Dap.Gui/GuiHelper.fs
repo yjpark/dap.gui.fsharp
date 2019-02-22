@@ -81,5 +81,3 @@ type IRunner with
         this.RunTask0 ignoreOnFailed (fun _ -> guiTask)
     member this.SetGuiValue (prop : IVarProperty<'v>, v : 'v) =
         this.SetGuiValue (prop.SetValue, v)
-
-

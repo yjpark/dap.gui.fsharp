@@ -13,53 +13,39 @@ let HomePanelKind = "HomePanel"
 let HomePanelJson = parseJson """
 {
     "prefab": "home_panel",
-    "styles": [
-        "yoga:home-panel"
-    ],
+    "styles": [],
     "container": "v_box",
     "children": {
         "title": {
             "prefab": "",
-            "styles": [
-                "yoga:leaf"
-            ],
+            "styles": [],
             "text": "Address Book"
         },
         "account": {
             "prefab": "contact",
-            "styles": [
-                "yoga:contact"
-            ],
+            "styles": [],
             "container": "h_box",
             "children": {
                 "name": {
                     "prefab": "",
-                    "styles": [
-                        "yoga:leaf"
-                    ],
+                    "styles": [],
                     "text": "..."
                 },
                 "phone": {
                     "prefab": "",
-                    "styles": [
-                        "yoga:leaf"
-                    ],
+                    "styles": [],
                     "text": "..."
                 }
             }
         },
         "contacts_title": {
             "prefab": "",
-            "styles": [
-                "yoga:leaf"
-            ],
+            "styles": [],
             "text": "Contacts:"
         },
         "contacts": {
             "prefab": "contacts",
-            "styles": [
-                "yoga:contacts"
-            ],
+            "styles": [],
             "container": "table",
             "item_prefab": "contact"
         }

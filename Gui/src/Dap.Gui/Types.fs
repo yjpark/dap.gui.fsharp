@@ -18,8 +18,15 @@ and IStyle<'prefab when 'prefab :> IPrefab> =
 
 and IPrefab =
     inherit IContext
+    abstract Parent : IPrefab option with get
+    abstract Path : string with get
+    abstract Key : string with get
+    abstract SetParent' : IPrefab option -> string -> unit
     abstract Widget0 : obj with get
+    abstract Extras : Map<string, obj> with get
+    abstract SetExtras' : Map<string, obj> -> unit
     abstract Styles : IStyle list with get
+    abstract SetStyles' : IStyle list -> unit
     abstract ApplyStyles : unit -> unit
 
 type IPrefab<'model when 'model :> IViewProps> =
@@ -117,6 +124,36 @@ type IView<'presenter, 'display when 'presenter :> IPresenter> =
 [<AutoOpen>]
 module Extensions =
     type IPrefab with
+        member this.TryFindExtra<'obj> (key : string) : 'obj option =
+            this.Extras
+            |> Map.tryFind key
+            |> function
+            | None -> None
+            | Some o ->
+                match o with
+                | :? 'obj as o ->
+                    Some o
+                | _ ->
+                    logError this "TryFindExtra" "Type_Mismatched" (key, typeof<'obj>, o.GetType(), o)
+                    None
+        member this.GetOrNewExtra<'obj> (key : string, factory : string -> 'obj) : 'obj =
+            this.Extras
+            |> Map.tryFind key
+            |> function
+            | Some o ->
+                match o with
+                | :? 'obj as o ->
+                    o
+                | _ ->
+                    failWith (sprintf "Type_Conflicted:%s" key) (typeof<'obj>, o.GetType(), o)
+            | None ->
+                let o = factory key
+                this.Extras
+                |> Map.add key (o :> obj)
+                |> this.SetExtras'
+                o
+        member this.GetOrNewExtra<'obj> (factory : string -> 'obj) : 'obj =
+            this.GetOrNewExtra<'obj> (typeof<'obj>.FullName, factory)
         member this.FilterStyles<'style when 'style :> IStyle> () : 'style list =
             this.Styles
             |> List.choose (fun style ->

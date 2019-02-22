@@ -13,23 +13,17 @@ let ContactKind = "Contact"
 let ContactJson = parseJson """
 {
     "prefab": "contact",
-    "styles": [
-        "yoga:contact"
-    ],
+    "styles": [],
     "container": "h_box",
     "children": {
         "name": {
             "prefab": "",
-            "styles": [
-                "yoga:leaf"
-            ],
+            "styles": [],
             "text": "..."
         },
         "phone": {
             "prefab": "",
-            "styles": [
-                "yoga:leaf"
-            ],
+            "styles": [],
             "text": "..."
         }
     }
