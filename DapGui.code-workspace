@@ -1,19 +1,16 @@
 {
 	"folders": [
 		{
-			"path": "Gui"
+			"path": "src""
 		},
 		{
-			"path"**/: "Console"
+			"path": "demo"
 		},
 		{
-			"path": "Eto"
+			"path": "old"
 		},
 		{
-			"path": "Forms"
-		},
-		{
-			"path": "Faker"
+			"path": "faker"
 		},
 	],
     "settings": {
@@ -22,7 +19,7 @@
             "**/obj": true,
             "*.log": true,
             "**/log" : true,
-            ".vs": true,
+            "**/.vs": true,
             ".vscode": true,
             ".gitignore": true,
             ".paket": true,

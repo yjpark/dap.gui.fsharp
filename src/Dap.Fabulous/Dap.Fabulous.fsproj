@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.6.0</Version>
+    <Description>Dap with Xamarin.Forms and Fabulous</Description>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Util.fs" />
+    <Compile Include="Forms/FileSystem.fs" />
+    <!--<Compile Include="Forms/LoggingProvider.fs" />-->
+    <Compile Include="Forms/Preferences.fs" />
+    <Compile Include="Forms/SecureStorage.fs" />
+    <Compile Include="Forms/Runner.fs" />
+    <Compile Include="View/Types.fs" />
+    <Compile Include="View/Logic.fs" />
+    <Compile Include="Presenter.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-62925-02" PrivateAssets="All" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

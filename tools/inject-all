@@ -3,9 +3,6 @@
 echo -en \\0033c
 
 cd `dirname $0`
-cd ../Gui && fake build -t Inject && \
-cd ../Eto && fake build -t Inject && \
-cd ../Forms && fake build -t Inject
-
+cd .. && fake build -t Inject && \
 
 
