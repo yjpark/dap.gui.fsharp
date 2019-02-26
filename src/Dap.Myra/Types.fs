@@ -13,6 +13,7 @@ open Myra.Graphics2D.UI
 
 open Dap.Prelude
 open Dap.Gui
+open Dap.Gui.App
 
 type Color = Microsoft.Xna.Framework.Color
 type Vector2 = Microsoft.Xna.Framework.Vector2
@@ -28,29 +29,27 @@ type MyraPanel = Myra.Graphics2D.UI.Panel
 type Proportion = Myra.Graphics2D.UI.Grid.Proportion
 type ProportionType = Myra.Graphics2D.UI.Grid.ProportionType
 
-type IApplication =
-    inherit IDisposable
-    inherit ILogger
+type IMyraPlatform =
+    inherit IGuiPlatform
+    abstract Param : MyraParam with get
     abstract Xna : Microsoft.Xna.Framework.Game with get
-    abstract Param : ApplicationParam with get
     abstract GraphicsManager : GraphicsDeviceManager with get
     abstract Graphics : GraphicsDevice with get
     abstract Desktop : Desktop with get
-    abstract Presenter : IPresenter with get
     abstract Width : int with get
     abstract Height : int with get
     abstract Quitting : bool with get
 
-and ApplicationParam = {
+and MyraParam = {
     Name : string
     Title : string
     Width : int
     Height : int
     ClearColor : Color option
     ExitKey : Keys option
-    Initializers : (IApplication -> unit) list
+    Actions : (IMyraPlatform -> unit) list
 } with
-    static member Create (name : string, ?title : string, ?width : int, ?height : int, ?clearColor : Color, ?exitKey : Keys) : ApplicationParam =
+    static member Create (name : string, ?title : string, ?width : int, ?height : int, ?clearColor : Color, ?exitKey : Keys) : MyraParam =
         {
             Name = name
             Title = defaultArg title name
@@ -58,5 +57,5 @@ and ApplicationParam = {
             Height = defaultArg height 720
             ClearColor = clearColor
             ExitKey = exitKey
-            Initializers = []
+            Actions = []
         }

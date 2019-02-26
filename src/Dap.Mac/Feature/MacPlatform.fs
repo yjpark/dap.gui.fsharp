@@ -19,12 +19,11 @@ type MacPlatform (logging : ILogging) =
     let mutable param : MacParam option = None
     let mutable window : NSWindow option = None
     let mutable display : IDisplay option = None
-    static member Init () =
-        NSApplication.Init ()
     override this.DidBecomeActive(notification : NSNotification) =
         window.Value.MakeKeyAndOrderFront (this)
-    member private __.DoSetup (param' : obj, presenter : IPresenter) =
+    member private __.DoInit (param' : obj) =
         param <- Some (param' :?> MacParam)
+    member private __.DoSetup (presenter : IPresenter) =
         let window' = new NSWindow (
                         new CoreGraphics.CGRect (0.0, 0.0, param.Value.Width, param.Value.Height),
                         param.Value.WindowStyle, param.Value.BackingStore, false)
@@ -41,31 +40,36 @@ type MacPlatform (logging : ILogging) =
         member __.Param = param.Value
         member __.Window = window.Value
     member this.AsMacPlatform = this :> IMacPlatform
-    interface IGuiPlatform with
-        member __.Param0 = param :> obj
-        member __.Display = display.Value
-        member this.Setup param' presenter' =
-            if display.IsSome then
-                failWith "Already_Setup" (param, display, param', presenter')
-            this.DoSetup (param', presenter')
-            let display' = new Display<'presenter, NSWindow> (window.Value)
-            display'.SetPresenter presenter'
-            display <- Some (display' :> IDisplay)
-            display' :> IDisplay<'presenter>
-        member this.Run () = this.Run ()
-    member this.AsGuiPlatform = this :> IGuiPlatform
-    interface IContext with
-        member __.Dispose () = failWith "MacPlatform" "Can_Not_Dispose"
-        member __.Spec0 = context.Spec0
-        member __.Properties0 = context.Properties0
-        member __.Channels = context.Channels
-        member __.Handlers = context.Handlers
-        member __.AsyncHandlers = context.AsyncHandlers
-        member __.Clone0 l = failWith "MacPlatform" "Can_Not_Clone"
-    interface IOwner with
-        member __.Luid = ""
-        member __.Disposed = false
-    interface IJson with
-        member __.ToJson () = toJson context
-    interface ILogger with
-        member __.Log evt = context.Log evt
+    //SILP: GUI_PLATFORM_FOOTER(MacPlatform, NSWindow, window.Value)
+    interface IGuiPlatform with                                              //__SILP__
+        member __.Param0 = param :> obj                                      //__SILP__
+        member __.Display = display.Value                                    //__SILP__
+        member this.Init param' =                                            //__SILP__
+            if param.IsSome then                                             //__SILP__
+                failWith "Already_Init" (param, param')                      //__SILP__
+            this.DoInit param'                                               //__SILP__
+        member this.Setup presenter' =                                       //__SILP__
+            if display.IsSome then                                           //__SILP__
+                failWith "Already_Setup" (display, presenter')               //__SILP__
+            this.DoSetup presenter'                                          //__SILP__
+            let display' = new Display<'presenter, NSWindow> (window.Value)  //__SILP__
+            display'.SetPresenter presenter'                                 //__SILP__
+            display <- Some (display' :> IDisplay)                           //__SILP__
+            display' :> IDisplay<'presenter>                                 //__SILP__
+        member this.Run () = this.Run ()                                     //__SILP__
+    member this.AsGuiPlatform = this :> IGuiPlatform                         //__SILP__
+    interface IContext with                                                  //__SILP__
+        member __.Dispose () = failWith "MacPlatform" "Can_Not_Dispose"      //__SILP__
+        member __.Spec0 = context.Spec0                                      //__SILP__
+        member __.Properties0 = context.Properties0                          //__SILP__
+        member __.Channels = context.Channels                                //__SILP__
+        member __.Handlers = context.Handlers                                //__SILP__
+        member __.AsyncHandlers = context.AsyncHandlers                      //__SILP__
+        member __.Clone0 l = failWith "MacPlatform" "Can_Not_Clone"          //__SILP__
+    interface IOwner with                                                    //__SILP__
+        member __.Luid = ""                                                  //__SILP__
+        member __.Disposed = false                                           //__SILP__
+    interface IJson with                                                     //__SILP__
+        member __.ToJson () = toJson context                                 //__SILP__
+    interface ILogger with                                                   //__SILP__
+        member __.Log evt = context.Log evt                                  //__SILP__

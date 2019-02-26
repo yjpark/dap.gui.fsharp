@@ -9,7 +9,8 @@ type IGuiPlatform =
     inherit IFeature
     abstract Param0 : obj with get
     abstract Display : IDisplay with get
-    abstract Setup<'presenter when 'presenter :> IPresenter> : obj -> 'presenter -> IDisplay<'presenter>
+    abstract Init : obj -> unit
+    abstract Setup<'presenter when 'presenter :> IPresenter> : 'presenter -> IDisplay<'presenter>
     abstract Run : unit -> int
 
 type Display<'presenter, 'output when 'presenter :> IPresenter> (output : 'output) =

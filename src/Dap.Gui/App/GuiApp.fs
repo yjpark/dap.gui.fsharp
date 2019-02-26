@@ -17,7 +17,9 @@ let internal getParam () =
     param
 
 let internal setParam (param' : obj) =
-    if started then
+    if param <> null then
+        failWith "Already_Set" (param, param')
+    elif started then
         failWith "Already_Started" (param, param')
     else
         param <- param'
@@ -29,9 +31,10 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
     member private __.Run' () =
         started <- true
         platform <- Some <| Feature.create<IGuiPlatform> (app.Env.Logging)
-        display <- Some <| platform.Value.Setup param ^<| newPresenter app.Env
-        logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform, display)
+        platform.Value.Init param
         setupGuiContext' platform.Value
+        display <- Some <| platform.Value.Setup ^<| newPresenter app.Env
+        logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform, display)
         app.OnSetup.AddWatcher platform.Value "OnSetup" (fun result ->
             if result.IsOk then
                 runGuiFunc (fun _ ->

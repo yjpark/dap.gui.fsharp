@@ -96,3 +96,38 @@ override __.Spawn l = ${container}.Create l
 interface IFallback
 ```
 
+# GUI_PLATFORM_FOOTER(type, output_type, output_value) #
+```F#
+interface IGuiPlatform with
+    member __.Param0 = param :> obj
+    member __.Display = display.Value
+    member this.Init param' =
+        if param.IsSome then
+            failWith "Already_Init" (param, param')
+        this.DoInit param'
+    member this.Setup presenter' =
+        if display.IsSome then
+            failWith "Already_Setup" (display, presenter')
+        this.DoSetup presenter'
+        let display' = new Display<'presenter, ${output_type}> (${output_value})
+        display'.SetPresenter presenter'
+        display <- Some (display' :> IDisplay)
+        display' :> IDisplay<'presenter>
+    member this.Run () = this.Run ()
+member this.AsGuiPlatform = this :> IGuiPlatform
+interface IContext with
+    member __.Dispose () = failWith "${type}" "Can_Not_Dispose"
+    member __.Spec0 = context.Spec0
+    member __.Properties0 = context.Properties0
+    member __.Channels = context.Channels
+    member __.Handlers = context.Handlers
+    member __.AsyncHandlers = context.AsyncHandlers
+    member __.Clone0 l = failWith "${type}" "Can_Not_Clone"
+interface IOwner with
+    member __.Luid = ""
+    member __.Disposed = false
+interface IJson with
+    member __.ToJson () = toJson context
+interface ILogger with
+    member __.Log evt = context.Log evt
+```

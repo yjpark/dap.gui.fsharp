@@ -44,18 +44,20 @@ type GuiSynchronizationContext (logger : ILogger) =
 
 let mutable private guiThread : int option = None
 let mutable private guiContext : SynchronizationContext option = None
+let mutable private guiLogger : ILogger option = None
 
 let internal setupGuiContext' (logger : ILogger) =
     match guiContext with
     | Some guiContext' ->
         logError logger "setupGuiContext'" "Already_Setup" guiContext'
     | None ->
-        let guiContext' = SynchronizationContext.Current
+        let mutable guiContext' = SynchronizationContext.Current
         if guiContext' =? null then
-            let guiContext' = GuiSynchronizationContext.Create (logger)
+            guiContext' <- GuiSynchronizationContext.Create (logger)
             logError logger "setupGuiContext'" "Created" guiContext'
         guiThread <- Some Thread.CurrentThread.ManagedThreadId
         guiContext <- Some guiContext'
+        guiLogger <- Some logger
         logWarn logger "setupGuiContext'" "Succeed" guiContext'
 
 let internal isGuiThread () =
@@ -104,3 +106,14 @@ let internal getGuiTask (getTask : unit -> Task<'res>) : Task<'res> =
         logError (getLogging ()) "Thread.getGuiTask" "GuiContext_Not_Exist" ()
         getTask ()
 *)
+
+let executeGuiActions' () =
+    match guiContext with
+    | Some context ->
+        match context with
+        | :? GuiSynchronizationContext as context ->
+            context.Execute ()
+        | _ ->
+            logWarn guiLogger.Value "Thread.executeGuiActions" "Is_Not_GuiSynchronizationContext" (context)
+    | None ->
+        logWarn (getLogging ()) "Thread.executeGuiActions" "GuiContext_Not_Exist" ()

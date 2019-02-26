@@ -15,5 +15,5 @@ open Demo.Gui
 let main argv =
     //initYogaGtk ()
     //YogaStyles.register ()
-    updateMyraParam id
+    setMyraParam <| MyraParam.Create ("Demo", clearColor = Color.Black)
     App.RunGui ("demo.log")
