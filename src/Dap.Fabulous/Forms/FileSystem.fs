@@ -1,11 +1,11 @@
 [<RequireQualifiedAccess>]
-module Dap.Gui.Fabulous.Forms.FileSystem
+module Dap.Fabulous.Forms.FileSystem
 
 open System.IO
 open Xamarin.Forms
 
 open Dap.Prelude
-open Dap.Gui.Fabulous
+open Dap.Fabulous
 
 let getDataFolder () =
     if hasEssentials () then

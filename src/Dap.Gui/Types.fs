@@ -109,17 +109,18 @@ type IDynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> =
     abstract AsPresenter : IPresenter<'domain, 'prefab> with get
     abstract OnDetached : IBus<IDynamicPresenter<'domain, 'prefab>> with get
 
-type IView =
-    abstract Display0 : obj with get
+type IDisplay =
+    abstract Output0 : obj with get
     abstract Presenter0 : IPresenter with get
 
-type IView<'presenter when 'presenter :> IPresenter> =
-    inherit IView
+type IDisplay<'presenter when 'presenter :> IPresenter> =
+    inherit IDisplay
     abstract Presenter : 'presenter with get
+    abstract SetPresenter : 'presenter -> unit
 
-type IView<'presenter, 'display when 'presenter :> IPresenter> =
-    inherit IView<'presenter>
-    abstract Display : 'display with get
+type IDisplay<'presenter, 'output when 'presenter :> IPresenter> =
+    inherit IDisplay<'presenter>
+    abstract Output : 'output with get
 
 [<AutoOpen>]
 module Extensions =
@@ -180,7 +181,7 @@ module Extensions =
             |> List.iter (fun style -> style.OnChildRemoved child)
     type IPrefab<'model when 'model :> IViewProps> with
         member this.Model = this.Properties
-    type IView with
+    type IDisplay with
         member this.Attached = this.Presenter0.Attached
         member this.Prefab0 = this.Presenter0.Prefab0
         member this.Widget0 = this.Presenter0.Prefab0.Widget0

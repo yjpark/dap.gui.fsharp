@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Gui.Fabulous.Forms.Preferences
+module Dap.Fabulous.Forms.Preferences
 
 open System.IO
 open FSharp.Control.Tasks.V2
@@ -9,7 +9,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
-open Dap.Gui.Fabulous
+open Dap.Fabulous
 
 type Provider = Xamarin.Essentials.Preferences
 type Fallback = Dap.Local.Feature.Preferences.Context

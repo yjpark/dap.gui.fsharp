@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Gui.Fabulous.View.Logic
+module Dap.Fabulous.View.Logic
 
 open Xamarin.Forms
 open Fabulous.Core
@@ -7,10 +7,10 @@ open Fabulous.DynamicViews
 
 open Dap.Prelude
 open Dap.Platform
-open Dap.Gui.Fabulous
-open Dap.Gui.Fabulous.Forms
+open Dap.Fabulous
+open Dap.Fabulous.Forms
 
-open Dap.Gui.Fabulous.View.Types
+open Dap.Fabulous.View.Types
 
 type ActorOperate<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'msg :> IMsg> =
     Operate<View<'pack, 'model, 'msg>, Model<'model, 'msg>, Msg<'model, 'msg>>

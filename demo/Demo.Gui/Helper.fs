@@ -7,6 +7,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Gui
+open Dap.Gui.App
 
 open Demo.App
 type HomePanel = Demo.Gui.Presenter.HomePanel.Presenter

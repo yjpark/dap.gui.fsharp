@@ -46,6 +46,7 @@ let allProjects =
     libProjects
     ++ "demo/Demo.App/*.fsproj"
     ++ "demo/Demo.Gui/*.fsproj"
+    ++ "demo/Demo.Fabulous/*.fsproj"
     ++ "demo/Demo.Myra/*.fsproj"
     ++ "demo/Demo.Gtk/*.fsproj"
 

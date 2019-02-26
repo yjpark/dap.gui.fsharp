@@ -1,4 +1,4 @@
-module Dap.Gui.Fabulous.View.Types
+module Dap.Fabulous.View.Types
 
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2
@@ -86,7 +86,8 @@ and View<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'ms
     member this.SetFormsRunner' runner =
 #if DEBUG
         if this.Actor.Args.UseLiveUpdate then
-            runner.EnableLiveUpdate ()
+            () //TODO
+            //runner.EnableLiveUpdate ()
 #endif
         formsRunner <- Some runner
     member _this.SetReact' react' =

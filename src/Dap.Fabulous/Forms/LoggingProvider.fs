@@ -1,4 +1,4 @@
-module Dap.Gui.Fabulous.Forms.LoggingProvider
+module Dap.Fabulous.Forms.LoggingProvider
 
 open System.IO
 open Xamarin.Forms
@@ -7,7 +7,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
-open Dap.Gui.Fabulous
+open Dap.Fabulous
 
 //TODO: Delete this file after all platform got their own provider
 type LoggingProvider (logging : ILogging) =

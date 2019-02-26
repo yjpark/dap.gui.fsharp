@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="View/Types.fs" />
+    <Compile Include="Page/Home.fs" />
+    <Compile Include="View/Logic.fs" />
+    <Compile Include="Helper.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.App\Demo.App.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Dap.Fabulous\Dap.Fabulous.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" /></Project>

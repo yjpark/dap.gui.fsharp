@@ -7,27 +7,25 @@ open Foundation
 open AppKit
 
 open Dap.Prelude
-open Dap.Gui
+open Dap.Gui.App
 
-type IApplication =
-    inherit IDisposable
-    inherit ILogger
-    abstract Param : ApplicationParam with get
+type IMacPlatform =
+    inherit IGuiPlatform
+    abstract Param : MacParam with get
     abstract Window : NSWindow with get
-    abstract Presenter : IPresenter with get
 
-and ApplicationParam = {
+and MacParam = {
     Name : string
     Title : string
     Width : float
     Height : float
     WindowStyle : NSWindowStyle
     BackingStore : NSBackingStore
-    Initializers : (IApplication -> unit) list
+    Actions : (IMacPlatform -> unit) list
 } with
     static member Create
             (name : string, ?title : string, ?width : float, ?height : float,
-                ?windowStyle : NSWindowStyle, ?backingStore : NSBackingStore) : ApplicationParam =
+                ?windowStyle : NSWindowStyle, ?backingStore : NSBackingStore) : MacParam =
         {
             Name = name
             Title = defaultArg title name
@@ -36,6 +34,6 @@ and ApplicationParam = {
             WindowStyle = defaultArg windowStyle
                 (NSWindowStyle.Resizable ||| NSWindowStyle.Closable ||| NSWindowStyle.Miniaturizable ||| NSWindowStyle.Titled)
             BackingStore = defaultArg backingStore NSBackingStore.Buffered
-            Initializers = []
+            Actions = []
         }
 

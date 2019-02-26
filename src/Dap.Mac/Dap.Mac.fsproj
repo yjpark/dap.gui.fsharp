@@ -74,8 +74,7 @@
     <Compile Include="Container/HBox.fs" />
     <Compile Include="Container/VBox.fs" />
     <Compile Include="Container/Table.fs" />
-    <Compile Include="Internal/Application.fs" />
-    <Compile Include="GuiRunner.fs" />
+    <Compile Include="Feature/MacPlatform.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.Fabulous.Util
+module Dap.Fabulous.Util
 
 open System.Threading.Tasks
 open Xamarin.Essentials

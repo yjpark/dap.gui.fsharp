@@ -1,6 +1,6 @@
 [<AutoOpen>]
 [<RequireQualifiedAccess>]
-module Dap.Gui.Fabulous.Forms.SecureStorage
+module Dap.Fabulous.Forms.SecureStorage
 
 open System.IO
 open FSharp.Control.Tasks.V2
@@ -9,7 +9,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
-open Dap.Gui.Fabulous
+open Dap.Fabulous
 
 type Provider = Xamarin.Essentials.SecureStorage
 type Fallback = Dap.Local.Feature.SecureStorage.Context

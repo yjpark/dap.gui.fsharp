@@ -13,5 +13,6 @@ open Demo.Gui
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    updateMacParam id
+    initMacPlatform ()
+    setMacParam <| MacParam.Create ("Demo")
     App.RunGui ("demo.log")
