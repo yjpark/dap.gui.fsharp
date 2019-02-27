@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Forms.Preferences
+module Dap.Fabulous.Feature.Preferences
 
 open System.IO
 open FSharp.Control.Tasks.V2

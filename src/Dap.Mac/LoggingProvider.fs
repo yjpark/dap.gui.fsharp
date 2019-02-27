@@ -1,4 +1,4 @@
-module Dap.Mac.ConsoleLogging
+module Dap.Mac.LoggingProvider
 
 open System
 open System.IO
@@ -25,7 +25,7 @@ type ConsoleSinkArgs with
             let sink = new ConsoleSink (formatter)
             config.WriteTo.Sink(sink, this.MinLevel.ToSerilogLevel)
 
-type ConsoleLoggingProvider (logging : ILogging) =
+type LoggingProvider (logging : ILogging) =
     inherit BaseLoggingProvider (logging)
     override this.CreateLogging (args : LoggingArgs) =
         //TODO: get proper log folder

@@ -1,4 +1,4 @@
-[<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Dap.Gtk.Feature.GtkPlatform
 
 open Dap.Prelude
@@ -12,8 +12,8 @@ open Dap.Gtk
 [<Literal>]
 let GtkPlatformKind = "GtkPlatform"
 
-type GtkPlatform (logging : ILogging) =
-    inherit BasePlatform<GtkParam, Gtk.Window> (logging, GtkPlatformKind)
+type Context (logging : ILogging) =
+    inherit GuiPlatform.Context<GtkParam, Gtk.Window> (logging, GtkPlatformKind)
     let mutable application : Gtk.Application option = None
     let mutable window : Gtk.Window option = None
     override this.DoInit (param : GtkParam) =

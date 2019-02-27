@@ -17,6 +17,7 @@ let render (runner : View) (model : Model) =
         content = View.StackLayout (
             padding = 20.0,
             children = [
+                View.Label (text = "TODO")
             ]
         )
     )

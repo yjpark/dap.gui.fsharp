@@ -37,9 +37,5 @@ let private render : Render =
         | HomePage ->
             Home.render runner model
 
-let args application =
-    Args.Create init update noSubscription render application
-
 let newArgs () =
-    Dap.Fabulous.Util.newApplication ()
-    |> args
+    Args.Create init update noSubscription render

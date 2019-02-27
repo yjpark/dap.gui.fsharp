@@ -30,11 +30,10 @@ and Args<'pack, 'model, 'msg
             when 'pack :> IPack and 'model : not struct and 'msg :> IMsg> = {
     Logic : ViewLogic<'pack, 'model, 'msg>
     Render : Render<'pack, 'model, 'msg>
-    Application : Application
     UseLiveUpdate : bool
     UseConsoleTrace : bool
 } with
-    static member Create init update subscribe render application =
+    static member Create init update subscribe render =
         {
             Logic =
                 {
@@ -43,7 +42,6 @@ and Args<'pack, 'model, 'msg
                     Subscribe = subscribe
                 }
             Render = render
-            Application = application
 #if DEBUG
             UseLiveUpdate = true
             UseConsoleTrace = true
@@ -81,7 +79,6 @@ and View<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'ms
     override this.Runner = this
     member this.Program = this.Actor.State.Program
     member this.ViewState = this.Actor.State.View
-    member this.Application = this.Actor.Args.Application
     member _this.HasFormsRunner = formsRunner.IsSome
     member this.SetFormsRunner' runner =
 #if DEBUG

@@ -1,4 +1,4 @@
-[<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Dap.Myra.Feature.MyraPlatform
 
 open Microsoft.Xna.Framework
@@ -89,8 +89,8 @@ type MyraWindow (platform : IMyraPlatform, param : MyraParam) =
         member this.Height = this.Height
         member __.Quitting = quitting
 
-type MyraPlatform (logging : ILogging) =
-    inherit BasePlatform<MyraParam, IMyraWindow> (logging, MyraPlatformKind)
+type Context (logging : ILogging) =
+    inherit GuiPlatform.Context<MyraParam, IMyraWindow> (logging, MyraPlatformKind)
     let mutable window : MyraWindow option = None
     override this.DoInit (param : MyraParam) =
         let window' = new MyraWindow (this, param)

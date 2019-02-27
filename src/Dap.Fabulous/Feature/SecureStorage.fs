@@ -1,6 +1,6 @@
 [<AutoOpen>]
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Forms.SecureStorage
+module Dap.Fabulous.Feature.SecureStorage
 
 open System.IO
 open FSharp.Control.Tasks.V2

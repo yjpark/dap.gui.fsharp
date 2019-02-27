@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Forms.FileSystem
+module Dap.Fabulous.Feature.FileSystem
 
 open System.IO
 open Xamarin.Forms

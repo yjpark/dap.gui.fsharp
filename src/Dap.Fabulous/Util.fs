@@ -33,16 +33,6 @@ let getDeviceName () =
     else
         System.Environment.MachineName
 
-let newApplication () =
-    if isRealForms () then
-        let application = new Application ()
-        let emptyPage = View.ContentPage (content = View.Label (text = "TEST"))
-        let page = emptyPage.Create ()
-        application.MainPage <- page :?> Page
-        application
-    else
-        failWith "newApplication" "Is_Not_Real_Forms"
-
 (*
  * All platform package should handle this by themselves
 type ConsoleSinkArgs with

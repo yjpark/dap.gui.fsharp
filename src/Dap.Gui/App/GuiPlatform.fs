@@ -1,5 +1,5 @@
-[<AutoOpen>]
-module Dap.Gui.App.BasePlatform
+[<RequireQualifiedAccess>]
+module Dap.Gui.App.GuiPlatform
 
 open Dap.Prelude
 open Dap.Context
@@ -8,7 +8,7 @@ open Dap.Platform
 open Dap.Gui
 
 [<AbstractClass>]
-type BasePlatform<'param, 'output> (logging : ILogging, kind : string) =
+type Context<'param, 'output> (logging : ILogging, kind : string) =
     inherit EmptyContext (logging, kind)
     let mutable param : 'param option = None
     let mutable output : 'output option = None

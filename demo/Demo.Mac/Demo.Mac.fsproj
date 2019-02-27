@@ -85,12 +85,13 @@
     <PackageReference Include="Dap.Platform">
       <Version>0.6.4</Version>
     </PackageReference>
-    <ProjectReference Include="..\..\src\Dap.Mac\Dap.Mac.fsproj">
-      <Project>{363A252D-9D4C-4607-98A7-D11F1A460EA2}</Project>
-      <Name>SuperClip.Core</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\..\src\Dap.Gui\Dap.Gui.fsproj" />
+    <ProjectReference Include="..\..\src\Dap.Fabulous\Dap.Fabulous.fsproj" />
+    <ProjectReference Include="..\..\src\Dap.Mac\Dap.Mac.fsproj" />
+    <ProjectReference Include="..\..\src\Dap.Fabulous.Mac\Dap.Fabulous.Mac.fsproj" />
     <ProjectReference Include="..\Demo.App\Demo.App.fsproj" />
     <ProjectReference Include="..\Demo.Gui\Demo.Gui.fsproj" />
+    <ProjectReference Include="..\Demo.Fabulous\Demo.Fabulous.fsproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.FSharp.targets" />
 </Project>

@@ -8,7 +8,8 @@ open Fabulous.DynamicViews
 open Dap.Prelude
 open Dap.Platform
 open Dap.Fabulous
-open Dap.Fabulous.Forms
+open Dap.Fabulous.Feature
+open Dap.Fabulous.Internal
 
 open Dap.Fabulous.View.Types
 
@@ -21,11 +22,12 @@ let private doRun req (callback: Callback<unit>) : ActorOperate<'pack, 'model, '
             if runner.HasFormsRunner then
                 reply runner callback <| nak req "Already_Running" ()
             else
+                let param = FabulousApp.getParam ()
                 let args = runner.Actor.Args
                 runner.RunFormsFunc (fun _ ->
                     model.Program
                     |> if args.UseConsoleTrace then Program.withConsoleTrace else id
-                    |> Program.runWithDynamicView runner.Actor.Args.Application
+                    |> Program.runWithDynamicView param.Application
                     |> runner.SetFormsRunner'
                     reply runner callback <| ack req ()
                 )

@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{F2A71F9B-5D33-465A-A702-920D77279786}</ProjectTypeGuids>
     <UseStandardResourceNames>true</UseStandardResourceNames>
     <OutputType>Library</OutputType>
-    <RootNamespace>Dap.Mac</RootNamespace>
-    <AssemblyName>Dap.Mac</AssemblyName>
+    <RootNamespace>Dap.Fabulous.Mac</RootNamespace>
+    <AssemblyName>Dap.Fabulous.Mac</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -62,17 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoggingProvider.fs" />
     <Compile Include="Types.fs" />
-    <Compile Include="Util.fs" />
-    <Compile Include="Prefab/Label.fs" />
-    <Compile Include="Prefab/Button.fs" />
-    <Compile Include="Prefab/TextField.fs" />
-    <Compile Include="Container/Panel.fs" />
-    <Compile Include="Container/HBox.fs" />
-    <Compile Include="Container/VBox.fs" />
-    <Compile Include="Container/Table.fs" />
-    <Compile Include="Feature/MacPlatform.fs" />
+    <Compile Include="Feature/FabulousMacPlatform.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +71,8 @@
       <Version>0.6.4</Version>
     </PackageReference>
     <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
+    <ProjectReference Include="..\Dap.Fabulous\Dap.Fabulous.fsproj" />
+    <ProjectReference Include="..\Dap.Mac\Dap.Mac.fsproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.FSharp.targets" />
 </Project>

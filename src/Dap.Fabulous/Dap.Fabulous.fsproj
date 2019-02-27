@@ -10,14 +10,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Util.fs" />
-    <Compile Include="Forms/FileSystem.fs" />
-    <!--<Compile Include="Forms/LoggingProvider.fs" />-->
-    <Compile Include="Forms/Preferences.fs" />
-    <Compile Include="Forms/SecureStorage.fs" />
-    <Compile Include="Forms/Runner.fs" />
+    <Compile Include="Feature/FileSystem.fs" />
+    <Compile Include="Feature/Preferences.fs" />
+    <Compile Include="Feature/SecureStorage.fs" />
+    <Compile Include="Feature/Runner.fs" />
     <Compile Include="View/Types.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Internal/FabulousApp.fs" />
     <Compile Include="View/Logic.fs" />
-    <Compile Include="Presenter.fs" />
+    <Compile Include="Forms.fs" />
+    <Compile Include="Internal/FabulousPresenter.fs" />
+    <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />

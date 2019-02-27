@@ -1,4 +1,4 @@
-[<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Dap.Mac.Feature.MacPlatform
 
 open Foundation
@@ -13,12 +13,9 @@ open Dap.Gui
 open Dap.Gui.App
 open Dap.Mac
 
-[<Literal>]
-let MacPlatformKind = "MacPlatform"
-
 [<AbstractClass>]
-type MacPlatform<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging : ILogging, kind : string) =
-    inherit BasePlatform<MacParam, NSWindow> (logging, kind)
+type Context<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging : ILogging, kind : string) =
+    inherit GuiPlatform.Context<MacParam, NSWindow> (logging, kind)
     let mutable appDelegate : 'appDelegate option = None
     let mutable window : NSWindow option = None
     abstract member CreateDelegate : MacParam -> NSWindow -> 'appDelegate
@@ -52,8 +49,8 @@ type AppDelegate (param : MacParam, window : NSWindow) =
     override this.DidBecomeActive(notification : NSNotification) =
         window.MakeKeyAndOrderFront (this)
 
-type MacPlatform (logging : ILogging) =
-    inherit MacPlatform<AppDelegate> (logging, MacPlatformKind)
+type Context (logging : ILogging) =
+    inherit Context<AppDelegate> (logging, MacPlatformKind)
     override this.CreateDelegate (param : MacParam) (window : NSWindow) =
         new AppDelegate (param, window)
     interface IFallback
