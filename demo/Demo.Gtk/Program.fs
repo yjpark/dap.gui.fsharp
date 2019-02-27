@@ -13,5 +13,5 @@ open Demo.Gui
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    updateGtkParam id
+    setGtkParam <| GtkParam.Create ("Gui.Demo")
     App.RunGui ("demo.log")

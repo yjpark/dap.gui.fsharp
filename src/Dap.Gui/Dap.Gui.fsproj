@@ -39,6 +39,7 @@
     <Compile Include="App/Types.fs" />
     <Compile Include="App/Thread.fs" />
     <Compile Include="App/GuiApp.fs" />
+    <Compile Include="App/BasePlatform.fs" />
     <Compile Include="App/Helper.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>

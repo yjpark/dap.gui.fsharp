@@ -29,9 +29,7 @@ type MyraPanel = Myra.Graphics2D.UI.Panel
 type Proportion = Myra.Graphics2D.UI.Grid.Proportion
 type ProportionType = Myra.Graphics2D.UI.Grid.ProportionType
 
-type IMyraPlatform =
-    inherit IGuiPlatform
-    abstract Param : MyraParam with get
+type IMyraWindow =
     abstract Xna : Microsoft.Xna.Framework.Game with get
     abstract GraphicsManager : GraphicsDeviceManager with get
     abstract Graphics : GraphicsDevice with get
@@ -39,6 +37,11 @@ type IMyraPlatform =
     abstract Width : int with get
     abstract Height : int with get
     abstract Quitting : bool with get
+
+type IMyraPlatform =
+    inherit IGuiPlatform
+    abstract Param : MyraParam with get
+    abstract Window : IMyraWindow with get
 
 and MyraParam = {
     Name : string

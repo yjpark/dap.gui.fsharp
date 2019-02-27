@@ -5,17 +5,10 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Gui
-
-// Need to call at lease one function in main()
-// otherwise the dll might not be included in AppDomain
+open Dap.Gui.App
 
 let getGtkParam () =
-    getParam ()
+    getGuiParam ()
 
-let setGtkParam (param' : ApplicationParam) =
-    setParam param'
-
-let updateGtkParam (update : ApplicationParam -> ApplicationParam) =
-    getParam ()
-    |> update
-    |> setParam
+let setGtkParam (param : GtkParam) =
+    setGuiParam param

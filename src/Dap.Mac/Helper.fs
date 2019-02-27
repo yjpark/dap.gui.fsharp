@@ -16,4 +16,3 @@ let getMacParam () =
 
 let setMacParam (param' : MacParam) =
     setGuiParam param'
-    NSApplication.Init ()
