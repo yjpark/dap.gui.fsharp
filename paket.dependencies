@@ -19,6 +19,9 @@ nuget Fabulous.Core
 nuget Fabulous.CustomControls
 nuget Fabulous.LiveUpdate
 
+//Ooui
+nuget Ooui.Forms
+
 //Yoga
 nuget Facebook.Yoga
 

@@ -35,9 +35,11 @@ let feed =
 
 let libProjects =
     !! "src/Dap.Gui/*.fsproj"
-    ++ "src/Dap.Fabulous/*.fsproj"
     ++ "src/Dap.Gtk/*.fsproj"
     ++ "src/Dap.Myra/*.fsproj"
+    ++ "src/Dap.Fabulous/*.fsproj"
+    ++ "src/Dap.Fabulous.Forms/*.fsproj"
+    ++ "src/Dap.Fabulous.Ooui/*.fsproj"
     ++ "src/Dap.Yoga/*.fsproj"
     ++ "src/Dap.Yoga.Gtk/*.fsproj"
     ++ "src/Dap.Yoga.Myra/*.fsproj"
@@ -45,8 +47,9 @@ let libProjects =
 let allProjects =
     libProjects
     ++ "demo/Demo.App/*.fsproj"
-    ++ "demo/Demo.Gui/*.fsproj"
     ++ "demo/Demo.Fabulous/*.fsproj"
+    ++ "demo/Demo.Ooui/*.fsproj"
+    ++ "demo/Demo.Gui/*.fsproj"
     ++ "demo/Demo.Myra/*.fsproj"
     ++ "demo/Demo.Gtk/*.fsproj"
 

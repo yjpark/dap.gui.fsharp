@@ -16,6 +16,8 @@ type Context<'param, 'output> (logging : ILogging, kind : string) =
     abstract member DoInit : 'param -> unit
     abstract member DoSetup : 'param -> IPresenter -> 'output
     abstract member DoRun : 'param -> int
+    abstract member OnDidAttach : IPack -> unit
+    default __.OnDidAttach (_app : IPack) = ()
     member __.Param = param.Value
     member __.Output = output.Value
     interface IGuiPlatform with
@@ -35,5 +37,6 @@ type Context<'param, 'output> (logging : ILogging, kind : string) =
             display'.SetPresenter presenter'
             display <- Some (display' :> IDisplay)
             display' :> IDisplay<'presenter>
+        member this.OnDidAttach app = this.OnDidAttach app
         member this.Run () = this.DoRun param.Value
     member this.AsGuiPlatform = this :> IGuiPlatform

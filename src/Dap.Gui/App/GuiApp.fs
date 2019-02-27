@@ -39,6 +39,7 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
             if result.IsOk then
                 runGuiFunc (fun _ ->
                     display.Value.Presenter.Attach app
+                    platform.Value.OnDidAttach app
                 )
         )
         Feature.tryStartApp app

@@ -11,6 +11,7 @@ type IGuiPlatform =
     abstract Display : IDisplay with get
     abstract Init : obj -> unit
     abstract Setup<'presenter when 'presenter :> IPresenter> : 'presenter -> IDisplay<'presenter>
+    abstract OnDidAttach : IPack -> unit
     abstract Run : unit -> int
 
 type Display<'presenter, 'output when 'presenter :> IPresenter> (output : 'output) =

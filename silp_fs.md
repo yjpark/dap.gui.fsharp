@@ -36,6 +36,12 @@ open Dap.Myra
 //SILP: COMMON_OPENS
 ```
 
+# FORMS_OPENS #
+```F#
+open Xamarin.Forms
+//SILP: COMMON_OPENS
+```
+
 # PREFAB_HEADER(prefab) #
 ```F#
 type ${prefab} (logging : ILogging) =

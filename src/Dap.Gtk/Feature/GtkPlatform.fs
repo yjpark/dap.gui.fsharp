@@ -9,9 +9,6 @@ open Dap.Gui
 open Dap.Gui.App
 open Dap.Gtk
 
-[<Literal>]
-let GtkPlatformKind = "GtkPlatform"
-
 type Context (logging : ILogging) =
     inherit GuiPlatform.Context<GtkParam, Gtk.Window> (logging, GtkPlatformKind)
     let mutable application : Gtk.Application option = None

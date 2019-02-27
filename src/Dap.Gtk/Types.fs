@@ -9,6 +9,9 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
+[<Literal>]
+let GtkPlatformKind = "GtkPlatform"
+
 type IGtkPlatform =
     inherit IGuiPlatform
     abstract Param : GtkParam with get
