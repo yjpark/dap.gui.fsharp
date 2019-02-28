@@ -1,4 +1,4 @@
-﻿module Demo.Gtk.Program
+﻿module Demo.Ooui.Program
 
 open System
 
