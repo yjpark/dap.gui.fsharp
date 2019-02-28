@@ -32,7 +32,7 @@ type Context (logging : ILogging) =
         Xamarin.Forms.Forms.Init ()
         let fabulousParam = getFabulousParam ()
         Xamarin.Forms.Forms.LoadApplication fabulousParam.Application
-    override this.DoSetup (param : OouiParam) (presenter : IPresenter) =
+    override this.DoShow (param : OouiParam, presenter : IPresenter) =
         param.Port
     override this.DoRun (param : OouiParam) =
         waitForExit logging this

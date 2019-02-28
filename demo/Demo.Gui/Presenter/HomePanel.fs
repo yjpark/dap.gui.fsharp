@@ -28,5 +28,4 @@ type Presenter (env : IEnv) =
         )
         if contacts.Count > 0 then
             contacts'.Attach contacts
-        ()
     static member Create e = new Presenter (e)

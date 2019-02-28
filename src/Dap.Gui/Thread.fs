@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Gui.App.Thread
+module Dap.Gui.Thread
 
 open System.Threading
 open System.Threading.Tasks
@@ -8,7 +8,6 @@ open FSharp.Control.Tasks.V2
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
-open Dap.Gui
 
 type GuiSynchronizationContext (logger : ILogger) =
     inherit SynchronizationContext ()
@@ -60,17 +59,17 @@ let internal setupGuiContext' (logger : ILogger) =
         guiLogger <- Some logger
         logWarn logger "setupGuiContext'" "Succeed" guiContext'
 
-let internal isGuiThread () =
+let isGuiThread () =
     match guiThread with
     | None -> false
     | Some thread ->
         thread = Thread.CurrentThread.ManagedThreadId
 
-let internal getGuiContext () = guiContext |> Option.get
+let getGuiContext () = guiContext |> Option.get
 
-let internal hasGuiContext () = guiContext.IsSome
+let hasGuiContext () = guiContext.IsSome
 
-let internal runGuiFunc (func : unit -> unit) : unit =
+let runGuiFunc (func : unit -> unit) : unit =
     match guiContext with
     | Some context ->
         if isGuiThread () then
@@ -83,29 +82,6 @@ let internal runGuiFunc (func : unit -> unit) : unit =
     | None ->
         logError (getLogging ()) "Thread.runGuiFunc" "GuiContext_Not_Exist" ()
         func ()
-
-(*
- * Can compile, but running has issues, left here in case needed in the future, also as reference
- *
-let internal getGuiTask (getTask : unit -> Task<'res>) : Task<'res> =
-    match guiContext with
-    | Some context ->
-        if isGuiThread () then
-            getTask ()
-        else
-            let onDone = new TaskCompletionSource<'res> ()
-            let callback = SendOrPostCallback(fun _ ->
-                let task = getTask ()
-                if not task.IsCompleted then
-                    task.Wait ()
-                onDone.SetResult task.Result
-            )
-            context.Send (callback, null)
-            onDone.Task
-    | None ->
-        logError (getLogging ()) "Thread.getGuiTask" "GuiContext_Not_Exist" ()
-        getTask ()
-*)
 
 let executeGuiActions' () =
     match guiContext with

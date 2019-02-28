@@ -12,10 +12,14 @@ open Demo.App
 open Demo.Gui
 open Demo.Fabulous
 
+let useFabulous = true
+
 [<EntryPoint>]
 [<STAThread>]
 let main argv =
-    //setMacParam <| MacParam.Create ("Demo")
-    //App.RunGui ("demo.log")
-    setFabulousMacParam <| MacParam.Create ("Demo")
-    App.RunFabulous ("demo.log")
+    if useFabulous then
+        setFabulousMacParam <| MacParam.Create ("Demo")
+        App.RunFabulous ("demo.log")
+    else
+        setMacParam <| MacParam.Create ("Demo")
+        App.RunGui ("demo.log")

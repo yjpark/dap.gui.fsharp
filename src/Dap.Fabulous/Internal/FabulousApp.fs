@@ -15,6 +15,9 @@ module ViewTypes = Dap.Fabulous.View.Types
 
 let mutable param : IFabulousParam option = None
 
+let internal hasParam () =
+    param.IsSome
+
 let internal getParam () =
     param.Value
 

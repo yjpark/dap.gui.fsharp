@@ -16,6 +16,14 @@ open Xamarin.Forms
 //SILP: COMMON_OPENS
 ```
 
+# IOS_OPENS #
+```F#
+open Foundation
+open UIKit
+open Dap.iOS
+//SILP: COMMON_OPENS
+```
+
 # MAC_OPENS #
 ```F#
 open Foundation

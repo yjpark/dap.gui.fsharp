@@ -14,6 +14,9 @@ open Dap.Fabulous.Internal
 
 module ViewTypes = Dap.Fabulous.View.Types
 
+let hasFabulousParam () =
+    FabulousApp.hasParam ()
+
 let getFabulousParam () =
     FabulousApp.getParam ()
 

@@ -8,9 +8,9 @@ open Dap.Gui
 type IGuiPlatform =
     inherit IFeature
     abstract Param0 : obj with get
-    abstract Display : IDisplay with get
+    abstract Display : IDisplay option with get
     abstract Init : obj -> unit
-    abstract Setup<'presenter when 'presenter :> IPresenter> : 'presenter -> IDisplay<'presenter>
+    abstract Show<'presenter when 'presenter :> IPresenter> : 'presenter -> IDisplay<'presenter>
     abstract OnDidAttach : IPack -> unit
     abstract Run : unit -> int
 

@@ -96,7 +96,7 @@ type Context (logging : ILogging) =
         let window' = new MyraWindow (this, param)
         window'.Init ()
         window <- Some window'
-    override this.DoSetup (param : MyraParam) (presenter : IPresenter) =
+    override this.DoShow (param : MyraParam, presenter : IPresenter) =
         window.Value.SetRoot (presenter.Prefab0.Widget0 :?> MyraWidget)
         window.Value :> IMyraWindow
     override this.DoRun (param : MyraParam) =

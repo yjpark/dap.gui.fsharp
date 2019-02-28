@@ -57,9 +57,6 @@
     <Reference Include="Xamarin.Mac" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Numerics" />
-    <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.4.3.3\lib\netstandard1.6\FSharp.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoggingProvider.fs" />

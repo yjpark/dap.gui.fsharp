@@ -17,8 +17,10 @@ type BasePresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefab, 
         if domain.IsSome then
             logError this "Attach" "Already_Attached" (domain, domain')
         domain <- Some domain'
-        this.OnDidAttach ()
-        onAttached.Trigger <| this.AsPresenter
+        runGuiFunc (fun () ->
+            this.OnDidAttach ()
+            onAttached.Trigger <| this.AsPresenter
+        )
     member __.Attached = domain.IsSome
     interface IPresenter<'domain, 'prefab> with
         member __.Prefab = prefab
@@ -62,9 +64,9 @@ type DynamicPresenter<'domain, 'prefab when 'prefab :> IPrefab> (prefab : 'prefa
     member this.Detach () =
         if sealed' then
             logError this "Detach" "Already_Sealed" (domain)
+        let domain' = domain
         if domain.IsSome then
             this.OnWillDetach None
-        let domain' = domain
         domain <- None
         onDetached.Trigger <| this.AsDynamicPresenter
         domain'

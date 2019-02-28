@@ -19,9 +19,6 @@ open Dap.Fabulous.Mac
 open Dap.Mac
 open Dap.Mac.Feature
 
-[<Literal>]
-let FabulousMacPlatformKind = "FabulousMacPlatform"
-
 type AppDelegate (param : MacParam, window : NSWindow) =
     inherit FormsApplicationDelegate ()
     override this.MainWindow = window
@@ -31,10 +28,18 @@ type AppDelegate (param : MacParam, window : NSWindow) =
         base.DidFinishLaunching (notification)
 
 type Context (logging : ILogging) =
-    inherit MacPlatform.Context<AppDelegate> (logging, FabulousMacPlatformKind)
+    inherit MacPlatform.Context<NSApplicationDelegate> (logging, FabulousMacPlatformKind)
     override this.CreateDelegate (param : MacParam) (window : NSWindow) =
-        Forms.Init ()
-        new AppDelegate (param, window)
-    override this.DoSetup (param : MacParam) (presenter : IPresenter) =
-        this.Window
+        if hasFabulousParam () then
+            Forms.Init ()
+            new AppDelegate (param, window)
+            :> NSApplicationDelegate
+        else
+            new MacPlatform.AppDelegate (param, window)
+            :> NSApplicationDelegate
+    override this.DoShow (param : MacParam, presenter : IPresenter) =
+        if hasFabulousParam () then
+            this.Window
+        else
+            base.DoShow (param, presenter)
     interface IOverride

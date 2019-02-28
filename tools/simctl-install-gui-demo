@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+cd ../demo/Demo.iOS
+
+xcrun simctl install booted bin/iPhoneSimulator/Debug/Demo.iOS.app

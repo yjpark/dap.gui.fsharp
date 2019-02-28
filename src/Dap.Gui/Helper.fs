@@ -9,14 +9,6 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
-let isGuiThread () = Dap.Gui.App.Thread.isGuiThread ()
-
-let getGuiContext () = Dap.Gui.App.Thread.getGuiContext ()
-
-let hasGuiContext () = Dap.Gui.App.Thread.hasGuiContext ()
-
-let runGuiFunc func = Dap.Gui.App.Thread.runGuiFunc func
-
 type IRunner<'runner when 'runner :> IRunner> with
     member this.RunGuiFunc (func : Func<'runner, unit>) : unit =
         runGuiFunc (fun () -> func this.Runner)

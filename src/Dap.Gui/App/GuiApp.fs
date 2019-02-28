@@ -33,11 +33,11 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
         platform <- Some <| Feature.create<IGuiPlatform> (app.Env.Logging)
         platform.Value.Init param
         setupGuiContext' platform.Value
-        display <- Some <| platform.Value.Setup ^<| newPresenter app.Env
-        logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform, display)
+        logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform)
         app.OnSetup.AddWatcher platform.Value "OnSetup" (fun result ->
             if result.IsOk then
                 runGuiFunc (fun _ ->
+                    display <- Some <| platform.Value.Show ^<| newPresenter app.Env
                     display.Value.Presenter.Attach app
                     platform.Value.OnDidAttach app
                 )
@@ -45,7 +45,7 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
         Feature.tryStartApp app
         platform.Value.Run ()
     member __.Platform = platform.Value
-    member __.Display = display.Value
+    member __.Display = display
     static member Run p a =
         let guiApp = new GuiApp<'presenter, 'app> (p, a)
         guiApp.Run' ()

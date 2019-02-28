@@ -19,7 +19,7 @@ type Context (logging : ILogging) =
         application.Value.Register (GLib.Cancellable.Current) |> ignore
         window <- Some <| new Gtk.Window (param.Title)
         window.Value.SetDefaultSize (param.Width, param.Height)
-    override this.DoSetup (param : GtkParam) (presenter : IPresenter) =
+    override this.DoShow (param : GtkParam, presenter : IPresenter) =
         window.Value.Child <- presenter.Prefab0.Widget0 :?> Gtk.Widget
         window.Value
     override this.DoRun (param : GtkParam) =

@@ -14,24 +14,25 @@ type Context<'param, 'output> (logging : ILogging, kind : string) =
     let mutable output : 'output option = None
     let mutable display : IDisplay option = None
     abstract member DoInit : 'param -> unit
-    abstract member DoSetup : 'param -> IPresenter -> 'output
+    abstract member DoShow : 'param * IPresenter -> 'output
     abstract member DoRun : 'param -> int
     abstract member OnDidAttach : IPack -> unit
     default __.OnDidAttach (_app : IPack) = ()
     member __.Param = param.Value
     member __.Output = output.Value
+    member __.Display = display
     interface IGuiPlatform with
         member __.Param0 = param :> obj
-        member __.Display = display.Value
+        member __.Display = display
         member this.Init param' =
             if param.IsSome then
                 failWith "Already_Init" (param, param')
             param <- Some (param' :?> 'param)
             this.DoInit param.Value
-        member this.Setup presenter' =
+        member this.Show presenter' =
             if display.IsSome then
-                failWith "Already_Setup" (display, presenter')
-            let output' = this.DoSetup param.Value presenter'
+                failWith "Already_Shown" (display, presenter')
+            let output' = this.DoShow (param.Value, presenter')
             output <- Some output'
             let display' = new Display<'presenter, 'output> (output')
             display'.SetPresenter presenter'

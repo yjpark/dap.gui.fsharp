@@ -30,7 +30,7 @@ type Context<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging :
         window.Value.Title <- param.Title
         appDelegate <- Some <| this.CreateDelegate param window.Value
         NSApplication.SharedApplication.Delegate <- (appDelegate.Value :> NSApplicationDelegate)
-    override this.DoSetup (param : MacParam) (presenter : IPresenter) =
+    override this.DoShow (param : MacParam, presenter : IPresenter) =
         window.Value.ContentView <- presenter.Prefab0.Widget0 :?> NSView
         window.Value
     override this.DoRun (param : MacParam) =
@@ -46,7 +46,7 @@ type Context<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging :
 
 type AppDelegate (param : MacParam, window : NSWindow) =
     inherit NSApplicationDelegate ()
-    override this.DidBecomeActive(notification : NSNotification) =
+    override this.DidBecomeActive (notification : NSNotification) =
         window.MakeKeyAndOrderFront (this)
 
 type Context (logging : ILogging) =

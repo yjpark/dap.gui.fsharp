@@ -8,6 +8,7 @@
     <Description>Gui Libs</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Thread.fs" />
     <Compile Include="Dsl/Models.fs" />
     <Compile Include="_Gen/Models.fs" />
     <Compile Include="_Gen/Builder/Models.fs" />
@@ -25,7 +26,6 @@
     <Compile Include="Internal/Helper.fs" />
     <Compile Include="BaseCombo.fs" />
     <Compile Include="BaseList.fs" />
-    <Compile Include="BasePresenter.fs" />
     <Compile Include="BaseDisplay.fs" />
     <Compile Include="Generator/Types.fs" />
     <Compile Include="Generator/Prefab.fs" />
@@ -36,8 +36,8 @@
     <Compile Include="Container/Const.fs" />
     <Compile Include="_Gen1/Prefab/InputField.fs" />
     <Compile Include="_Gen1/Builder/Prefabs.fs" />
+    <Compile Include="BasePresenter.fs" />
     <Compile Include="App/Types.fs" />
-    <Compile Include="App/Thread.fs" />
     <Compile Include="App/GuiApp.fs" />
     <Compile Include="App/GuiPlatform.fs" />
     <Compile Include="App/Helper.fs" />
