@@ -14,4 +14,4 @@ open Demo.Fabulous
 [<STAThread>]
 let main argv =
     setFabulousOouiParam <| OouiParam.Create ("Demo", port = 6000)
-    App.RunFabulous ("demo.log")
+    App.RunFabulous ("demo-.log")

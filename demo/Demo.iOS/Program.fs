@@ -19,7 +19,7 @@ let useFabulous = true
 let main argv =
     if useFabulous then
         setFabulousIOSParam <| IOSParam.Create ("Demo")
-        App.RunFabulous ("demo.log")
+        App.RunFabulous ("demo-.log")
     else
         setIOSParam <| IOSParam.Create ("Demo")
-        App.RunGui ("demo.log")
+        App.RunGui ("demo-.log")

@@ -19,7 +19,7 @@ let useFabulous = true
 let main argv =
     if useFabulous then
         setFabulousMacParam <| MacParam.Create ("Demo")
-        App.RunFabulous ("demo.log")
+        App.RunFabulous ("demo-.log")
     else
         setMacParam <| MacParam.Create ("Demo")
-        App.RunGui ("demo.log")
+        App.RunGui ("demo-.log")

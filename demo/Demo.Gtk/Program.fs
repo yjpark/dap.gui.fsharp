@@ -14,4 +14,4 @@ open Demo.Gui
 [<STAThread>]
 let main argv =
     setGtkParam <| GtkParam.Create ("Gui.Demo")
-    App.RunGui ("demo.log")
+    App.RunGui ("demo-.log")

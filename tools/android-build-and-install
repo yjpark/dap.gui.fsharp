@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+cd ../demo/Demo.Android
+
+msbuild /t:SignAndroidPackage && \
+    adb install -r bin/Debug/org.yjpark.gui.demo-Signed.apk

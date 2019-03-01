@@ -3,8 +3,6 @@ module Dap.Android.Types
 
 open System
 
-open Android
-
 open Dap.Prelude
 open Dap.Gui.App
 
@@ -13,21 +11,23 @@ let AndroidPlatformKind = "AndroidPlatform"
 
 type Widget = Android.Views.View
 
+type Activity = Android.App.Activity
+
 type IAndroidPlatform =
     inherit IGuiPlatform
     abstract Param : AndroidParam with get
-    abstract Window : App.Activity with get
+    abstract Window : Activity with get
 
 and AndroidParam = {
     Name : string
-    Title : string
+    Activity : Activity
     Actions : (IAndroidPlatform -> unit) list
 } with
     static member Create
-            (name : string, ?title : string) : AndroidParam =
+            (name : string, activity : Activity) : AndroidParam =
         {
             Name = name
-            Title = defaultArg title name
+            Activity = activity
             Actions = []
         }
 

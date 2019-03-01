@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{F2A71F9B-5D33-465A-A702-920D77279786}</ProjectTypeGuids>
     <UseStandardResourceNames>true</UseStandardResourceNames>
     <OutputType>Library</OutputType>
-    <RootNamespace>Dap.Android</RootNamespace>
-    <AssemblyName>Dap.Android</AssemblyName>
+    <RootNamespace>Dap.Fabulous.Android</RootNamespace>
+    <AssemblyName>Dap.Fabulous.Android</AssemblyName>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -47,18 +47,9 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoggingProvider.fs" />
     <Compile Include="Types.fs" />
-    <Compile Include="Extension.fs" />
-    <Compile Include="Util.fs" />
-    <Compile Include="Prefab/Label.fs" />
-    <Compile Include="Prefab/Button.fs" />
-    <Compile Include="Prefab/TextField.fs" />
-    <Compile Include="Container/Panel.fs" />
-    <Compile Include="Container/HBox.fs" />
-    <Compile Include="Container/VBox.fs" />
-    <Compile Include="Container/Table.fs" />
-    <Compile Include="Feature/AndroidPlatform.fs" />
+    <Compile Include="Feature/FabulousAndroidPlatform.fs" />
+    <Compile Include="Activity.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +60,8 @@
       <Version>0.6.4</Version>
     </PackageReference>
     <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
+    <ProjectReference Include="..\Dap.Fabulous\Dap.Fabulous.fsproj" />
+    <ProjectReference Include="..\Dap.Android\Dap.Android.fsproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.FSharp.targets" />
 </Project>

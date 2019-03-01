@@ -15,7 +15,7 @@ open Dap.Fabulous.Ooui
 
 let private onExit (logging : ILogging) (logger : ILogger) (exited : AutoResetEvent) =
     fun (_sender : obj) (cancelArgs : ConsoleCancelEventArgs) ->
-        logWarn logger "OouiPlatform" "Quitting ..." cancelArgs
+        logWarn logger OouiPlatformKind "Quitting ..." cancelArgs
         logging.Close ()
         exited.Set() |> ignore
 

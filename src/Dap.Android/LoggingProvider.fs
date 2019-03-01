@@ -28,8 +28,7 @@ type ConsoleSinkArgs with
 type LoggingProvider (logging : ILogging) =
     inherit BaseLoggingProvider (logging)
     override this.CreateLogging (args : LoggingArgs) =
-        //TODO: get proper log folder
-        let root = Path.Combine ("..", "log")
+        let root = Path.Combine (Xamarin.Essentials.FileSystem.CacheDirectory, "log")
         let newArgs = args.WithFolder(root)
         let logging = newArgs.ToSerilogLogging (consoleProvider = ConsoleSinkArgs.ConsoleProvider)
         logInfo logging "ConsoleLoggingProvider" "CreateLogging" (encodeJson 4 newArgs)
