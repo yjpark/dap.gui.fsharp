@@ -28,8 +28,10 @@ type TextField (logging : ILogging) =                                           
         widget.Changed.Add (fun _ ->
             model.Text.SetValue widget.StringValue
         )
-        model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            widget.StringValue <- evt.New
+        runGuiFunc (fun () ->
+            model.Text.OnChanged.AddWatcher owner kind (fun evt ->
+                widget.StringValue <- evt.New
+            )
         )
     )
     //SILP: PREFAB_FOOTER(TextField)

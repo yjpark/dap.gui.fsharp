@@ -26,12 +26,16 @@ type Label (logging : ILogging) =                                     //__SILP__
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         //https://stackoverflow.com/questions/1507644/sample-code-for-creating-a-nstextfield-label
-        widget.Editable <- false
-        widget.Selectable <- false
-        widget.DrawsBackground <- false
-        widget.Bezeled <- false
+        runGuiFunc (fun () ->
+            widget.Editable <- false
+            widget.Selectable <- false
+            widget.DrawsBackground <- false
+            widget.Bezeled <- false
+        )
         model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            widget.StringValue <- evt.New
+            runGuiFunc (fun () ->
+                widget.StringValue <- evt.New
+            )
         )
     )
     //SILP: PREFAB_FOOTER(Label)

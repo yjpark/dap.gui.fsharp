@@ -28,8 +28,8 @@ type TextField (logging : ILogging) =                                           
         widget.EditingChanged.Add (fun _ ->
             model.Text.SetValue widget.Text
         )
-        model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            runGuiFunc (fun () ->
+        runGuiFunc (fun () ->
+            model.Text.OnChanged.AddWatcher owner kind (fun evt ->
                 widget.Text <- evt.New
             )
         )

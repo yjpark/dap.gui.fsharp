@@ -24,12 +24,18 @@ type VBox (logging : ILogging) =                                      //__SILP__
         let kind = VBoxKind                                           //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
-        widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
+        runGuiFunc (fun () ->
+            widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
+        )
     )
     override this.AddChild (child : NSView) =
-        this.Widget.AddArrangedSubview (child)
+        runGuiFunc (fun () ->
+            this.Widget.AddArrangedSubview (child)
+        )
     override this.RemoveChild (child : NSView) =
-        child.RemoveFromSuperview ()
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(VBox)
     static member Create l = new VBox (l)                             //__SILP__
     static member Create () = new VBox (getLogging ())                //__SILP__

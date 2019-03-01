@@ -65,6 +65,20 @@ let isGuiThread () =
     | Some thread ->
         thread = Thread.CurrentThread.ManagedThreadId
 
+let executeGuiActions' () =
+    match guiContext with
+    | Some context ->
+        match context with
+        | :? GuiSynchronizationContext as context ->
+            if isGuiThread () then
+                context.Execute ()
+            else
+                logError guiLogger.Value "Thread.executeGuiActions" "Is_Not_GuiThread" (context, guiThread)
+        | _ ->
+            logError guiLogger.Value "Thread.executeGuiActions" "Is_Not_GuiSynchronizationContext" (context)
+    | None ->
+        logError (getLogging ()) "Thread.executeGuiActions" "GuiContext_Not_Exist" ()
+
 let getGuiContext () = guiContext |> Option.get
 
 let hasGuiContext () = guiContext.IsSome
@@ -83,13 +97,14 @@ let runGuiFunc (func : unit -> unit) : unit =
         logError (getLogging ()) "Thread.runGuiFunc" "GuiContext_Not_Exist" ()
         func ()
 
-let executeGuiActions' () =
-    match guiContext with
-    | Some context ->
-        match context with
-        | :? GuiSynchronizationContext as context ->
-            context.Execute ()
-        | _ ->
-            logWarn guiLogger.Value "Thread.executeGuiActions" "Is_Not_GuiSynchronizationContext" (context)
-    | None ->
-        logWarn (getLogging ()) "Thread.executeGuiActions" "GuiContext_Not_Exist" ()
+//TODO: Replace the async usage with standard dotnet core logic
+let getGuiTask (getTask : unit -> Task<'res>) : Task<'res> = task {
+    return! async {
+        (*
+        while guiContext.IsNone do
+            do! Async.Sleep 50
+        *)
+        do! Async.SwitchToContext (getGuiContext ())
+        return! Async.AwaitTask (getTask ())
+    }
+}

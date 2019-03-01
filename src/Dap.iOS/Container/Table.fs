@@ -31,9 +31,13 @@ type Table (logging : ILogging) =                                     //__SILP__
         )
     )
     override this.AddChild (child : UIView) =
-        this.Widget.AddArrangedSubview (child)
+        runGuiFunc (fun () ->
+            this.Widget.AddArrangedSubview (child)
+        )
     override this.RemoveChild (child : UIView) =
-        child.RemoveFromSuperview ()
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(Table)
     static member Create l = new Table (l)                            //__SILP__
     static member Create () = new Table (getLogging ())               //__SILP__

@@ -23,11 +23,6 @@ type IRunner with
     member this.SetGuiValue (prop : IVarProperty<'v>, v : 'v) =
         this.SetGuiValue (prop.SetValue, v)
 
-(*
- * In case needed in the future
- *
-let getGuiTask (getTask : unit -> Task<'res>) = Dap.Gui.App.Thread.getGuiTask getTask
-
 type IAsyncHandler<'req, 'res>  with
     member this.SetupGuiHandler' (handler' : 'req -> Task<'res>) =
         fun (req : 'req) ->
@@ -36,15 +31,16 @@ type IAsyncHandler<'req, 'res>  with
     member this.SetupGuiHandler (handler : 'req -> Task<'res>) =
         this.SetupGuiHandler' handler
         this.Seal ()
+
 type IRunner<'runner when 'runner :> IRunner> with
     member this.GetGuiTask (getTask : GetTask<'runner, 'res>) : Task<'res> =
         getGuiTask (fun () -> getTask this.Runner)
     member this.RunGuiTask (onFailed : OnFailed<'runner>) (getTask : GetTask<'runner, unit>) : unit =
         this.RunTask onFailed (fun _ -> this.GetGuiTask getTask)
+
 type IRunner with
     member this.GetGuiTask0 (getTask : GetTask<IRunner, 'res>) : Task<'res> =
         getGuiTask (fun () -> getTask this)
     member this.RunGuiTask0 (onFailed : OnFailed<IRunner>) (getTask : GetTask<IRunner, unit>) : unit =
         this.RunTask0 onFailed (fun _ -> this.GetGuiTask0 getTask)
-*)
 

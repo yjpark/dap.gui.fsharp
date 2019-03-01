@@ -28,10 +28,14 @@ type Button (logging : ILogging) =                                      //__SILP
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            widget.Title <- evt.New
+            runGuiFunc (fun () ->
+                widget.Title <- evt.New
+            )
         )
-        widget.Activated.Add (fun _ ->
-            onClick.FireEvent ()
+        runGuiFunc (fun () ->
+            widget.Activated.Add (fun _ ->
+                onClick.FireEvent ()
+            )
         )
     )
     member __.OnClick : IChannel<unit> = onClick

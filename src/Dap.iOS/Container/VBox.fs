@@ -28,10 +28,14 @@ type VBox (logging : ILogging) =                                      //__SILP__
             widget.Axis <- UILayoutConstraintAxis.Vertical
         )
     )
-    override this.AddChild (child : UIView) =
-        this.Widget.AddArrangedSubview (child)
-    override this.RemoveChild (child : UIView) =
-        child.RemoveFromSuperview ()
+    override this.AddChild (child : NSView) =
+        runGuiFunc (fun () ->
+            this.Widget.AddArrangedSubview (child)
+        )
+    override this.RemoveChild (child : NSView) =
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(VBox)
     static member Create l = new VBox (l)                             //__SILP__
     static member Create () = new VBox (getLogging ())                //__SILP__

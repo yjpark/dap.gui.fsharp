@@ -29,9 +29,13 @@ type HBox (logging : ILogging) =                                      //__SILP__
         )
     )
     override this.AddChild (child : UIView) =
-        this.Widget.AddArrangedSubview (child)
+        runGuiFunc (fun () ->
+            this.Widget.AddArrangedSubview (child)
+        )
     override this.RemoveChild (child : UIView) =
-        child.RemoveFromSuperview ()
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(HBox)
     static member Create l = new HBox (l)                             //__SILP__
     static member Create () = new HBox (getLogging ())                //__SILP__

@@ -27,9 +27,13 @@ type Panel (logging : ILogging) =                                     //__SILP__
         ()
     )
     override this.AddChild (child : NSView) =
-        this.Widget.AddSubview (child)
+        runGuiFunc (fun () ->
+            this.Widget.AddSubview (child)
+        )
     override this.RemoveChild (child : NSView) =
-        child.RemoveFromSuperview ()
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(Panel)
     static member Create l = new Panel (l)                            //__SILP__
     static member Create () = new Panel (getLogging ())               //__SILP__

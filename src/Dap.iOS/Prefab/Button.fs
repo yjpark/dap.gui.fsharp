@@ -32,8 +32,10 @@ type Button (logging : ILogging) =                                      //__SILP
                 widget.SetTitle (evt.New, UIControlState.Normal)
             )
         )
-        widget.TouchUpInside.Add (fun _ ->
-            onClick.FireEvent ()
+        runGuiFunc (fun () ->
+            widget.TouchUpInside.Add (fun _ ->
+                onClick.FireEvent ()
+            )
         )
     )
     member __.OnClick : IChannel<unit> = onClick

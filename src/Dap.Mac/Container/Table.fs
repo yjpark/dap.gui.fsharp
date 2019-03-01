@@ -26,12 +26,18 @@ type Table (logging : ILogging) =                                     //__SILP__
         let kind = TableKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
-        widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
+        runGuiFunc (fun () ->
+            widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
+        )
     )
     override this.AddChild (child : NSView) =
-        this.Widget.AddArrangedSubview (child)
+        runGuiFunc (fun () ->
+            this.Widget.AddArrangedSubview (child)
+        )
     override this.RemoveChild (child : NSView) =
-        child.RemoveFromSuperview ()
+        runGuiFunc (fun () ->
+            child.RemoveFromSuperview ()
+        )
     //SILP: CONTAINER_FOOTER(Table)
     static member Create l = new Table (l)                            //__SILP__
     static member Create () = new Table (getLogging ())               //__SILP__
