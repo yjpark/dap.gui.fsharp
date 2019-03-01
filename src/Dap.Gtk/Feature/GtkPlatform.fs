@@ -20,7 +20,7 @@ type Context (logging : ILogging) =
         window <- Some <| new Gtk.Window (param.Title)
         window.Value.SetDefaultSize (param.Width, param.Height)
     override this.DoShow (param : GtkParam, presenter : IPresenter) =
-        window.Value.Child <- presenter.Prefab0.Widget0 :?> Gtk.Widget
+        window.Value.Child <- presenter.Prefab0.Widget0 :?> Widget
         window.Value
     override this.DoRun (param : GtkParam) =
         window.Value.ShowAll ()

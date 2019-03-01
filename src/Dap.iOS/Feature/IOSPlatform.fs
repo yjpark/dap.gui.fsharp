@@ -61,7 +61,7 @@ type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging :
     member this.AsIOSPlatform = this :> IIOSPlatform
 
 type ViewController (param : IOSParam) =
-    inherit UIViewController ()
+    inherit WidgetController ()
     do (
         if base.RespondsToSelector (Selector.automaticallyAdjustsScrollViewInsets) then
             base.AutomaticallyAdjustsScrollViewInsets <- true
@@ -69,8 +69,8 @@ type ViewController (param : IOSParam) =
             base.ExtendedLayoutIncludesOpaqueBars <- true
         let view = base.View
         view.AutosizesSubviews <- true
-        view.AutoresizingMask <- UIViewAutoresizing.FlexibleDimensions
-        view.BackgroundColor <- UIColor.White
+        view.AutoresizingMask <- WidgetAutoresizing.FlexibleDimensions
+        view.BackgroundColor <- Color.White
     )
     //TODO: Add to IOSParam
     override this.GetSupportedInterfaceOrientations () : UIInterfaceOrientationMask =
@@ -105,7 +105,7 @@ type Context (logging : ILogging) =
         match (window, presenter) with
         | (Some window, Some presenter) ->
             //Add Widget
-            let widget = presenter.Prefab0.Widget0 :?> UIView
+            let widget = presenter.Prefab0.Widget0 :?> Widget
             window.RootViewController.View.AddSubview widget
             logWidgetLayout logger window
             widget.Frame <- window.RootViewController.View.Frame

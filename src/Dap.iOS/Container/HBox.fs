@@ -3,7 +3,7 @@ module Dap.iOS.Prefab.HBox
 
 //SILP:IOS_OPENS
 open Foundation                                                       //__SILP__
-open UIKit                                                           //__SILP__
+open UIKit                                                            //__SILP__
 open Dap.iOS                                                          //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
@@ -16,9 +16,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type HBoxWidget = UIStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(HBox, UIView)
+//SILP: CONTAINER_HEADER_MIDDLE(HBox, Widget)
 type HBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<HBox, HBoxWidget, UIView>                   //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, Widget>                   //__SILP__
         (HBoxKind, logging, new HBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = HBoxKind                                           //__SILP__
@@ -28,11 +28,11 @@ type HBox (logging : ILogging) =                                      //__SILP__
             widget.Axis <- UILayoutConstraintAxis.Horizontal
         )
     )
-    override this.AddChild (child : UIView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddArrangedSubview (child)
         )
-    override this.RemoveChild (child : UIView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

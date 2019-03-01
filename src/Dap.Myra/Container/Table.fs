@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type TableWidget = Myra.Graphics2D.UI.Grid
 
-//SILP: CONTAINER_HEADER_MIDDLE(Table, MyraWidget)
+//SILP: CONTAINER_HEADER_MIDDLE(Table, Widget)
 type Table (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Table, TableWidget, MyraWidget>             //__SILP__
+    inherit BaseContainer<Table, TableWidget, Widget>                 //__SILP__
         (TableKind, logging, new TableWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = TableKind                                          //__SILP__
@@ -24,11 +24,11 @@ type Table (logging : ILogging) =                                     //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : MyraWidget) =
+    override this.AddChild (child : Widget) =
         child.GridRow <- this.Widget.Widgets.Count
         this.Widget.Widgets.Add child
         this.Widget.RowsProportions.Add (new Proportion(ProportionType.Auto))
-    override this.RemoveChild (child : MyraWidget) =
+    override this.RemoveChild (child : Widget) =
         this.Widget.RemoveChild child
     //SILP: CONTAINER_FOOTER(Table)
     static member Create l = new Table (l)                            //__SILP__

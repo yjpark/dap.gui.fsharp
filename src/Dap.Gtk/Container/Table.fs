@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type TableWidget = Gtk.ListBox
 
-//SILP: CONTAINER_HEADER_MIDDLE(Table, Gtk.Widget)
+//SILP: CONTAINER_HEADER_MIDDLE(Table, Widget)
 type Table (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Table, TableWidget, Gtk.Widget>             //__SILP__
+    inherit BaseContainer<Table, TableWidget, Widget>                 //__SILP__
         (TableKind, logging, new TableWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = TableKind                                          //__SILP__
@@ -24,9 +24,9 @@ type Table (logging : ILogging) =                                     //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : Gtk.Widget) =
+    override this.AddChild (child : Widget) =
         this.Widget.Add(child)
-    override this.RemoveChild (child : Gtk.Widget) =
+    override this.RemoveChild (child : Widget) =
         child.Parent <- null
     //SILP: PREFAB_FOOTER(Table)
     static member Create l = new Table (l)                            //__SILP__

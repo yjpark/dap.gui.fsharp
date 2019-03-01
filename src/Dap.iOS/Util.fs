@@ -9,7 +9,7 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let rec calcLayoutInfo (prefix : string) (widget : UIView) : string list =
+let rec calcLayoutInfo (prefix : string) (widget : Widget) : string list =
     let viewType = (widget.GetType ()) .Name
     [
         yield sprintf "%s%s %A %A" prefix viewType widget.Frame widget
@@ -18,13 +18,13 @@ let rec calcLayoutInfo (prefix : string) (widget : UIView) : string list =
                 yield line
     ]
 
-let logWidgetLayout (logger : ILogger) (widget : UIView) =
+let logWidgetLayout (logger : ILogger) (widget : Widget) =
     let info =
         calcLayoutInfo "" widget
         |> String.concat "\n"
     logWip logger "Layout" info
 
 let logLayout (prefab : IPrefab) =
-    prefab.Widget0 :?> UIView
+    prefab.Widget0 :?> Widget
     |> logWidgetLayout prefab
 

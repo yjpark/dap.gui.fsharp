@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type VBoxWidget = Gtk.VBox
 
-//SILP: CONTAINER_HEADER_MIDDLE(VBox, Gtk.Widget)
+//SILP: CONTAINER_HEADER_MIDDLE(VBox, Widget)
 type VBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<VBox, VBoxWidget, Gtk.Widget>               //__SILP__
+    inherit BaseContainer<VBox, VBoxWidget, Widget>                   //__SILP__
         (VBoxKind, logging, new VBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = VBoxKind                                           //__SILP__
@@ -24,9 +24,9 @@ type VBox (logging : ILogging) =                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : Gtk.Widget) =
+    override this.AddChild (child : Widget) =
         this.Widget.PackStart(child, false, false, (uint32) 0)
-    override this.RemoveChild (child : Gtk.Widget) =
+    override this.RemoveChild (child : Widget) =
         child.Parent <- null
     //SILP: PREFAB_FOOTER(VBox)
     static member Create l = new VBox (l)                             //__SILP__

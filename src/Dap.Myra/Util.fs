@@ -6,7 +6,7 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let rec calcLayoutInfo (prefix : string) (widget : MyraWidget) : string list =
+let rec calcLayoutInfo (prefix : string) (widget : Widget) : string list =
     let viewType = (widget.GetType ()) .Name
     [
         match widget with
@@ -20,7 +20,7 @@ let rec calcLayoutInfo (prefix : string) (widget : MyraWidget) : string list =
     ]
 
 let logLayout (prefab : IPrefab) =
-    let widget = prefab.Widget0 :?> MyraWidget
+    let widget = prefab.Widget0 :?> Widget
     let info =
         "" :: calcLayoutInfo "" widget
         |> String.concat "\n"

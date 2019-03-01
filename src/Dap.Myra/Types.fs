@@ -23,7 +23,8 @@ type GamePad = Microsoft.Xna.Framework.Input.GamePad
 type Keyboard = Microsoft.Xna.Framework.Input.Keyboard
 type Keys = Microsoft.Xna.Framework.Input.Keys
 
-type MyraWidget = Myra.Graphics2D.UI.Widget
+type Widget = Myra.Graphics2D.UI.Widget
+
 type MyraPanel = Myra.Graphics2D.UI.Panel
 
 type Proportion = Myra.Graphics2D.UI.Grid.Proportion

@@ -9,18 +9,18 @@ open Dap.Platform
 open Dap.Yoga
 
 type Adaptor (logging : ILogging) =
-    inherit BaseAdaptor<Gtk.Widget> (logging)
+    inherit BaseAdaptor<Widget> (logging)
     let logger = logging.GetLogger "GtkYoga"
-    override __.GetSize (widget : Gtk.Widget) =
+    override __.GetSize (widget : Widget) =
         ((float32) widget.AllocatedWidth, (float32) widget.AllocatedHeight)
-    override __.MeasureSize (widget : Gtk.Widget, constrainWidth : float32,  constrainHeight : float32) =
+    override __.MeasureSize (widget : Widget, constrainWidth : float32,  constrainHeight : float32) =
         let mutable constrainSize = new Gtk.Requisition ()
         constrainSize.Width <- (int) constrainWidth
         constrainSize.Height <- (int) constrainHeight
         let mutable result : Gtk.Requisition = Gtk.Requisition.Zero
         widget.GetPreferredSize (ref constrainSize, ref result)
         ((float32) result.Width, (float32) result.Height)
-    override __.ApplyLayout (widget : Gtk.Widget, node : YogaNode) =
+    override __.ApplyLayout (widget : Widget, node : YogaNode) =
         match widget.Parent with
         | :? Gtk.Fixed as container ->
             container.Move (widget, (int) node.LayoutX, (int) node.LayoutY)

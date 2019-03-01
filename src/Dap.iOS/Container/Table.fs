@@ -3,7 +3,7 @@ module Dap.iOS.Prefab.Table
 
 //SILP:IOS_OPENS
 open Foundation                                                       //__SILP__
-open UIKit                                                           //__SILP__
+open UIKit                                                            //__SILP__
 open Dap.iOS                                                          //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
@@ -18,9 +18,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type TableWidget = UIStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(Table, UIView)
+//SILP: CONTAINER_HEADER_MIDDLE(Table, Widget)
 type Table (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Table, TableWidget, UIView>                 //__SILP__
+    inherit BaseContainer<Table, TableWidget, Widget>                 //__SILP__
         (TableKind, logging, new TableWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = TableKind                                          //__SILP__
@@ -30,11 +30,11 @@ type Table (logging : ILogging) =                                     //__SILP__
             widget.Axis <- UILayoutConstraintAxis.Vertical
         )
     )
-    override this.AddChild (child : UIView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddArrangedSubview (child)
         )
-    override this.RemoveChild (child : UIView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

@@ -3,7 +3,7 @@ module Dap.iOS.Prefab.VBox
 
 //SILP:IOS_OPENS
 open Foundation                                                       //__SILP__
-open UIKit                                                           //__SILP__
+open UIKit                                                            //__SILP__
 open Dap.iOS                                                          //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
@@ -16,9 +16,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type VBoxWidget = UIStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(VBox, UIView)
+//SILP: CONTAINER_HEADER_MIDDLE(VBox, Widget)
 type VBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<VBox, VBoxWidget, UIView>                   //__SILP__
+    inherit BaseContainer<VBox, VBoxWidget, Widget>                   //__SILP__
         (VBoxKind, logging, new VBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = VBoxKind                                           //__SILP__
@@ -28,11 +28,11 @@ type VBox (logging : ILogging) =                                      //__SILP__
             widget.Axis <- UILayoutConstraintAxis.Vertical
         )
     )
-    override this.AddChild (child : NSView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddArrangedSubview (child)
         )
-    override this.RemoveChild (child : NSView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

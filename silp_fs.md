@@ -24,6 +24,12 @@ open Dap.iOS
 //SILP: COMMON_OPENS
 ```
 
+# ANDROID_OPENS #
+```F#
+open Dap.Android
+//SILP: COMMON_OPENS
+```
+
 # MAC_OPENS #
 ```F#
 open Foundation
@@ -57,23 +63,32 @@ type ${prefab} (logging : ILogging) =
         (${prefab}Kind, ${prefab}Props.Create, logging, new ${prefab}Widget ())
 ```
 
-# PREFAB_MIDDLE(prefab) #
+# PREFAB_HEADER_CREATE(prefab) #
 ```F#
-do (
-    let kind = ${prefab}Kind
-    let owner = base.AsOwner
-    let model = base.Model
-    let widget = base.Widget
+type ${prefab} (logging : ILogging) =
+    inherit BasePrefab<${prefab}, ${prefab}Props, ${prefab}Widget>
+        (${prefab}Kind, ${prefab}Props.Create, logging, IPrefab.Create${prefab} ())
 ```
 
-# PREFAB_HEADER_MIDDLE(prefab) #
+# PREFAB_MIDDLE(prefab) #
 ```F#
-//SILP: PREFAB_HEADER(${prefab})
     do (
         let kind = ${prefab}Kind
         let owner = base.AsOwner
         let model = base.Model
         let widget = base.Widget
+```
+
+# PREFAB_HEADER_MIDDLE(prefab) #
+```F#
+//SILP: PREFAB_HEADER(${prefab})
+//SILP: PREFAB_MIDDLE(${prefab})
+```
+
+# PREFAB_HEADER_MIDDLE_CREATE(prefab) #
+```F#
+//SILP: PREFAB_HEADER_CREATE(${prefab})
+//SILP: PREFAB_MIDDLE(${prefab})
 ```
 
 # PREFAB_FOOTER(prefab) #
@@ -92,13 +107,31 @@ type ${container} (logging : ILogging) =
         (${container}Kind, logging, new ${container}Widget ())
 ```
 
-# CONTAINER_HEADER_MIDDLE(container, widget) #
+# CONTAINER_HEADER_CREATE(container, widget) #
 ```F#
-//SILP: CONTAINER_HEADER(${container}, ${widget})
+type ${container} (logging : ILogging) =
+    inherit BaseContainer<${container}, ${container}Widget, ${widget}>
+        (${container}Kind, logging, IContainer.Create${container} ())
+```
+
+# CONTAINER_MIDDLE(container) #
+```F#
     do (
         let kind = ${container}Kind
         let owner = base.AsOwner
         let widget = base.Widget
+```
+
+# CONTAINER_HEADER_MIDDLE(container, widget) #
+```F#
+//SILP: CONTAINER_HEADER(${container}, ${widget})
+//SILP: CONTAINER_MIDDLE(${container})
+```
+
+# CONTAINER_HEADER_MIDDLE_CREATE(container, widget) #
+```F#
+//SILP: CONTAINER_HEADER_CREATE(${container}, ${widget})
+//SILP: CONTAINER_MIDDLE(${container})
 ```
 
 # CONTAINER_FOOTER(container) #

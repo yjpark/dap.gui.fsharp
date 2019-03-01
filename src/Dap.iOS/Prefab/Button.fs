@@ -3,7 +3,7 @@ module Dap.iOS.Prefab.Button
 
 //SILP:IOS_OPENS
 open Foundation                                                       //__SILP__
-open UIKit                                                           //__SILP__
+open UIKit                                                            //__SILP__
 open Dap.iOS                                                          //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
@@ -21,7 +21,7 @@ type Button (logging : ILogging) =                                      //__SILP
     inherit BasePrefab<Button, ButtonProps, ButtonWidget>               //__SILP__
         (ButtonKind, ButtonProps.Create, logging, new ButtonWidget ())  //__SILP__
     let onClick = IButton.AddChannels base.Channels
-    //SILP: PREFAB_MIDDLE(Button)
+//SILP: PREFAB_MIDDLE(Button)
     do (                                                              //__SILP__
         let kind = ButtonKind                                         //__SILP__
         let owner = base.AsOwner                                      //__SILP__

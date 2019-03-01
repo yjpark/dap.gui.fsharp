@@ -18,9 +18,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type TableWidget = NSStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(Table, NSView)
+//SILP: CONTAINER_HEADER_MIDDLE(Table, Widget)
 type Table (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Table, TableWidget, NSView>                 //__SILP__
+    inherit BaseContainer<Table, TableWidget, Widget>                 //__SILP__
         (TableKind, logging, new TableWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = TableKind                                          //__SILP__
@@ -30,11 +30,11 @@ type Table (logging : ILogging) =                                     //__SILP__
             widget.Orientation <- NSUserInterfaceLayoutOrientation.Vertical
         )
     )
-    override this.AddChild (child : NSView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddArrangedSubview (child)
         )
-    override this.RemoveChild (child : NSView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

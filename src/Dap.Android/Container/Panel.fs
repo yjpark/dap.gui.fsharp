@@ -1,10 +1,8 @@
 [<AutoOpen>]
-module Dap.iOS.Prefab.Panel
+module Dap.Android.Prefab.Panel
 
-//SILP:IOS_OPENS
-open Foundation                                                       //__SILP__
-open UIKit                                                            //__SILP__
-open Dap.iOS                                                          //__SILP__
+//SILP: ANDROID_OPENS
+open Dap.Android                                                      //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
 open Dap.Context                                                      //__SILP__
@@ -14,12 +12,13 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type PanelWidget = Widget
+type PanelWidget = Android.Widget.FrameLayout
 
-//SILP: CONTAINER_HEADER_MIDDLE(Panel, Widget)
+
+//SILP: CONTAINER_HEADER_MIDDLE_CREATE(Panel, Widget)
 type Panel (logging : ILogging) =                                     //__SILP__
     inherit BaseContainer<Panel, PanelWidget, Widget>                 //__SILP__
-        (PanelKind, logging, new PanelWidget ())                      //__SILP__
+        (PanelKind, logging, IContainer.CreatePanel ())               //__SILP__
     do (                                                              //__SILP__
         let kind = PanelKind                                          //__SILP__
         let owner = base.AsOwner                                      //__SILP__
@@ -28,11 +27,11 @@ type Panel (logging : ILogging) =                                     //__SILP__
     )
     override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
-            this.Widget.AddSubview (child)
+            this.Widget.AddView (child)
         )
     override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
-            child.RemoveFromSuperview ()
+            this.Widget.RemoveView (child)
         )
     //SILP: CONTAINER_FOOTER(Panel)
     static member Create l = new Panel (l)                            //__SILP__

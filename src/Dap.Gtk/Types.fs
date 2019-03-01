@@ -12,6 +12,8 @@ open Dap.Gui.App
 [<Literal>]
 let GtkPlatformKind = "GtkPlatform"
 
+type Widget = Gtk.Widget
+
 type IGtkPlatform =
     inherit IGuiPlatform
     abstract Param : GtkParam with get

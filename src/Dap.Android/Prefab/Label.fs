@@ -1,10 +1,8 @@
 [<AutoOpen>]
-module Dap.iOS.Prefab.Label
+module Dap.Android.Prefab.Label
 
-//SILP:IOS_OPENS
-open Foundation                                                       //__SILP__
-open UIKit                                                            //__SILP__
-open Dap.iOS                                                          //__SILP__
+//SILP: ANDROID_OPENS
+open Dap.Android                                                      //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
 open Dap.Context                                                      //__SILP__
@@ -14,17 +12,17 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type LabelWidget = UILabel
+type LabelWidget = Android.Widget.TextView
 
-//SILP: PREFAB_HEADER_MIDDLE(Label)
-type Label (logging : ILogging) =                                     //__SILP__
-    inherit BasePrefab<Label, LabelProps, LabelWidget>                //__SILP__
-        (LabelKind, LabelProps.Create, logging, new LabelWidget ())   //__SILP__
-    do (                                                              //__SILP__
-        let kind = LabelKind                                          //__SILP__
-        let owner = base.AsOwner                                      //__SILP__
-        let model = base.Model                                        //__SILP__
-        let widget = base.Widget                                      //__SILP__
+//SILP: PREFAB_HEADER_MIDDLE_CREATE(Label)
+type Label (logging : ILogging) =                                        //__SILP__
+    inherit BasePrefab<Label, LabelProps, LabelWidget>                   //__SILP__
+        (LabelKind, LabelProps.Create, logging, IPrefab.CreateLabel ())  //__SILP__
+    do (                                                                 //__SILP__
+        let kind = LabelKind                                             //__SILP__
+        let owner = base.AsOwner                                         //__SILP__
+        let model = base.Model                                           //__SILP__
+        let widget = base.Widget                                         //__SILP__
         model.Text.OnChanged.AddWatcher owner kind (fun evt ->
             runGuiFunc (fun () ->
                 widget.Text <- evt.New

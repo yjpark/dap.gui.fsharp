@@ -14,11 +14,11 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type PanelWidget = NSView
+type PanelWidget = Widget
 
-//SILP: CONTAINER_HEADER_MIDDLE(Panel, NSView)
+//SILP: CONTAINER_HEADER_MIDDLE(Panel, Widget)
 type Panel (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Panel, PanelWidget, NSView>                 //__SILP__
+    inherit BaseContainer<Panel, PanelWidget, Widget>                 //__SILP__
         (PanelKind, logging, new PanelWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = PanelKind                                          //__SILP__
@@ -26,11 +26,11 @@ type Panel (logging : ILogging) =                                     //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : NSView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddSubview (child)
         )
-    override this.RemoveChild (child : NSView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

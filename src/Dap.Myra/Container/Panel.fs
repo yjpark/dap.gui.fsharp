@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type PanelWidget = MyraPanel
 
-//SILP: CONTAINER_HEADER_MIDDLE(Panel, MyraWidget)
+//SILP: CONTAINER_HEADER_MIDDLE(Panel, Widget)
 type Panel (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Panel, PanelWidget, MyraWidget>             //__SILP__
+    inherit BaseContainer<Panel, PanelWidget, Widget>                 //__SILP__
         (PanelKind, logging, new PanelWidget ())                      //__SILP__
     do (                                                              //__SILP__
         let kind = PanelKind                                          //__SILP__
@@ -24,9 +24,9 @@ type Panel (logging : ILogging) =                                     //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : MyraWidget) =
+    override this.AddChild (child : Widget) =
         this.Widget.Widgets.Add child
-    override this.RemoveChild (child : MyraWidget) =
+    override this.RemoveChild (child : Widget) =
         this.Widget.RemoveChild child
     //SILP: CONTAINER_FOOTER(Panel)
     static member Create l = new Panel (l)                            //__SILP__

@@ -1,10 +1,8 @@
 [<AutoOpen>]
-module Dap.iOS.Prefab.Panel
+module Dap.Android.Prefab.HBox
 
-//SILP:IOS_OPENS
-open Foundation                                                       //__SILP__
-open UIKit                                                            //__SILP__
-open Dap.iOS                                                          //__SILP__
+//SILP: ANDROID_OPENS
+open Dap.Android                                                      //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
 open Dap.Context                                                      //__SILP__
@@ -14,30 +12,33 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type PanelWidget = Widget
+type HBoxWidget = Android.Widget.LinearLayout
 
-//SILP: CONTAINER_HEADER_MIDDLE(Panel, Widget)
-type Panel (logging : ILogging) =                                     //__SILP__
-    inherit BaseContainer<Panel, PanelWidget, Widget>                 //__SILP__
-        (PanelKind, logging, new PanelWidget ())                      //__SILP__
+
+//SILP: CONTAINER_HEADER_MIDDLE_CREATE(HBox, Widget)
+type HBox (logging : ILogging) =                                      //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, Widget>                   //__SILP__
+        (HBoxKind, logging, IContainer.CreateHBox ())                 //__SILP__
     do (                                                              //__SILP__
-        let kind = PanelKind                                          //__SILP__
+        let kind = HBoxKind                                           //__SILP__
         let owner = base.AsOwner                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
-        ()
+        runGuiFunc (fun () ->
+            widget.Orientation <- Android.Widget.Orientation.Horizontal
+        )
     )
     override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
-            this.Widget.AddSubview (child)
+            this.Widget.AddView (child)
         )
     override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
-            child.RemoveFromSuperview ()
+            this.Widget.RemoveView (child)
         )
-    //SILP: CONTAINER_FOOTER(Panel)
-    static member Create l = new Panel (l)                            //__SILP__
-    static member Create () = new Panel (getLogging ())               //__SILP__
+    //SILP: CONTAINER_FOOTER(HBox)
+    static member Create l = new HBox (l)                             //__SILP__
+    static member Create () = new HBox (getLogging ())                //__SILP__
     override this.Self = this                                         //__SILP__
-    override __.Spawn l = Panel.Create l                              //__SILP__
+    override __.Spawn l = HBox.Create l                               //__SILP__
     interface IFallback                                               //__SILP__
-    interface IPanel
+    interface IHBox

@@ -16,9 +16,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type HBoxWidget = NSStackView
 
-//SILP: CONTAINER_HEADER_MIDDLE(HBox, NSView)
+//SILP: CONTAINER_HEADER_MIDDLE(HBox, Widget)
 type HBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<HBox, HBoxWidget, NSView>                   //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, Widget>                   //__SILP__
         (HBoxKind, logging, new HBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = HBoxKind                                           //__SILP__
@@ -28,11 +28,11 @@ type HBox (logging : ILogging) =                                      //__SILP__
             widget.Orientation <- NSUserInterfaceLayoutOrientation.Horizontal
         )
     )
-    override this.AddChild (child : NSView) =
+    override this.AddChild (child : Widget) =
         runGuiFunc (fun () ->
             this.Widget.AddArrangedSubview (child)
         )
-    override this.RemoveChild (child : NSView) =
+    override this.RemoveChild (child : Widget) =
         runGuiFunc (fun () ->
             child.RemoveFromSuperview ()
         )

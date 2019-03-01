@@ -13,6 +13,9 @@ open Dap.Gui.App
 [<Literal>]
 let IOSPlatformKind = "IOSPlatform"
 
+type Color = UIColor
+type Widget = UIView
+
 type IIOSPlatform =
     inherit IGuiPlatform
     abstract Param : IOSParam with get

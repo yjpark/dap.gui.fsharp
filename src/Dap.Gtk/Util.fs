@@ -6,7 +6,7 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let rec calcLayoutInfo (prefix : string) (widget : Gtk.Widget) : string list =
+let rec calcLayoutInfo (prefix : string) (widget : Widget) : string list =
     let viewType = (widget.GetType ()) .Name
     [
         yield sprintf "%s%s %A" prefix viewType widget
@@ -19,7 +19,7 @@ let rec calcLayoutInfo (prefix : string) (widget : Gtk.Widget) : string list =
     ]
 
 let logLayout (prefab : IPrefab) =
-    let widget = prefab.Widget0 :?> Gtk.Widget
+    let widget = prefab.Widget0 :?> Widget
     let info =
         calcLayoutInfo "" widget
         |> String.concat "\n"

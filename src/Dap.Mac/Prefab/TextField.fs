@@ -25,12 +25,14 @@ type TextField (logging : ILogging) =                                           
         let owner = base.AsOwner                                                 //__SILP__
         let model = base.Model                                                   //__SILP__
         let widget = base.Widget                                                 //__SILP__
-        widget.Changed.Add (fun _ ->
-            model.Text.SetValue widget.StringValue
-        )
         runGuiFunc (fun () ->
             model.Text.OnChanged.AddWatcher owner kind (fun evt ->
                 widget.StringValue <- evt.New
+            )
+        )
+        runGuiFunc (fun () ->
+            widget.Changed.Add (fun _ ->
+                model.Text.SetValue widget.StringValue
             )
         )
     )

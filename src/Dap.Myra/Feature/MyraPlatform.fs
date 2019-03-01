@@ -38,7 +38,7 @@ type MyraWindow (platform : IMyraPlatform, param : MyraParam) =
         graphicsManager <- Some graphics
         MyraEnvironment.Game <- this :> Microsoft.Xna.Framework.Game
         desktop <- Some <| new Desktop ()
-    member __.SetRoot (widget : MyraWidget) =
+    member __.SetRoot (widget : Widget) =
         desktop.Value.Widgets.Clear ()
         desktop.Value.Widgets.Add (widget)
     override this.Initialize () =
@@ -97,7 +97,7 @@ type Context (logging : ILogging) =
         window'.Init ()
         window <- Some window'
     override this.DoShow (param : MyraParam, presenter : IPresenter) =
-        window.Value.SetRoot (presenter.Prefab0.Widget0 :?> MyraWidget)
+        window.Value.SetRoot (presenter.Prefab0.Widget0 :?> Widget)
         window.Value :> IMyraWindow
     override this.DoRun (param : MyraParam) =
         window.Value.Run ()

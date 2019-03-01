@@ -12,6 +12,9 @@ open Dap.Gui.App
 [<Literal>]
 let MacPlatformKind = "MacPlatform"
 
+type Color = NSColor
+type Widget = NSView
+
 type IMacPlatform =
     inherit IGuiPlatform
     abstract Param : MacParam with get

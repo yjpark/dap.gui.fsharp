@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type HBoxWidget = Gtk.HBox
 
-//SILP: CONTAINER_HEADER_MIDDLE(HBox, Gtk.Widget)
+//SILP: CONTAINER_HEADER_MIDDLE(HBox, Widget)
 type HBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<HBox, HBoxWidget, Gtk.Widget>               //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, Widget>                   //__SILP__
         (HBoxKind, logging, new HBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = HBoxKind                                           //__SILP__
@@ -24,9 +24,9 @@ type HBox (logging : ILogging) =                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : Gtk.Widget) =
+    override this.AddChild (child : Widget) =
         this.Widget.PackStart(child, false, false, (uint32) 0)
-    override this.RemoveChild (child : Gtk.Widget) =
+    override this.RemoveChild (child : Widget) =
         child.Parent <- null
     //SILP: PREFAB_FOOTER(HBox)
     static member Create l = new HBox (l)                             //__SILP__

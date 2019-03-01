@@ -14,9 +14,9 @@ open Dap.Gui.Internal                                                 //__SILP__
 
 type HBoxWidget = Myra.Graphics2D.UI.Grid
 
-//SILP: CONTAINER_HEADER_MIDDLE(HBox, MyraWidget)
+//SILP: CONTAINER_HEADER_MIDDLE(HBox, Widget)
 type HBox (logging : ILogging) =                                      //__SILP__
-    inherit BaseContainer<HBox, HBoxWidget, MyraWidget>               //__SILP__
+    inherit BaseContainer<HBox, HBoxWidget, Widget>                   //__SILP__
         (HBoxKind, logging, new HBoxWidget ())                        //__SILP__
     do (                                                              //__SILP__
         let kind = HBoxKind                                           //__SILP__
@@ -24,11 +24,11 @@ type HBox (logging : ILogging) =                                      //__SILP__
         let widget = base.Widget                                      //__SILP__
         ()
     )
-    override this.AddChild (child : MyraWidget) =
+    override this.AddChild (child : Widget) =
         child.GridColumn <- this.Widget.Widgets.Count
         this.Widget.ColumnsProportions.Add (new Proportion(ProportionType.Auto))
         this.Widget.Widgets.Add child
-    override this.RemoveChild (child : MyraWidget) =
+    override this.RemoveChild (child : Widget) =
         this.Widget.RemoveChild child
     //SILP: CONTAINER_FOOTER(HBox)
     static member Create l = new HBox (l)                             //__SILP__

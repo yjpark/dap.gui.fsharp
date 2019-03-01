@@ -19,7 +19,7 @@ type Button (logging : ILogging) =                                      //__SILP
     inherit BasePrefab<Button, ButtonProps, ButtonWidget>               //__SILP__
         (ButtonKind, ButtonProps.Create, logging, new ButtonWidget ())  //__SILP__
     let onClick = IButton.AddChannels base.Channels
-    //SILP: PREFAB_MIDDLE(Button)
+//SILP: PREFAB_MIDDLE(Button)
     do (                                                              //__SILP__
         let kind = ButtonKind                                         //__SILP__
         let owner = base.AsOwner                                      //__SILP__

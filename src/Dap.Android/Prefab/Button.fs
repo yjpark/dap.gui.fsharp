@@ -1,8 +1,8 @@
 [<AutoOpen>]
-module Dap.Gtk.Prefab.Button
+module Dap.Android.Prefab.Button
 
-//SILP: GTK_OPENS
-open Dap.Gtk                                                          //__SILP__
+//SILP: ANDROID_OPENS
+open Dap.Android                                                      //__SILP__
 open System                                                           //__SILP__
 open Dap.Prelude                                                      //__SILP__
 open Dap.Context                                                      //__SILP__
@@ -12,12 +12,12 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type ButtonWidget = Gtk.Button
+type ButtonWidget = Android.Widget.Button
 
-//SILP: PREFAB_HEADER(Button)
-type Button (logging : ILogging) =                                      //__SILP__
-    inherit BasePrefab<Button, ButtonProps, ButtonWidget>               //__SILP__
-        (ButtonKind, ButtonProps.Create, logging, new ButtonWidget ())  //__SILP__
+//SILP: PREFAB_HEADER_CREATE(Button)
+type Button (logging : ILogging) =                                          //__SILP__
+    inherit BasePrefab<Button, ButtonProps, ButtonWidget>                   //__SILP__
+        (ButtonKind, ButtonProps.Create, logging, IPrefab.CreateButton ())  //__SILP__
     let onClick = IButton.AddChannels base.Channels
 //SILP: PREFAB_MIDDLE(Button)
     do (                                                              //__SILP__
@@ -26,10 +26,14 @@ type Button (logging : ILogging) =                                      //__SILP
         let model = base.Model                                        //__SILP__
         let widget = base.Widget                                      //__SILP__
         model.Text.OnChanged.AddWatcher owner kind (fun evt ->
-            widget.Label <- evt.New
+            runGuiFunc (fun () ->
+                widget.Text <- evt.New
+            )
         )
-        widget.Clicked.Add (fun _ ->
-            onClick.FireEvent ()
+        runGuiFunc (fun () ->
+            widget.Click.Add (fun _ ->
+                onClick.FireEvent ()
+            )
         )
     )
     member __.OnClick : IChannel<unit> = onClick
