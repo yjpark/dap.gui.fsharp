@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-APP='org.yjpark.gui.demo'
+cd `dirname $0`
+. ./_android-set-env
 
 cd `dirname $0`
-cd ../demo/Demo.Android
+cd $PROJ
 
 adb exec-out run-as $APP tar c cache/log > /tmp/$APP.cache.tar
 tar xf /tmp/$APP.cache.tar

@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-adb shell run-as org.yjpark.gui.demo ls -R /data/data/org.yjpark.gui.demo/cache/
+cd `dirname $0`
+. ./_android-set-env
+
+adb exec-out run-as $APP ls -R cache/

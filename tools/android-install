@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-APP='org.yjpark.gui.demo'
-
 cd `dirname $0`
+. ./_android-set-env
 
 #./android-clear-cache
 
-cd ../demo/Demo.Android
+cd $PROJ
 ls -lh bin/Debug/$APP-Signed.apk
 adb install -r bin/Debug/$APP-Signed.apk
 

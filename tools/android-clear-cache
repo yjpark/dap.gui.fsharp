@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-APP='org.yjpark.gui.demo'
+cd `dirname $0`
+. ./_android-set-env
 
-adb exec-out run-as org.yjpark.gui.demo rm -rf cache
+adb exec-out run-as $APP rm -rf cache

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 cd `dirname $0`
-cd ../demo/Demo.Android
+. ./_android-set-env
+
+cd $PROJ
 
 msbuild /t:SignAndroidPackage && \
     ../../tools/android-install
