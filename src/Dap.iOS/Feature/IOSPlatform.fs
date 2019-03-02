@@ -61,7 +61,7 @@ type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging :
     member this.AsIOSPlatform = this :> IIOSPlatform
 
 type ViewController (param : IOSParam) =
-    inherit WidgetController ()
+    inherit UIViewController ()
     do (
         if base.RespondsToSelector (Selector.automaticallyAdjustsScrollViewInsets) then
             base.AutomaticallyAdjustsScrollViewInsets <- true
@@ -69,7 +69,7 @@ type ViewController (param : IOSParam) =
             base.ExtendedLayoutIncludesOpaqueBars <- true
         let view = base.View
         view.AutosizesSubviews <- true
-        view.AutoresizingMask <- WidgetAutoresizing.FlexibleDimensions
+        view.AutoresizingMask <- UIViewAutoresizing.FlexibleDimensions
         view.BackgroundColor <- Color.White
     )
     //TODO: Add to IOSParam
