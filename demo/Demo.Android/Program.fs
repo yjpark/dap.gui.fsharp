@@ -30,7 +30,7 @@ type MainActivity () =
             App.RunGui ("demo-.log")
         |> ignore
 
-(*
+(* Without Fabulous
 [<Activity (Label = "Gui.Demo", MainLauncher = true, Icon = "@mipmap/icon", Theme = "@style/MainTheme")>]
 type MainActivity () =
     inherit Activity ()
