@@ -19,7 +19,13 @@ type Context (logging : ILogging, kind : string) =
     override this.DoInit (param : AndroidParam) =
         ()
     override this.DoShow (param : AndroidParam, presenter : IPresenter) =
-        param.Activity.SetContentView (presenter.Prefab0.Widget0 :?> Widget)
+        logWarn this "DoShow" param.Name (presenter)
+        let view = presenter.Prefab0.Widget0 :?> Widget
+        param.Activity.SetContentView (view)
+        param.BackgroundColor
+        |> Option.iter (fun color ->
+            view.SetBackgroundColor (color)
+        )
         param.Activity
     override this.DoRun (param : AndroidParam) =
         param.Actions

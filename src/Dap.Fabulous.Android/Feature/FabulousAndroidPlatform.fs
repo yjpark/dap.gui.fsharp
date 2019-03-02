@@ -18,7 +18,15 @@ open Dap.Android.Feature
 type Context (logging : ILogging) =
     inherit AndroidPlatform.Context (logging, FabulousAndroidPlatformKind)
     override this.DoShow (param : AndroidParam, presenter : IPresenter) =
+        logWarn this "DoShow" param.Name (presenter, hasFabulousParam ())
         if hasFabulousParam () then
+            param.BackgroundColor
+            |> Option.iter (fun color ->
+                let loadingForm = presenter.Prefab0 :?> ILoadingForm
+                let page = loadingForm.Page0
+                page.BackgroundColor <- color.ToColor ()
+                ()
+            )
             param.Activity
         else
             base.DoShow (param, presenter)

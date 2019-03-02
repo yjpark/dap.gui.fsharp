@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+APP='org.yjpark.gui.demo'
+
+adb exec-out run-as org.yjpark.gui.demo rm -rf cache

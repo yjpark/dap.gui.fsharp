@@ -2,6 +2,8 @@
 module Dap.Android.Types
 
 open System
+open Android.Graphics
+open Android.App
 
 open Dap.Prelude
 open Dap.Gui.App
@@ -12,6 +14,7 @@ let AndroidPlatformKind = "AndroidPlatform"
 type Widget = Android.Views.View
 
 type Activity = Android.App.Activity
+type Bundle = Android.OS.Bundle
 
 type IAndroidPlatform =
     inherit IGuiPlatform
@@ -21,13 +24,15 @@ type IAndroidPlatform =
 and AndroidParam = {
     Name : string
     Activity : Activity
+    BackgroundColor : Color option
     Actions : (IAndroidPlatform -> unit) list
 } with
     static member Create
-            (name : string, activity : Activity) : AndroidParam =
+            (name : string, activity : Activity, ?backgroundColor : Color) : AndroidParam =
         {
             Name = name
             Activity = activity
+            BackgroundColor = backgroundColor
             Actions = []
         }
 

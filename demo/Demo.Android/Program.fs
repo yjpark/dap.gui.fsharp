@@ -1,13 +1,7 @@
 ﻿module Demo.Android.Program
 
 open System
-
 open Android.App
-open Android.Content
-open Android.OS
-open Android.Runtime
-open Android.Views
-open Android.Widget
 
 open Dap.Prelude
 open Dap.Context
@@ -19,18 +13,31 @@ open Demo.App
 open Demo.Gui
 open Demo.Fabulous
 
-let useFabulous = false
+let useFabulous = true
 
 [<Activity (Label = "Gui.Demo", MainLauncher = true, Icon = "@mipmap/icon", Theme = "@style/MainTheme")>]
 type MainActivity () =
     inherit FabulousActivity ()
     override this.UseFabulous () = useFabulous
     override this.DoSetup (bundle : Bundle) =
+        let param = AndroidParam.Create ("Demo", this, backgroundColor = Android.Graphics.Color.Black)
         if useFabulous then
-            setFabulousAndroidParam <| AndroidParam.Create ("Demo", this)
+            setFabulousAndroidParam param
             App.RunFabulous ("demo-.log")
         else
             this.SetContentView (Resources.Layout.Main)
-            setAndroidParam <| AndroidParam.Create ("Demo", this)
+            setAndroidParam param
             App.RunGui ("demo-.log")
         |> ignore
+
+(*
+[<Activity (Label = "Gui.Demo", MainLauncher = true, Icon = "@mipmap/icon", Theme = "@style/MainTheme")>]
+type MainActivity () =
+    inherit Activity ()
+    override this.OnCreate (bundle: Bundle) =
+        base.OnCreate (bundle)
+        this.SetContentView (Resources.Layout.Main)
+        setAndroidParam <| AndroidParam.Create ("Demo", this, backgroundColor = Android.Graphics.Color.Black)
+        App.RunGui ("demo-.log")
+        |> ignore
+*)

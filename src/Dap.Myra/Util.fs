@@ -22,6 +22,6 @@ let rec calcLayoutInfo (prefix : string) (widget : Widget) : string list =
 let logLayout (prefab : IPrefab) =
     let widget = prefab.Widget0 :?> Widget
     let info =
-        "" :: calcLayoutInfo "" widget
+        "" :: calcLayoutInfo "\t" widget
         |> String.concat "\n"
     logWip prefab "Layout" info

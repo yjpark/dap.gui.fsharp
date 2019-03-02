@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+APP='org.yjpark.gui.demo'
+
+cd `dirname $0`
+
+./android-fetch-cache
+
+cd ../demo/Demo.Android/cache/log
+cd `ls -1Ft | head -1`
+$EDITOR *.log

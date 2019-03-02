@@ -32,10 +32,12 @@ type FabulousActivity() =
     abstract member DoSetup : Bundle -> unit
     override this.OnCreate (bundle: Bundle) =
         base.OnCreate (bundle)
+        Xamarin.Essentials.Platform.Init (this, bundle)
+        logWip (getLogging ()) "1 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" (this.UseFabulous ())
         if this.UseFabulous () then
-            Xamarin.Essentials.Platform.Init (this, bundle)
             Xamarin.Forms.Forms.Init (this, bundle)
         this.DoSetup bundle
+        logWip (getLogging ()) "2 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" (hasFabulousParam ())
         if hasFabulousParam () then
             let fabulousParam = getFabulousParam ()
             this.LoadApplication (fabulousParam.Application)

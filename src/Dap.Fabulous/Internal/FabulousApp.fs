@@ -28,3 +28,4 @@ let internal setParam<'app, 'model, 'msg when 'app :> IPack and 'model : not str
     else
         let param' = new FabulousParam<'app, 'model, 'msg> (view)
         param <- Some (param' :> IFabulousParam)
+        logWarn (getLogging ()) "FabulousApp" "setParam" param'
