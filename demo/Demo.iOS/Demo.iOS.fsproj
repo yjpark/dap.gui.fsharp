@@ -14,7 +14,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Demo.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Demo.iOS</AssemblyName>
+    <AssemblyName>org.yjpark.gui.demo</AssemblyName>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <NuGetPackageImportStamp></NuGetPackageImportStamp>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

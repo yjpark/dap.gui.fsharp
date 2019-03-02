@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+PROJ='../demo/Demo.iOS'
+APP='org.yjpark.gui.demo'
+
+
