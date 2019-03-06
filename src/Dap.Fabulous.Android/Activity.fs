@@ -33,11 +33,10 @@ type FabulousActivity() =
     override this.OnCreate (bundle: Bundle) =
         base.OnCreate (bundle)
         Xamarin.Essentials.Platform.Init (this, bundle)
-        logWip (getLogging ()) "1 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" (this.UseFabulous ())
+        logWip (getLogging ()) "1 FabulousActivity.OnCreated" (this.UseFabulous ())
         if this.UseFabulous () then
             Xamarin.Forms.Forms.Init (this, bundle)
         this.DoSetup bundle
-        logWip (getLogging ()) "2 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" (hasFabulousParam ())
         if hasFabulousParam () then
             let fabulousParam = getFabulousParam ()
             this.LoadApplication (fabulousParam.Application)

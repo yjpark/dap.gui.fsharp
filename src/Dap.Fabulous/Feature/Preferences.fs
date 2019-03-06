@@ -16,46 +16,37 @@ type Fallback = Dap.Local.Feature.Preferences.Context
 
 type Context (logging : ILogging) =
     inherit BasePreferences<Context> (logging)
-    let fallback : Fallback option =
-        if hasEssentials () then
-            None
-        else
-            Some <| new Fallback (logging)
+    let fallback = new Fallback (logging)
     do (
         base.Has.SetupHandler (fun (luid : Luid) ->
-            match fallback with
-            | Some fallback ->
-                fallback.Has.Handle luid
-            | None ->
+            if hasEssentials () then
                 Provider.ContainsKey luid
+            else
+                fallback.Has.Handle luid
         )
         base.Get.SetupHandler (fun (luid : Luid) ->
-            match fallback with
-            | Some fallback ->
-                fallback.Get.Handle luid
-            | None ->
+            if hasEssentials () then
                 Provider.Get (luid, "")
+            else
+                fallback.Get.Handle luid
         )
         base.Set.SetupHandler (fun (req : SetTextReq) ->
-            match fallback with
-            | Some fallback ->
-                fallback.Set.Handle req
-            | None ->
+            if hasEssentials () then
                 Provider.Set (req.Path, req.Text)
+            else
+                fallback.Set.Handle req
         )
         base.Remove.SetupHandler (fun (luid : Luid) ->
-            match fallback with
-            | Some fallback ->
-                fallback.Remove.Handle luid
-            | None ->
+            if hasEssentials () then
                 Provider.Remove luid
+            else
+                fallback.Remove.Handle luid
         )
         base.Clear.SetupHandler (fun () ->
-            match fallback with
-            | Some fallback ->
-                fallback.Clear.Handle ()
-            | None ->
+            if hasEssentials () then
                 Provider.Clear ()
+            else
+                fallback.Clear.Handle ()
         )
     )
     override this.Self = this
