@@ -21,7 +21,7 @@ NUGET
     Dap.Context (0.6.1)
       Dap.Prelude (>= 0.6) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       Thoth.Json.Net (>= 2.5) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
-    Dap.Platform (0.6.5)
+    Dap.Platform (0.6.6)
       Dap.Context (>= 0.6.1) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       Elmish (>= 2.0.3) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       NodaTime (>= 2.4.4) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
