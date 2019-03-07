@@ -20,7 +20,7 @@ let internal setParam (param' : obj) =
     if param <> null then
         failWith "Already_Set" (param, param')
     elif started then
-        failWith "Already_Started" (param, param')
+        failWith "Already_Started" param'
     else
         param <- param'
         logWarn (getLogging ()) "GuiApp" "setParam" param'
