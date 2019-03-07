@@ -7,6 +7,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Yoga
+open Dap.Gtk
 
 type Adaptor (logging : ILogging) =
     inherit BaseAdaptor<Widget> (logging)
