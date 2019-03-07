@@ -97,6 +97,17 @@ let runGuiFunc (func : unit -> unit) : unit =
         logError (getLogging ()) "Thread.runGuiFunc" "GuiContext_Not_Exist" ()
         func ()
 
+let runGuiFunc' (func : unit -> unit) : unit =
+    match guiContext with
+    | Some context ->
+        let callback = SendOrPostCallback(fun _ ->
+            func ()
+        )
+        context.Post (callback, null)
+    | None ->
+        logError (getLogging ()) "Thread.runGuiFunc'" "GuiContext_Not_Exist" ()
+        func ()
+
 //TODO: Replace the async usage with standard dotnet core logic
 let getGuiTask (getTask : unit -> Task<'res>) : Task<'res> = task {
     return! async {

@@ -31,6 +31,7 @@ type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging :
     abstract member GetDelegateType : unit -> string
     abstract member CreateWindow : 'appDelegate -> UIWindow
     abstract member TryShow : unit -> unit
+    override __.ShouldStartAppBeforeRun () = false
     override this.DoInit (param : IOSParam) =
         instance <- Some (this :> IIOSPlatform)
         //AppDomain.CurrentDomain.UnhandledException.Add <| onUnhandledException this
@@ -51,6 +52,7 @@ type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging :
         let delegate' = delegate' :?> 'appDelegate
         appDelegate <- Some delegate'
         window <- Some <| this.CreateWindow (delegate')
+        Feature.tryStartApp this.App
         this.TryShow ()
     interface IIOSPlatform with
         member this.Param = this.Param

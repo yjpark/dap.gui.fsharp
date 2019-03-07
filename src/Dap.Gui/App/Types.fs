@@ -5,11 +5,13 @@ open Dap.Prelude
 open Dap.Platform
 open Dap.Gui
 
+//Note: It's IGuiPlatform's responsibility to start the app at right time
 type IGuiPlatform =
     inherit IFeature
+    abstract App : IBaseApp with get
     abstract Param0 : obj with get
     abstract Display : IDisplay option with get
-    abstract Init : obj -> unit
+    abstract Init : IBaseApp -> obj -> unit
     abstract Show<'presenter when 'presenter :> IPresenter> : 'presenter -> IDisplay<'presenter>
     abstract OnDidAttach : IPack -> unit
     abstract Run : unit -> int

@@ -28,6 +28,7 @@ type AppDelegate () =
         Forms.Init ()
         let fabulousParam = getFabulousParam ()
         this.LoadApplication (fabulousParam.Application)
+        platform.SetAppDelegate' this
         base.FinishedLaunching (application, launchOptions)
 
 type ViewController = IOSPlatform.ViewController

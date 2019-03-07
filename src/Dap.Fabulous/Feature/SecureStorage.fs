@@ -16,43 +16,53 @@ type Fallback = Dap.Local.Feature.SecureStorage.Context
 
 type Context (logging : ILogging) =
     inherit BaseSecureStorage<Context> (logging)
-    let fallback = new Fallback (logging)
+    let fallback : Fallback option =
+        if hasEssentials () then
+            None
+        else
+            Some <| new Fallback (logging)
     do (
         let owner = base.Owner
+        logInfo owner "SecureStorage" "hasEssentials" (Dap.Fabulous.Util.hasEssentials (), fallback)
         base.HasAsync.SetupHandler (fun (luid : Luid) -> task {
-            if hasEssentials () then
+            match fallback with
+            | Some fallback ->
+                return! fallback.HasAsync.Handle luid
+            | None ->
                 let! content = Provider.GetAsync (luid)
                 return not (System.String.IsNullOrEmpty (content))
-            else
-                return! fallback.HasAsync.Handle luid
         })
         base.GetAsync.SetupHandler (fun (luid : Luid) -> task {
-            if hasEssentials () then
+            match fallback with
+            | Some fallback ->
+                return! fallback.GetAsync.Handle luid
+            | None ->
                 let! content = Provider.GetAsync (luid)
                 if System.String.IsNullOrEmpty (content) then
                     return ""
                 else
                     return content
-            else
-                return! fallback.GetAsync.Handle luid
             })
         base.SetAsync.SetupHandler (fun (req : SetTextReq) -> task {
-            if hasEssentials () then
-                do! Provider.SetAsync (req.Path, req.Text)
-            else
+            match fallback with
+            | Some fallback ->
                 do! fallback.SetAsync.Handle req
+            | None ->
+                do! Provider.SetAsync (req.Path, req.Text)
         })
         base.Remove.SetupHandler (fun (luid : Luid) ->
-            if hasEssentials () then
-                Provider.Remove luid |> ignore
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Remove.Handle luid
+            | None ->
+                Provider.Remove luid |> ignore
         )
         base.Clear.SetupHandler (fun () ->
-            if hasEssentials () then
-                Provider.RemoveAll ()
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Clear.Handle ()
+            | None ->
+                Provider.RemoveAll ()
         )
     )
     override this.Self = this

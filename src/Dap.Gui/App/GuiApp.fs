@@ -25,14 +25,14 @@ let internal setParam (param' : obj) =
         param <- param'
         logWarn (getLogging ()) "GuiApp" "setParam" param'
 
-type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPack and 'app :> INeedSetupAsync>
+type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IBaseApp>
         (newPresenter : IEnv -> 'presenter, app : 'app) =
     let mutable platform : IGuiPlatform option = None
     let mutable display : IDisplay<'presenter> option = None
     member private __.Run' () =
         started <- true
         platform <- Some <| Feature.create<IGuiPlatform> (app.Env.Logging)
-        platform.Value.Init param
+        platform.Value.Init app param
         setupGuiContext' platform.Value
         logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform)
         app.OnSetup.AddWatcher platform.Value "OnSetup" (fun result ->
@@ -44,7 +44,6 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPa
                     platform.Value.OnDidAttach app
                 )
         )
-        Feature.tryStartApp app
         platform.Value.Run ()
     member __.Platform = platform.Value
     member __.Display = display

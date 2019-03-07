@@ -16,6 +16,6 @@ let getGuiParam () =
 let setGuiParam<'obj> (param : 'obj) =
     GuiApp.setParam param
 
-let runGuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IPack and 'app :> INeedSetupAsync>
+let runGuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IBaseApp>
     (newPresenter : IEnv -> 'presenter) (app : 'app) =
     GuiApp.GuiApp<'presenter, 'app>.Run newPresenter app

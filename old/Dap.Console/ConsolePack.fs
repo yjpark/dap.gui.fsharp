@@ -13,7 +13,7 @@ type IConsolePack =
     abstract Quit : unit -> unit
 
 
-type ConsolePack<'app, 'presenter when 'app :> IPack and 'app :> INeedSetupAsync and 'presenter :> IPresenter<'app>> (app : 'app, newPresenter : IEnv -> 'presenter) =
+type ConsolePack<'app, 'presenter when 'app :> IBaseApp and 'presenter :> IPresenter<'app>> (app : 'app, newPresenter : IEnv -> 'presenter) =
     let view = new ConsoleView<'presenter> (newPresenter app.Env)
     member __.Setup () =
         Application.MainLoop.Invoke (fun () ->

@@ -25,9 +25,9 @@ let setFabulousParam<'app, 'model, 'msg when 'app :> IPack and 'model : not stru
     FabulousApp.setParam view
 
 let runFabulousApp<'app, 'model, 'msg
-        when 'app :> IPack and 'app :> INeedSetupAsync
+        when 'app :> IBaseApp
             and 'model : not struct and 'msg :> IMsg> (app : 'app) =
-    let param' = getFabulousParam () :?> FabulousParam<'app, 'model, 'msg>
+    let param = getFabulousParam () :?> FabulousParam<'app, 'model, 'msg>
     let newPresenter = fun (env : IEnv) ->
-        new FabulousPresenter<'app, 'model, 'msg> (param', env)
+        new FabulousPresenter<'app, 'model, 'msg> (param, env)
     runGuiApp newPresenter app

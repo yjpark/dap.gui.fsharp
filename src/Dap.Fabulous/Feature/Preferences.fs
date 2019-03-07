@@ -16,37 +16,48 @@ type Fallback = Dap.Local.Feature.Preferences.Context
 
 type Context (logging : ILogging) =
     inherit BasePreferences<Context> (logging)
-    let fallback = new Fallback (logging)
+    let fallback : Fallback option =
+        if hasEssentials () then
+            None
+        else
+            Some <| new Fallback (logging)
     do (
+        let owner = base.Owner
+        logInfo owner "SecureStorage" "hasEssentials" (Dap.Fabulous.Util.hasEssentials (), fallback)
         base.Has.SetupHandler (fun (luid : Luid) ->
-            if hasEssentials () then
-                Provider.ContainsKey luid
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Has.Handle luid
+            | None ->
+                Provider.ContainsKey luid
         )
         base.Get.SetupHandler (fun (luid : Luid) ->
-            if hasEssentials () then
-                Provider.Get (luid, "")
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Get.Handle luid
+            | None ->
+                Provider.Get (luid, "")
         )
         base.Set.SetupHandler (fun (req : SetTextReq) ->
-            if hasEssentials () then
-                Provider.Set (req.Path, req.Text)
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Set.Handle req
+            | None ->
+                Provider.Set (req.Path, req.Text)
         )
         base.Remove.SetupHandler (fun (luid : Luid) ->
-            if hasEssentials () then
-                Provider.Remove luid
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Remove.Handle luid
+            | None ->
+                Provider.Remove luid
         )
         base.Clear.SetupHandler (fun () ->
-            if hasEssentials () then
-                Provider.Clear ()
-            else
+            match fallback with
+            | Some fallback ->
                 fallback.Clear.Handle ()
+            | None ->
+                Provider.Clear ()
         )
     )
     override this.Self = this
