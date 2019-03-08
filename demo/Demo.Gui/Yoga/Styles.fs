@@ -12,26 +12,26 @@ open Dap.Yoga
 
 open Demo.Gui.Prefab
 
-let register () =
-    Styles.addClass<ILabel, YogaStyle> [
+let register (theme : Theme) =
+    theme.AddClassStyle<ILabel, YogaStyle> [
         yoga {
             flex_direction YogaFlexDirection.Row
             margin_horizontal (point 20.0f)
         }
     ]
-    Styles.addClass<IContact, YogaStyle> [
+    theme.AddClassStyle<IContact, YogaStyle> [
         yoga {
             flex_direction YogaFlexDirection.Row
         }
     ]
 
-    Styles.addClass<IContacts, YogaStyle> [
+    theme.AddClassStyle<IContacts, YogaStyle> [
         yoga {
             flex_direction YogaFlexDirection.Column
         }
     ]
 
-    Styles.addClass<IHomePanel, YogaStyle> [
+    theme.AddClassStyle<IHomePanel, YogaStyle> [
         yoga {
             flex_direction YogaFlexDirection.Column
         }

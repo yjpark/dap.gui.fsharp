@@ -74,12 +74,12 @@ with interface IMsg
 and View<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'msg :> IMsg> (pack : 'pack, param) =
     inherit PackAgent<'pack, View<'pack, 'model, 'msg>, Args<'pack, 'model, 'msg>, Model<'model, 'msg>, Msg<'model, 'msg>, Req, Evt> (pack, param)
     let mutable react : ('msg -> unit) option = None
-    let mutable formsRunner : obj option = None
+    let mutable formsRunner : ProgramRunner<'model, 'msg> option = None
     static member Spawn pack' param' = new View<'pack, 'model, 'msg> (pack', param')
     override this.Runner = this
     member this.Program = this.Actor.State.Program
     member this.ViewState = this.Actor.State.View
-    member _this.HasFormsRunner = formsRunner.IsSome
+    member __.HasFormsRunner = formsRunner.IsSome
     member this.SetFormsRunner' runner =
 #if DEBUG
         if this.Actor.Args.UseLiveUpdate then
@@ -87,11 +87,14 @@ and View<'pack, 'model, 'msg when 'pack :> IPack and 'model : not struct and 'ms
             //runner.EnableLiveUpdate ()
 #endif
         formsRunner <- Some runner
-    member _this.SetReact' react' =
+    member __.SetReact' react' =
         react <- Some react'
-    member _this.React (msg : 'msg) =
+    member __.React (msg : 'msg) =
         react
         |> Option.iter (fun d -> d msg)
+    member __.Reset () =
+        formsRunner
+        |> Option.iter (fun r -> r.ResetView ())
     member this.StartAsync () : Task<unit> = task {
         do! this.PostAsync DoRun
     }

@@ -19,6 +19,7 @@ type BasePrefab<'prefab, 'model, 'widget when 'prefab :> IPrefab and 'model :> I
     member __.Widget = widget
     member __.Styles = styles
     member this.Model = this.Properties
+    member this.Theme = Themes.get this.Properties.Theme.Value
     member this.Setup' (parent' : IPrefab option) (key' : string) =
         if path.IsSome then
             logError this "SetParent" "Already_Set" (parent, path, key, parent', key')
@@ -32,9 +33,9 @@ type BasePrefab<'prefab, 'model, 'widget when 'prefab :> IPrefab and 'model :> I
                 | Some p ->
                     sprintf "%s/%s" p.Path key'
             )
-            styles <- Styles.init this
+            styles <- this.Theme.InitStyles this
             base.Properties.Styles.OnAdded.AddWatcher base.AsOwner "Styles_OnAdded" (fun (style', _index) ->
-                styles <- styles @ Styles.create this style'.Value
+                styles <- styles @ this.Theme.CreateStyles this style'.Value
             )
             this.OnSetup ()
     member this.LoadJson' (json : Json) =
@@ -54,8 +55,13 @@ type BasePrefab<'prefab, 'model, 'widget when 'prefab :> IPrefab and 'model :> I
         member __.SetExtras' extras' = extras <- extras'
         member __.Styles = styles
         member __.SetStyles' styles' = styles <- styles'
-        member __.ApplyStyles () =
+        member this.ApplyStyles () =
             styles
-            |> List.iter (fun s -> s.Apply ())
+            |> List.iter (fun s ->
+                try
+                    s.Apply ()
+                with e ->
+                    logException this "ApplyStyle" "Exception_Raised" (s.Kind, s) e
+            )
     member this.AsPrefab = this :> IPrefab<'model, 'widget>
     member this.AsPrefab0 = this :> IPrefab

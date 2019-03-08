@@ -16,11 +16,13 @@ type BaseStyle<'prefab when 'prefab :> IPrefab> (kind : string, target : 'prefab
     member __.Kind = kind
     member __.Target = target
     member __.Target0 = target :> IPrefab
+    member __.TargetType = typeof<'prefab>
     interface IStyle<'prefab> with
         member __.Target = target
     interface IStyle with
         member __.Kind = kind
-        member __.Target0 = target :> IPrefab
+        member this.Target0 = this.Target0
+        member this.TargetType = this.TargetType
         member this.OnChildAdded child = this.OnChildAdded child
         member this.OnChildRemoved child = this.OnChildRemoved child
         member this.Apply () = this.Apply ()

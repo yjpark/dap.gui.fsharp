@@ -13,6 +13,7 @@ let InputFieldKind = "InputField"
 let InputFieldJson = parseJson """
 {
     "prefab": "input_field",
+    "theme": null,
     "styles": [
         "style3"
     ],
@@ -20,11 +21,13 @@ let InputFieldJson = parseJson """
     "children": {
         "label": {
             "prefab": "",
+            "theme": null,
             "styles": [],
             "text": "Label"
         },
         "value": {
             "prefab": "",
+            "theme": null,
             "styles": [],
             "disabled": false,
             "text": ""

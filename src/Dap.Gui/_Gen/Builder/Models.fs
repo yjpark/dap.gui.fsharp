@@ -16,6 +16,10 @@ type LabelPropsBuilder () =
     member __.Prefab (target : LabelProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
         target
+    [<CustomOperation("theme")>]
+    member __.Theme (target : LabelProps, (* IViewProps *) theme : string option) =
+        target.Theme.SetValue theme
+        target
     [<CustomOperation("styles")>]
     member __.Styles (target : LabelProps, (* IViewProps *) styles : string list) =
         styles
@@ -40,6 +44,10 @@ type ButtonPropsBuilder () =
     [<CustomOperation("prefab")>]
     member __.Prefab (target : ButtonProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
+        target
+    [<CustomOperation("theme")>]
+    member __.Theme (target : ButtonProps, (* IViewProps *) theme : string option) =
+        target.Theme.SetValue theme
         target
     [<CustomOperation("styles")>]
     member __.Styles (target : ButtonProps, (* IViewProps *) styles : string list) =
@@ -69,6 +77,10 @@ type TextFieldPropsBuilder () =
     [<CustomOperation("prefab")>]
     member __.Prefab (target : TextFieldProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
+        target
+    [<CustomOperation("theme")>]
+    member __.Theme (target : TextFieldProps, (* IViewProps *) theme : string option) =
+        target.Theme.SetValue theme
         target
     [<CustomOperation("styles")>]
     member __.Styles (target : TextFieldProps, (* IViewProps *) styles : string list) =

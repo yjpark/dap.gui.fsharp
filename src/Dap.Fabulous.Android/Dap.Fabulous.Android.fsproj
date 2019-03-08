@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Feature/CellSetters.fs" />
     <Compile Include="Feature/FabulousAndroidPlatform.fs" />
     <Compile Include="Activity.fs" />
     <Compile Include="Helper.fs" />
@@ -63,7 +64,7 @@
       <Version>0.6.1</Version>
     </PackageReference>
     <PackageReference Include="Dap.Platform">
-      <Version>0.6.6</Version>
+      <Version>0.6.8</Version>
     </PackageReference>
     <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
     <ProjectReference Include="..\Dap.Fabulous\Dap.Fabulous.fsproj" />

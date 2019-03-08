@@ -9,6 +9,7 @@ open Fabulous.DynamicViews
 
 open Dap.Prelude
 open Dap.Platform
+open Dap.Gui
 
 let isMockForms () =
     try
@@ -46,3 +47,14 @@ type ConsoleSinkArgs with
             | true -> this.ToAddSink ()
             | false -> id
 *)
+
+type Themes.Theme with
+    member this.DecorateFabulous<'widget when 'widget :> Element> (widget : 'widget) =
+        let kinds =
+            if System.String.IsNullOrEmpty (widget.ClassId) then
+                []
+            else
+                widget.ClassId.Split [| ';' |]
+                |> Array.map (fun c -> c.Trim ())
+                |> Array.toList
+        this.DecorateWidget (widget, kinds)

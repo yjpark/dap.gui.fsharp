@@ -8,6 +8,7 @@ open Dap.Context.Generator
 let IViewProps =
     combo {
         var (M.string "prefab")
+        option (M.string "theme")
         list (M.string "styles")
     }
 

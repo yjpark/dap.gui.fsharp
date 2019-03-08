@@ -16,6 +16,10 @@ type ListPropsBuilder () =
     member __.Prefab (target : ListProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
         target
+    [<CustomOperation("theme")>]
+    member __.Theme (target : ListProps, (* IViewProps *) theme : string option) =
+        target.Theme.SetValue theme
+        target
     [<CustomOperation("styles")>]
     member __.Styles (target : ListProps, (* IViewProps *) styles : string list) =
         styles
@@ -44,6 +48,10 @@ type ComboPropsBuilder () =
     [<CustomOperation("prefab")>]
     member __.Prefab (target : ComboProps, (* IViewProps *) prefab : string) =
         target.Prefab.SetValue prefab
+        target
+    [<CustomOperation("theme")>]
+    member __.Theme (target : ComboProps, (* IViewProps *) theme : string option) =
+        target.Theme.SetValue theme
         target
     [<CustomOperation("styles")>]
     member __.Styles (target : ComboProps, (* IViewProps *) styles : string list) =

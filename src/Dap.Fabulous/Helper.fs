@@ -11,6 +11,7 @@ open Dap.Platform
 open Dap.Gui
 open Dap.Gui.App
 open Dap.Fabulous.Internal
+open Dap.Fabulous.Theme
 
 module ViewTypes = Dap.Fabulous.View.Types
 

@@ -6,6 +6,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Myra
+open Dap.Gui
 
 open Demo.App
 open Demo.Gui
@@ -14,6 +15,6 @@ open Demo.Gui
 [<STAThread>]
 let main argv =
     //initYogaGtk ()
-    //YogaStyles.register ()
+    //YogaStyles.register (Themes.getFallback ())
     setMyraParam <| MyraParam.Create ("Demo", clearColor = Color.Black)
     App.RunGui ("demo-.log")

@@ -11,6 +11,7 @@ open Dap.Context
 type IViewProps =
     inherit ICustomProperties
     abstract Prefab : IVarProperty<string> with get
+    abstract Theme : IVarProperty<string option> with get
     abstract Styles : IListProperty<IVarProperty<string>> with get
 
 (*
@@ -41,6 +42,7 @@ type ListProps (owner : IOwner, key : Key) =
     inherit WrapProperties<ListProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
+    let theme = target'.AddVar<(* IViewProps *) string option> ((E.option E.string), (D.option D.string), "theme", None, None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
     let container = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "container", "", None)
     let itemPrefab = target'.AddVar<(* ListProps *) string> (E.string, D.string, "item_prefab", "", None)
@@ -55,11 +57,13 @@ type ListProps (owner : IOwner, key : Key) =
     override __.Spawn (o, k) = ListProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
+    member __.Theme (* IViewProps *) : IVarProperty<string option> = theme
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
     member __.Container (* IGroupProps *) : IVarProperty<string> = container
     member __.ItemPrefab (* ListProps *) : IVarProperty<string> = itemPrefab
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
+        member this.Theme (* IViewProps *) : IVarProperty<string option> = this.Theme
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IGroupProps with
@@ -73,6 +77,7 @@ type ComboProps (owner : IOwner, key : Key) =
     inherit WrapProperties<ComboProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
+    let theme = target'.AddVar<(* IViewProps *) string option> ((E.option E.string), (D.option D.string), "theme", None, None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
     let container = target'.AddVar<(* IGroupProps *) string> (E.string, D.string, "container", "", None)
     let children = target'.AddCombo(* ComboProps *)  ("children")
@@ -87,11 +92,13 @@ type ComboProps (owner : IOwner, key : Key) =
     override __.Spawn (o, k) = ComboProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
+    member __.Theme (* IViewProps *) : IVarProperty<string option> = theme
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
     member __.Container (* IGroupProps *) : IVarProperty<string> = container
     member __.Children (* ComboProps *) : IComboProperty = children
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
+        member this.Theme (* IViewProps *) : IVarProperty<string option> = this.Theme
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IGroupProps with
@@ -105,6 +112,7 @@ type LabelProps (owner : IOwner, key : Key) =
     inherit WrapProperties<LabelProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
+    let theme = target'.AddVar<(* IViewProps *) string option> ((E.option E.string), (D.option D.string), "theme", None, None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
     let text = target'.AddVar<(* ITextProps *) string> (E.string, D.string, "text", "", None)
     do (
@@ -118,10 +126,12 @@ type LabelProps (owner : IOwner, key : Key) =
     override __.Spawn (o, k) = LabelProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
+    member __.Theme (* IViewProps *) : IVarProperty<string option> = theme
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
     member __.Text (* ITextProps *) : IVarProperty<string> = text
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
+        member this.Theme (* IViewProps *) : IVarProperty<string option> = this.Theme
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface ITextProps with
@@ -135,6 +145,7 @@ type ButtonProps (owner : IOwner, key : Key) =
     inherit WrapProperties<ButtonProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
+    let theme = target'.AddVar<(* IViewProps *) string option> ((E.option E.string), (D.option D.string), "theme", None, None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
     let disabled = target'.AddVar<(* IControlProps *) bool> (E.bool, D.bool, "disabled", false, None)
     let text = target'.AddVar<(* ITextProps *) string> (E.string, D.string, "text", "", None)
@@ -149,11 +160,13 @@ type ButtonProps (owner : IOwner, key : Key) =
     override __.Spawn (o, k) = ButtonProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
+    member __.Theme (* IViewProps *) : IVarProperty<string option> = theme
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
     member __.Disabled (* IControlProps *) : IVarProperty<bool> = disabled
     member __.Text (* ITextProps *) : IVarProperty<string> = text
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
+        member this.Theme (* IViewProps *) : IVarProperty<string option> = this.Theme
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IControlProps with
@@ -170,6 +183,7 @@ type TextFieldProps (owner : IOwner, key : Key) =
     inherit WrapProperties<TextFieldProps, IComboProperty> ()
     let target' = Properties.combo (owner, key)
     let prefab = target'.AddVar<(* IViewProps *) string> (E.string, D.string, "prefab", "", None)
+    let theme = target'.AddVar<(* IViewProps *) string option> ((E.option E.string), (D.option D.string), "theme", None, None)
     let styles = target'.AddList<(* IViewProps *) string> (E.string, D.string, "styles", "", None)
     let disabled = target'.AddVar<(* IControlProps *) bool> (E.bool, D.bool, "disabled", false, None)
     let text = target'.AddVar<(* ITextProps *) string> (E.string, D.string, "text", "", None)
@@ -184,11 +198,13 @@ type TextFieldProps (owner : IOwner, key : Key) =
     override __.Spawn (o, k) = TextFieldProps.Create (o, k)
     override __.SyncTo t = target'.SyncTo t.Target
     member __.Prefab (* IViewProps *) : IVarProperty<string> = prefab
+    member __.Theme (* IViewProps *) : IVarProperty<string option> = theme
     member __.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = styles
     member __.Disabled (* IControlProps *) : IVarProperty<bool> = disabled
     member __.Text (* ITextProps *) : IVarProperty<string> = text
     interface IViewProps with
         member this.Prefab (* IViewProps *) : IVarProperty<string> = this.Prefab
+        member this.Theme (* IViewProps *) : IVarProperty<string option> = this.Theme
         member this.Styles (* IViewProps *) : IListProperty<IVarProperty<string>> = this.Styles
     member this.AsViewProps = this :> IViewProps
     interface IControlProps with

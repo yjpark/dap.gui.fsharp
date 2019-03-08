@@ -4,7 +4,7 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;gui;</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.0</Version>
+    <Version>0.6.1</Version>
     <Description>Gui Libs</Description>
   </PropertyGroup>
   <ItemGroup>
@@ -19,7 +19,8 @@
     <Compile Include="Prefabs.fs" />
     <Compile Include="Containers.fs" />
     <Compile Include="BaseStyle.fs" />
-    <Compile Include="Styles.fs" />
+    <Compile Include="BaseDecorator.fs" />
+    <Compile Include="Themes.fs" />
     <Compile Include="Internal/BasePrefab.fs" />
     <Compile Include="Internal/BaseContainer.fs" />
     <Compile Include="Internal/BaseGroup.fs" />

@@ -1,13 +1,19 @@
 [<AutoOpen>]
 module Dap.Gui.Types
 
+open System
+
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
+[<Literal>]
+let GuiThemeKind = "GuiTheme"
+
 type IStyle =
     abstract Kind : string with get
     abstract Target0 : IPrefab with get
+    abstract TargetType : Type with get
     abstract OnChildAdded : IPrefab -> unit
     abstract OnChildRemoved : IPrefab -> unit
     abstract Apply : unit -> unit
@@ -121,6 +127,16 @@ type IDisplay<'presenter when 'presenter :> IPresenter> =
 type IDisplay<'presenter, 'output when 'presenter :> IPresenter> =
     inherit IDisplay<'presenter>
     abstract Output : 'output with get
+
+type IDecorator =
+    abstract Kind : string with get
+    abstract Setup' : string -> unit
+    abstract TargetType : Type with get
+    abstract Decorate0 : obj -> unit
+
+type IDecorator<'widget> =
+    inherit IDecorator
+    abstract Decorate : 'widget -> unit
 
 [<AutoOpen>]
 module Extensions =
