@@ -37,6 +37,7 @@ let feed =
 let libProjects =
     !! "src/Dap.Gui/*.fsproj"
     ++ "src/Dap.Gtk/*.fsproj"
+    ++ "src/Dap.UWP/*.fsproj"
     ++ "src/Dap.Myra/*.fsproj"
     ++ "src/Dap.Fabulous/*.fsproj"
     ++ "src/Dap.Fabulous.Forms/*.fsproj"
