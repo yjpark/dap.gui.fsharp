@@ -745,7 +745,6 @@ NUGET
       System.Numerics.Vectors (>= 4.5)
       System.ValueTuple (>= 4.5) - restriction: || (&& (== netcoreapp2.1) (< netstandard2.0)) (&& (== netcoreapp2.2) (< netstandard2.0)) (== xamarinmac)
     Xamarin.Forms (3.5.0.169047)
-  remote: https://nuget.yjpark.org/nuget/dap
     Dap.Archive (0.6.0) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       Dap.Remote (>= 0.6) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       FSharp.Core (>= 4.5.4) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
