@@ -7,12 +7,19 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
-type UWPParam = {
+[<Literal>]
+let UWPPlatformKind = "UWPPlatform"
+
+type IUWPPlatform =
+    inherit IGuiPlatform
+    abstract Param : UWPParam with get
+
+and UWPParam = {
     Name : string
     Title : string
     Width : int
     Height : int
-    //Actions : (IUWPPlatform -> unit) list
+    Actions : (IUWPPlatform -> unit) list
 } with
     static member Create (name : string, ?title : string, ?width : int, ?height : int) : UWPParam =
         {
@@ -20,6 +27,6 @@ type UWPParam = {
             Title = defaultArg title name
             Width = defaultArg width 1280
             Height = defaultArg height 720
-            //Actions = []
+            Actions = []
         }
 
