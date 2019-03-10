@@ -3,6 +3,7 @@
 #load ".fake/build.fsx/intellisense.fsx"
 
 #load "src/Dap.Gui/Dsl/Models.fs"
+#load "src/Dap.Gui/Dsl/PaletteParam.fs"
 //(*
 #load "src/Dap.Gui/_Gen/Models.fs"
 #load "src/Dap.Gui/_Gen/Builder/Models.fs"
@@ -62,6 +63,8 @@ NuGet.extend NuGet.release feed libProjects
 DotNet.createPrepares [
     ["Dap.Gui"], fun _ ->
         Dap.Gui.Dsl.Models.compile ["src" ; "Dap.Gui"]
+        |> List.iter traceSuccess
+        Dap.Gui.Dsl.PaletteParam.compile ["src" ; "Dap.Gui"]
         |> List.iter traceSuccess
         //(*
         Dap.Gui.Dsl.Prefabs.compile ["src" ; "Dap.Gui"]

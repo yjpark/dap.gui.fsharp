@@ -9,35 +9,28 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
-let TextColorSetterKind = "SwitchCellTextColorSetter"
+let NativeDecoratorKind = "SwitchCellNativeDecorator"
 
-type ITextColorSetter =
+type INativeDecorator =
     inherit IFeature
     abstract SetTextColor : SwitchCell -> Color -> unit
 
-let mutable private textColorSetter : ITextColorSetter option = None
-let mutable initialized = false
-
-let setTextColor (widget : SwitchCell) (textColor : Color) =
-    if not initialized then
-        textColorSetter <- Feature.tryCreate<ITextColorSetter> (getLogging ())
-        if textColorSetter.IsNone then
-            logError (getLogging ()) "SwitchCell.setTextColor" "Feature_Not_Exist" "ITextColorSetter"
-    textColorSetter
-    |> Option.iter (fun setter ->
-        widget.Appearing.Add (fun _ ->
-            setter.SetTextColor widget textColor
-        )
-    )
-
 type Decorator
-        (?backgroundColor : Color,
+        (?backgroundColor : Color, ?update : SwitchCell -> unit,
             ?textColor : Color, ?onColor : Color) =
     inherit Cell.Decorator<SwitchCell>
-        (?backgroundColor = backgroundColor)
+        (?backgroundColor = backgroundColor, ?update = update)
+    let native = base.TryCreateFeature<INativeDecorator> ()
+    let DecorateNative (widget : SwitchCell) (decorator : INativeDecorator) =
+        if textColor.IsSome then
+            widget.Appearing.Add (fun _ ->
+                textColor
+                |> Option.iter (decorator.SetTextColor widget)
+            )
+
     override __.Decorate (widget : SwitchCell) =
         base.Decorate widget
-        textColor
-        |> Option.iter ^<| setTextColor widget
+        native
+        |> Option.iter (DecorateNative widget)
         onColor
         |> Option.iter (fun x -> widget.OnColor <- x)

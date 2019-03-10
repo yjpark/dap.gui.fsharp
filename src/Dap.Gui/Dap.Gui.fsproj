@@ -4,10 +4,16 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;gui;</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.1</Version>
+    <Version>0.6.2</Version>
     <Description>Gui Libs</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dsl/PaletteParam.fs" />
+    <Compile Include="Palette/Types.fs" />
+    <Compile Include="_Gen/Palette/SchemeParam.fs" />
+    <Compile Include="_Gen/Palette/MaterialParam.fs" />
+    <Compile Include="Palette/Scheme.fs" />
+    <Compile Include="Palette/Material.fs" />
     <Compile Include="Thread.fs" />
     <Compile Include="Dsl/Models.fs" />
     <Compile Include="_Gen/Models.fs" />
@@ -20,7 +26,8 @@
     <Compile Include="Containers.fs" />
     <Compile Include="BaseStyle.fs" />
     <Compile Include="BaseDecorator.fs" />
-    <Compile Include="Themes.fs" />
+    <Compile Include="Internal/Theme.fs" />
+    <Compile Include="Theme.fs" />
     <Compile Include="Internal/BasePrefab.fs" />
     <Compile Include="Internal/BaseContainer.fs" />
     <Compile Include="Internal/BaseGroup.fs" />

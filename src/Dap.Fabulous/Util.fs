@@ -48,7 +48,7 @@ type ConsoleSinkArgs with
             | false -> id
 *)
 
-type Themes.Theme with
+type ITheme with
     member this.DecorateFabulous<'widget when 'widget :> Element> (widget : 'widget) =
         let kinds =
             if System.String.IsNullOrEmpty (widget.ClassId) then

@@ -1,3 +1,6 @@
+## 0.6.2
+* Improve theme and color scheme
+
 ## 0.6.1
 * Basic skeleton for themes
 

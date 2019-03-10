@@ -10,10 +10,10 @@ open Dap.Platform
 open Dap.Gui
 
 type Decorator<'widget when 'widget :> View>
-        (?backgroundColor : Color,
+        (?backgroundColor : Color, ?update : 'widget -> unit,
             ?horizontalOptions : LayoutOptions, ?verticalOptions : LayoutOptions, ?margin : Thickness) =
     inherit VisualElement.Decorator<'widget>
-        (?backgroundColor = backgroundColor)
+        (?backgroundColor = backgroundColor, ?update = update)
     override __.Decorate (widget : 'widget) =
         base.Decorate widget
         horizontalOptions
@@ -24,8 +24,8 @@ type Decorator<'widget when 'widget :> View>
         |> Option.iter (fun x -> widget.Margin <- x)
 
 type Decorator
-        (?backgroundColor : Color,
+        (?backgroundColor : Color, ?update : View -> unit,
             ?horizontalOptions : LayoutOptions, ?verticalOptions : LayoutOptions, ?margin : Thickness) =
     inherit Decorator<View>
-        (?backgroundColor = backgroundColor,
+        (?backgroundColor = backgroundColor, ?update = update,
             ?horizontalOptions = horizontalOptions, ?verticalOptions = verticalOptions, ?margin = margin)

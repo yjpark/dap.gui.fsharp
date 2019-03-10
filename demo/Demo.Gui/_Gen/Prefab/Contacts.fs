@@ -13,6 +13,7 @@ let ContactsKind = "Contacts"
 let ContactsJson = parseJson """
 {
     "prefab": "contacts",
+    "theme": null,
     "styles": [],
     "container": "table",
     "item_prefab": "contact",

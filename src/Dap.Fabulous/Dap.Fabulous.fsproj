@@ -4,7 +4,7 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.1</Version>
+    <Version>0.6.2</Version>
     <Description>Dap with Xamarin.Forms and Fabulous</Description>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
@@ -14,23 +14,25 @@
     <Compile Include="Feature/Preferences.fs" />
     <Compile Include="Feature/SecureStorage.fs" />
     <Compile Include="Feature/Runner.fs" />
+    <Compile Include="Palette/Types.fs" />
+    <Compile Include="Palette/Material.fs" />
     <Compile Include="View/Types.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Internal/FabulousApp.fs" />
     <Compile Include="View/Logic.fs" />
     <Compile Include="Forms.fs" />
     <Compile Include="Internal/FabulousPresenter.fs" />
+    <Compile Include="Decorator/Util.fs" />
     <Compile Include="Decorator/VisualElement.fs" />
     <Compile Include="Decorator/View.fs" />
     <Compile Include="Decorator/Label.fs" />
+    <Compile Include="Decorator/Button.fs" />
     <Compile Include="Decorator/Cell.fs" />
     <Compile Include="Decorator/TextCell.fs" />
     <Compile Include="Decorator/SwitchCell.fs" />
     <Compile Include="Decorator/Page.fs" />
-    <Compile Include="Theme/Types.fs" />
-    <Compile Include="Theme/Light.fs" />
-    <Compile Include="Theme/Dark.fs" />
-    <Compile Include="Theme/Helper.fs" />
+    <Compile Include="Decorator/NavigationPage.fs" />
+    <Compile Include="Theme.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,10 +10,10 @@ open Dap.Platform
 open Dap.Gui
 
 type Decorator
-        (?backgroundColor : Color,
+        (?backgroundColor : Color, ?update : TextCell -> unit,
             ?textColor : Color, ?detailColor : Color) =
     inherit Cell.Decorator<TextCell>
-        (?backgroundColor = backgroundColor)
+        (?backgroundColor = backgroundColor, ?update = update)
     override __.Decorate (widget : TextCell) =
         base.Decorate widget
         textColor

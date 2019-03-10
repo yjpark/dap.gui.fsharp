@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Decorator.Label
+module Dap.Fabulous.Decorator.Button
 
 open Xamarin.Forms
 open Fabulous.Core
@@ -10,13 +10,13 @@ open Dap.Platform
 open Dap.Gui
 
 type Decorator
-        (?backgroundColor : Color, ?update : Label -> unit,
+        (?backgroundColor : Color, ?update : Button -> unit,
             ?horizontalOptions : LayoutOptions, ?verticalOptions : LayoutOptions, ?margin : Thickness,
             ?textColor : Color, ?fontSize : float) =
-    inherit View.Decorator<Label>
+    inherit View.Decorator<Button>
         (?backgroundColor = backgroundColor, ?update = update,
             ?horizontalOptions = horizontalOptions, ?verticalOptions = verticalOptions, ?margin = margin)
-    override __.Decorate (widget : Label) =
+    override __.Decorate (widget : Button) =
         base.Decorate widget
         textColor
         |> Option.iter (fun x -> widget.TextColor <- x)

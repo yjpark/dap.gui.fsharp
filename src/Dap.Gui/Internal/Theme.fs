@@ -1,12 +1,12 @@
 [<AutoOpen>]
-[<RequireQualifiedAccess>]
-module Dap.Gui.Themes
+module Dap.Gui.Internal.Theme
 
 open System
 
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
+open Dap.Gui
 
 let private typeIPrefab = typeof<IPrefab>
 
@@ -26,16 +26,16 @@ let private getWidgetClasses (type' : Type) =
 
 type StyleFactory = IPrefab -> IStyle
 
-type Theme (logging : ILogging) =
+type internal Theme (logging : ILogging, key : string, param : obj) =
     inherit EmptyContext (logging, GuiThemeKind)
     let mutable styles : Map<string, StyleFactory list> = Map.empty
     let mutable decorators : Map<string, IDecorator list> = Map.empty
-    new () =
-        new Theme (getLogging ())
+    new (k, p) =
+        new Theme (getLogging (), k, p)
     member __.Styles = styles
     member __.Decorators = decorators
 
-    member this.CreateStyles' (logMissing : bool) (prefab : IPrefab) (kind : string) : IStyle list =
+    member private this.CreateStyles' (logMissing : bool) (prefab : IPrefab) (kind : string) : IStyle list =
         match Map.tryFind kind styles with
         | Some factories ->
             factories
@@ -50,20 +50,7 @@ type Theme (logging : ILogging) =
                 logWarn this "Style_Not_Registered" kind (prefab)
             []
 
-    member this.CreateStyles (prefab : IPrefab) (kind : string) : IStyle list =
-        this.CreateStyles' true prefab kind
-
-    member this.InitStyles (prefab : IPrefab) : IStyle list =
-        //TODO: Also check parent and key for more complex rules
-        let type' = prefab.GetType ()
-        type'.GetInterfaces ()
-        |> Array.toList
-        |> List.filter isPrefabInterface
-        |> List.map (fun type' ->
-            this.CreateStyles' false prefab type'.FullName
-        )|> List.concat
-
-    member this.GetDecorators' (logMissing : bool) (kind : string) : IDecorator list =
+    member private this.GetDecorators' (logMissing : bool) (kind : string) : IDecorator list =
         Map.tryFind kind decorators
         |> Option.defaultWith (fun () ->
             if logMissing then
@@ -71,7 +58,7 @@ type Theme (logging : ILogging) =
             []
         )
 
-    member this.GetDecorators (widget : obj) (kinds : string list) : IDecorator list =
+    member private this.GetDecorators (widget : obj) (kinds : string list) : IDecorator list =
         let classDecorators =
             widget.GetType ()
             |> getWidgetClasses
@@ -85,16 +72,6 @@ type Theme (logging : ILogging) =
             )
         classDecorators @ kindDecorators
         |> List.concat
-
-    member this.DecorateWidget (widget : obj, ?kinds : string list) : unit =
-        defaultArg kinds []
-        |> this.GetDecorators widget
-        |> List.iter (fun decorator ->
-            try
-                decorator.Decorate0 widget
-            with e ->
-                logException this "DecorateWidget" "Exception_Raised" (decorator.Kind, decorator) e
-        )
 
     (*
      * Note: Not have 'style :> IStyle<'prefab> on purpose
@@ -126,19 +103,6 @@ type Theme (logging : ILogging) =
                 else
                     logError this "Style_Not_Allow_Multiple" kind (factories, factory)
 
-    member this.AddStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
-        this.RegisterStyle<'prefab, 'style> true false kind param
-
-    member this.AddNewStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
-        this.RegisterStyle<'prefab, 'style> false false kind param
-
-    member this.AddForceStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
-        this.RegisterStyle<'prefab, 'style> false true kind param
-
-    member this.AddClassStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (param : obj list) : unit =
-        if not typeof<'prefab>.IsInterface then
-            failWith "Must_Be_Interface" (typeof<'prefab>.FullName)
-        this.RegisterStyle<'prefab, 'style> true false (typeof<'prefab>.FullName) param
 
     member private this.RegisterDecorator
             (allowMultiple : bool) (clearExists : bool) (kind : string) (decorator : IDecorator) : unit =
@@ -157,53 +121,56 @@ type Theme (logging : ILogging) =
                     decorators <- decorators |> Map.add kind (decorator :: decorators')
                 else
                     logError this "Decorator_Not_Allow_Multiple" kind (decorators, decorator)
+    interface ITheme with
+        member __.Key = key
+        member __.Param = param
 
-    member this.AddDecorator (kind : string) (decorator : IDecorator) : unit =
-        this.RegisterDecorator true false kind decorator
+        member this.CreateStyles (prefab : IPrefab) (kind : string) : IStyle list =
+            this.CreateStyles' true prefab kind
 
-    member this.AddNewDecorator (kind : string) (decorator : IDecorator) : unit =
-        this.RegisterDecorator false false kind decorator
+        member this.InitStyles (prefab : IPrefab) : IStyle list =
+            //TODO: Also check parent and key for more complex rules
+            let type' = prefab.GetType ()
+            type'.GetInterfaces ()
+            |> Array.toList
+            |> List.filter isPrefabInterface
+            |> List.map (fun type' ->
+                this.CreateStyles' false prefab type'.FullName
+            )|> List.concat
 
-    member this.AddForceDecorator (kind : string) (decorator : IDecorator) : unit =
-        this.RegisterDecorator false true kind decorator
+        member this.DecorateWidget (widget : obj, kinds : string list) : unit =
+            kinds
+            |> this.GetDecorators widget
+            |> List.iter (fun decorator ->
+                try
+                    decorator.Decorate0 widget
+                with e ->
+                    logException this "DecorateWidget" "Exception_Raised" (decorator.Kind, decorator) e
+            )
 
-    member this.AddClassDecorator<'widget> (decorator : IDecorator<'widget>) : unit =
-        if typeof<'widget>.IsInterface then
-            failWith "Must_Not_Be_Interface" (typeof<'widget>.FullName)
-        this.RegisterDecorator true false (typeof<'widget>.FullName) decorator
+        member this.AddStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+            this.RegisterStyle<'prefab, 'style> true false kind param
 
-let mutable private fallback : Theme option = None
-let mutable private themes : Map<string, Theme> = Map.empty
+        member this.AddNewStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+            this.RegisterStyle<'prefab, 'style> false false kind param
 
-let getFallback () =
-    if fallback.IsNone then
-        fallback <- Some <| new Theme (getLogging ())
-    fallback.Value
+        member this.AddForceStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (kind : string) (param : obj list) : unit =
+            this.RegisterStyle<'prefab, 'style> false true kind param
 
-let setFallback (theme : Theme) =
-    logWarn theme "Themes.setFallback" "As_Fallback" fallback
-    fallback <- Some theme
+        member this.AddClassStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> (param : obj list) : unit =
+            if not typeof<'prefab>.IsInterface then
+                failWith "Must_Be_Interface" (typeof<'prefab>.FullName)
+            this.RegisterStyle<'prefab, 'style> true false (typeof<'prefab>.FullName) param
+        member this.AddDecorator (kind : string) (decorator : IDecorator) : unit =
+            this.RegisterDecorator true false kind decorator
 
-let register (key : string, theme : Theme) =
-    themes
-    |> Map.tryFind key
-    |> function
-    | None ->
-        themes <- themes |> Map.add key theme
-    | Some theme' ->
-        logError theme "Themes.register" ("Already_Exist: " + key) (theme', theme)
+        member this.AddNewDecorator (kind : string) (decorator : IDecorator) : unit =
+            this.RegisterDecorator false false kind decorator
 
-let get (theme : string option) =
-    match theme with
-    | None ->
-        getFallback ()
-    | Some theme ->
-        themes
-        |> Map.tryFind theme
-        |> Option.defaultWith (fun () ->
-            let result = getFallback ()
-            themes
-            |> Map.map (fun k _v -> k)
-            |> logError result "Themes.get" ("Not_Exist: " + theme)
-            result
-        )
+        member this.AddForceDecorator (kind : string) (decorator : IDecorator) : unit =
+            this.RegisterDecorator false true kind decorator
+
+        member this.AddClassDecorator<'widget> (decorator : IDecorator<'widget>) : unit =
+            if typeof<'widget>.IsInterface then
+                failWith "Must_Not_Be_Interface" (typeof<'widget>.FullName)
+            this.RegisterDecorator true false (typeof<'widget>.FullName) decorator

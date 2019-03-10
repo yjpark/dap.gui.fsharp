@@ -13,16 +13,19 @@ let ContactKind = "Contact"
 let ContactJson = parseJson """
 {
     "prefab": "contact",
+    "theme": null,
     "styles": [],
     "container": "h_box",
     "children": {
         "name": {
             "prefab": "",
+            "theme": null,
             "styles": [],
             "text": "..."
         },
         "phone": {
             "prefab": "",
+            "theme": null,
             "styles": [],
             "text": "..."
         }

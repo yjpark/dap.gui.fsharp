@@ -138,6 +138,24 @@ type IDecorator<'widget> =
     inherit IDecorator
     abstract Decorate : 'widget -> unit
 
+type ITheme =
+    inherit IContext
+    abstract Key : string with get
+    abstract Param : obj with get
+    abstract CreateStyles : IPrefab -> string -> IStyle list
+    abstract InitStyles : IPrefab -> IStyle list
+    abstract DecorateWidget : obj * string list -> unit
+
+    abstract AddStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> : string -> obj list -> unit
+    abstract AddNewStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> : string -> obj list -> unit
+    abstract AddForceStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> : string -> obj list -> unit
+    abstract AddClassStyle<'prefab, 'style when 'prefab :> IPrefab and 'style :> IStyle> : obj list -> unit
+
+    abstract AddDecorator : string -> IDecorator -> unit
+    abstract AddNewDecorator : string -> IDecorator -> unit
+    abstract AddForceDecorator : string -> IDecorator -> unit
+    abstract AddClassDecorator<'widget> : IDecorator<'widget> -> unit
+
 [<AutoOpen>]
 module Extensions =
     type IPrefab with
