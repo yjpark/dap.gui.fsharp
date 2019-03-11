@@ -1,3 +1,6 @@
+## 0.6.3
+* Add IGuiApp make theme management simpler
+
 ## 0.6.2
 * Improve theme and color scheme
 

@@ -1,3 +1,6 @@
+## 0.6.3
+* Decorator for NavigationPage
+
 ## 0.6.2
 * Decorator Util for easier platform specific hack
 
