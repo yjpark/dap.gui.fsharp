@@ -8,6 +8,10 @@ open FSharp.Control.Tasks.V2
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
+open Dap.Gui.Internal
+
+type IGuiApp with
+    static member Instance = GuiApp.Instance
 
 type IRunner<'runner when 'runner :> IRunner> with
     member this.RunGuiFunc (func : Func<'runner, unit>) : unit =

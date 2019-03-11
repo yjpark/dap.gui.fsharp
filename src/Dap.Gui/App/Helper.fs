@@ -18,4 +18,4 @@ let setGuiParam<'obj> (param : 'obj) =
 
 let runGuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IBaseApp>
     (newPresenter : IEnv -> 'presenter) (app : 'app) =
-    GuiApp.GuiApp<'presenter, 'app>.Run newPresenter app
+    GuiApp.run<'presenter, 'app> newPresenter app

@@ -53,9 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Util.fs" />
     <Compile Include="Feature/Decorator/Cell.fs" />
     <Compile Include="Feature/Decorator/SwitchCell.fs" />
-    <Compile Include="Feature/Decorator/Page.fs" />
+    <Compile Include="Feature/Decorator/NavigationPage.fs" />
     <Compile Include="Feature/FabulousIOSPlatform.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>

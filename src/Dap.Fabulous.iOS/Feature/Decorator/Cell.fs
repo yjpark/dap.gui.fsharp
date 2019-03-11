@@ -1,9 +1,6 @@
 [<RequireQualifiedAccess>]
 module Dap.Fabulous.iOS.Feature.Decorator.Cell
 
-open System
-open System.Reflection
-
 open Foundation
 open CoreGraphics
 open UIKit

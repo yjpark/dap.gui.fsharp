@@ -14,7 +14,9 @@ open Dap.Fabulous.Palette
 open Dap.Fabulous.Decorator
 
 type ITheme with
-    member this.AddFabulousColorScheme (param : Dap.Fabulous.Palette.Types.ColorScheme) =
+    member this.AddFabulousColorScheme
+            (param : Dap.Fabulous.Palette.Types.ColorScheme,
+                ?forNavigationBar : bool) =
         // Views
         this.AddClassDecorator
             (new View.Decorator
@@ -38,7 +40,8 @@ type ITheme with
         // Pages
         this.AddClassDecorator
             (new Page.Decorator
-                (backgroundColor = param.Background, toolbarTextColor = param.Toolbar.Normal))
-        this.AddClassDecorator
-            (new NavigationPage.Decorator
-                (barTextColor = param.Primary.Brush, barBackgroundColor = param.Primary.Normal))
+                (backgroundColor = param.Background))
+        if defaultArg forNavigationBar true then
+            this.AddClassDecorator
+                (new NavigationPage.Decorator
+                    (barTextColor = param.Panel.Normal, ?barBackgroundColor = param.Panel.Surface, barActionColor = param.Button.Normal))

@@ -19,7 +19,7 @@ type BasePrefab<'prefab, 'model, 'widget when 'prefab :> IPrefab and 'model :> I
     member __.Widget = widget
     member __.Styles = styles
     member this.Model = this.Properties
-    member this.Theme = Theme.get this.Properties.Theme.Value
+    member this.Theme = GuiApp.Instance.GetTheme this.Properties.Theme.Value
     member this.Setup' (parent' : IPrefab option) (key' : string) =
         if path.IsSome then
             logError this "SetParent" "Already_Set" (parent, path, key, parent', key')

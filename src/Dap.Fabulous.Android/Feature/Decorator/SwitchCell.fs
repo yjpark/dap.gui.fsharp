@@ -1,8 +1,6 @@
 [<RequireQualifiedAccess>]
 module Dap.Fabulous.Android.Feature.Decorator.SwitchCell
 
-open System.Reflection
-
 open Xamarin.Forms
 open Xamarin.Forms.Platform.Android
 
@@ -24,11 +22,11 @@ let getSwitchCellView (logger : ILogger) (cell : SwitchCell) : SwitchCellView op
 type Decorator (logging : ILogging) =
     inherit EmptyContext (logging, SwitchCell.NativeDecoratorKind)
     interface SwitchCell.INativeDecorator with
-        member this.SetTextColor (widget : SwitchCell) (textColor : Color) =
+        member this.SetTextColor (widget : SwitchCell) (color : Color) =
             getSwitchCellView this widget
             |> Option.iter (fun view ->
                 if view =? null then
-                    logError this "SetTextColor" "SwitchCellView_Not_Found" (widget, textColor)
+                    logError this "SetTextColor" "SwitchCellView_Not_Found" (widget, color)
                 else
-                    view.SetMainTextColor (textColor)
+                    view.SetMainTextColor (color)
             )
