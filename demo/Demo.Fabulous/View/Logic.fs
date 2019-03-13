@@ -3,7 +3,6 @@ module Demo.Fabulous.View.Logic
 
 open FSharp.Control.Tasks.V2
 
-open Fabulous.Core
 open Fabulous.DynamicViews
 
 open Dap.Prelude

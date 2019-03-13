@@ -130,33 +130,40 @@ type Params = MaterialParams with
                 Params.Brown, Params.Gray, Params.BlueGray
             )
     static member CreateScheme
-            (background, surface, normal,
-                ?primary, ?secondary, ?action,
-                ?labelDimmed, ?switchAccent) : ColorSchemeParam =
+            (normal, dimmed, surface, background,
+                ?primary, ?secondary,
+                ?action, ?actionDimmed, ?actionAccent, ?actionSurface,
+                ?switch, ?switchDimmed, ?switchAccent
+                ) : ColorSchemeParam =
         let primary = defaultArg primary background
         let secondary = defaultArg secondary surface
         let action = defaultArg action normal
+        let actionDimmed = defaultArg actionDimmed dimmed
+        let actionAccent = defaultArg actionAccent action
+        let switch = defaultArg switch normal
+        let switchDimmed = defaultArg switchDimmed dimmed
+        let switchAccent = defaultArg switchAccent switch
         {
             Primary = SurfaceColorParam.Create
                 (brush = normal, normal = primary)
             Secondary = SurfaceColorParam.Create
                 (brush = normal, normal = secondary)
             Label = BrushColorParam.Create
-                (normal = normal, ?dimmed = labelDimmed)
+                (normal = normal, dimmed = dimmed)
             Button = BrushColorParam.Create
-                (normal = action)
+                (normal = action, dimmed = actionDimmed, accent = actionAccent, surface = background)
             TextField = BrushColorParam.Create
-                (normal = normal)
+                (normal = normal, dimmed = dimmed)
             Switch = BrushColorParam.Create
-                (normal = normal, ?accent = switchAccent)
+                (normal = switch, dimmed = switchDimmed, accent = switchAccent)
             Box = BrushColorParam.Create
-                (normal = normal, surface = surface)
+                (normal = normal, dimmed = dimmed, surface = surface)
             Table = BrushColorParam.Create
-                (normal = normal, surface = surface)
+                (normal = normal, dimmed = dimmed, surface = surface)
             Panel = BrushColorParam.Create
-                (normal = normal, surface = surface)
+                (normal = normal, dimmed = dimmed, surface = surface)
             Toolbar = BrushColorParam.Create
-                (normal = action, surface = surface)
+                (normal = action, dimmed = actionDimmed, accent = actionAccent, surface = surface)
             Error = BrushColorParam.Create
                 (normal = Params.White, surface = Params.Red.Normal500)
             Background = background
@@ -165,20 +172,22 @@ type Params = MaterialParams with
         Params.CreateScheme
             (
                 normal = Params.Black,
+                dimmed = Params.Gray.Normal700,
                 surface = Params.Gray.Normal100,
                 background = Params.White,
                 action = Params.Blue.Normal500,
-                labelDimmed = Params.Gray.Normal700,
+                actionAccent = Params.Blue.Normal300,
                 switchAccent = Params.Green.Normal700
             )
     static member DarkScheme : ColorSchemeParam =
         Params.CreateScheme
             (
-                background = Params.Black,
-                surface = Params.Gray.Normal900,
                 normal = Params.Gray.Normal100,
+                dimmed = Params.Gray.Normal400,
+                surface = Params.Gray.Normal900,
+                background = Params.Black,
                 action = Params.Blue.Normal800,
-                labelDimmed = Params.Gray.Normal400,
+                actionAccent = Params.Blue.Normal900,
                 switchAccent = Params.Green.Normal500
             )
 

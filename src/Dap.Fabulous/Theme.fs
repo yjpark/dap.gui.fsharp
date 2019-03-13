@@ -37,6 +37,12 @@ type ITheme with
         this.AddClassDecorator
             (new SwitchCell.Decorator
                 (textColor = param.Switch.Normal, ?onColor = param.Switch.Accent, ?backgroundColor = param.Switch.Surface))
+        // Custom Cells
+        this.AddClassDecorator
+            (new TextActionCell.Decorator
+                (textColor = param.Label.Normal, ?detailColor = param.Label.Dimmed, ?backgroundColor = param.Label.Surface,
+                actionColor = param.Button.Normal, ?actionSelectedColor = param.Button.Accent,
+                    ?actionDisabledColor = param.Button.Dimmed, ?actionBackgroundColor = param.Button.Surface))
         // Pages
         this.AddClassDecorator
             (new Page.Decorator

@@ -4,7 +4,6 @@ module Dap.Fabulous.Decorator.Util
 open System.Reflection
 
 open Xamarin.Forms
-open Fabulous.Core
 
 open Dap.Prelude
 open Dap.Context

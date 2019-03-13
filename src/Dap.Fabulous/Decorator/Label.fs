@@ -2,7 +2,6 @@
 module Dap.Fabulous.Decorator.Label
 
 open Xamarin.Forms
-open Fabulous.Core
 
 open Dap.Prelude
 open Dap.Context

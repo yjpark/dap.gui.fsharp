@@ -2,6 +2,7 @@ module Dap.Fabulous.View.Types
 
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2
+
 open Xamarin.Forms
 open Fabulous.Core
 open Fabulous.DynamicViews

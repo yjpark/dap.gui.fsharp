@@ -81,9 +81,9 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <Compile Include="Program.fs" />
-    <PackageReference Include="Dap.Platform">
-      <Version>0.6.4</Version>
-    </PackageReference>
+  </ItemGroup>
+  <Import Project="..\..\src\Dap.Fabulous\Dap.Fabulous.reference" />
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Dap.Gui\Dap.Gui.fsproj" />
     <ProjectReference Include="..\..\src\Dap.Fabulous\Dap.Fabulous.fsproj" />
     <ProjectReference Include="..\..\src\Dap.Mac\Dap.Mac.fsproj" />

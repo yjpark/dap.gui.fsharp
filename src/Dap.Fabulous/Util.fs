@@ -4,7 +4,6 @@ module Dap.Fabulous.Util
 open System.Threading.Tasks
 open Xamarin.Essentials
 open Xamarin.Forms
-open Fabulous.Core
 open Fabulous.DynamicViews
 
 open Dap.Prelude

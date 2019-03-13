@@ -40,6 +40,7 @@ let libProjects =
     ++ "src/Dap.Gtk/*.fsproj"
     ++ "src/Dap.UWP/*.fsproj"
     ++ "src/Dap.Myra/*.fsproj"
+    ++ "src/Dap.Fabulous.Controls/*.csproj"
     ++ "src/Dap.Fabulous/*.fsproj"
     ++ "src/Dap.Fabulous.Forms/*.fsproj"
     ++ "src/Dap.Fabulous.Ooui/*.fsproj"

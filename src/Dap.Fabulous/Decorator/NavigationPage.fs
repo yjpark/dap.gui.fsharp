@@ -2,7 +2,6 @@
 module Dap.Fabulous.Decorator.NavigationPage
 
 open Xamarin.Forms
-open Fabulous.Core
 
 open Dap.Prelude
 open Dap.Context
