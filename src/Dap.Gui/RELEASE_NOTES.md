@@ -1,3 +1,6 @@
+## 0.6.5
+* Update IGuiAppHook
+
 ## 0.6.4
 * Update material color scheme
 

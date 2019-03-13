@@ -1,5 +1,4 @@
-## 0.6.4
-* TODO:RELEASE
+## 0.6.5
 * Use INativeDecorator from Dap.Fabulous.Controls
 
 ## 0.6.4
