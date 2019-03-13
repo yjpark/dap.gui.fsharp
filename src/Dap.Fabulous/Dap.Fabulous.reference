@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+  <Import Project="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.reference" />
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
       <Version>3.5.0.169047</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Essentials">
-      <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Fabulous.Core">
       <Version>0.32</Version>
@@ -16,14 +14,9 @@
     <PackageReference Include="Fabulous.LiveUpdate">
       <Version>0.32</Version>
     </PackageReference>
-    <PackageReference Include="Dap.Prelude">
-      <Version>0.6.1</Version>
-    </PackageReference>
-    <PackageReference Include="Dap.Context">
-      <Version>0.6.2</Version>
-    </PackageReference>
-    <PackageReference Include="Dap.Platform">
-      <Version>0.6.9</Version>
-    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous.Controls\Dap.Fabulous.Controls.csproj" />
+    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous\Dap.Fabulous.fsproj" />
   </ItemGroup>
 </Project>

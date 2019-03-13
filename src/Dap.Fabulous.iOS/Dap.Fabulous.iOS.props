@@ -2,9 +2,6 @@
 <Project>
   <Import Project="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous\Dap.Fabulous.reference" />
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.fsproj" />
-    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous.Controls\Dap.Fabulous.Controls.csproj" />
-    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous\Dap.Fabulous.fsproj" />
     <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.iOS\Dap.iOS.fsproj" />
   </ItemGroup>
 </Project>
