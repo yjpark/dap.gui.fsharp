@@ -1,3 +1,7 @@
+## 0.6.4
+* Create builders for easier gui creation with dsl
+* Support TextActionCell as custom cell
+
 ## 0.6.3
 * Decorator for NavigationPage
 

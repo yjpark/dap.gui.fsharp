@@ -1,3 +1,6 @@
+## 0.6.4
+* Update material color scheme
+
 ## 0.6.3
 * Add IGuiApp make theme management simpler
 
