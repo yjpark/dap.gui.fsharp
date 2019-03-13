@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+PROJ='../demo/Demo.Mac'
+APP='Demo'
+
+

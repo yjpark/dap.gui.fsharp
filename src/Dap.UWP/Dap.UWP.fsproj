@@ -2,10 +2,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
-    <PackageTags>fsharp;dap;gui;gtk</PackageTags>
+    <PackageTags>fsharp;dap;gui;uwp</PackageTags>
     <Authors>YJ Park</Authors>
     <Version>0.6.1</Version>
-    <Description>Dap with GtkSharp</Description>
+    <Description>Dap with UWP</Description>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
