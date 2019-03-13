@@ -10,11 +10,13 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="LoggingProvider.fs" />
+    <Compile Include="Hook/GuiApp.fs" />
     <Compile Include="Feature/UWPPlatform.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dap.Gui\Dap.Gui.fsproj" />
+    <ProjectReference Include="..\Dap.UWP.Cli\Dap.UWP.Cli.csproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

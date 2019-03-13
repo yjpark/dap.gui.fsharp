@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <ItemGroup>
-    <PackageReference Include="Dap.Prelude">
-      <Version>0.6.1</Version>
-    </PackageReference>
-    <PackageReference Include="Dap.Context">
-      <Version>0.6.2</Version>
-    </PackageReference>
-    <PackageReference Include="Dap.Platform">
-      <Version>0.6.9</Version>
-    </PackageReference>
-    <PackageReference Include="Dap.Local">
-      <Version>0.6.0</Version>
-    </PackageReference>
-  </ItemGroup>
+  <Import Project="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.packages" />
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.fsproj" />
   </ItemGroup>

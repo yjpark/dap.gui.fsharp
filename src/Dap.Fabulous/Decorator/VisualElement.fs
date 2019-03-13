@@ -9,15 +9,14 @@ open Dap.Platform
 open Dap.Gui
 
 type Decorator<'widget when 'widget :> VisualElement>
-        (?backgroundColor : Color, ?update : 'widget -> unit) =
-    inherit BaseDecorator<'widget> ()
+        (?update : 'widget -> unit, ?backgroundColor : Color) =
+    inherit Element.Decorator<'widget> (?update = update)
     override __.Decorate (widget : 'widget) =
+        base.Decorate widget
         backgroundColor
         |> Option.iter (fun x -> widget.BackgroundColor <- x)
-        update
-        |> Option.iter (fun x -> x widget)
 
 type Decorator
-        (?backgroundColor : Color, ?update : VisualElement -> unit) =
+        (?update : VisualElement -> unit, ?backgroundColor : Color) =
     inherit Decorator<VisualElement>
-        (?backgroundColor = backgroundColor, ?update = update)
+        (?update = update, ?backgroundColor = backgroundColor)

@@ -6,25 +6,19 @@ open Xamarin.Forms
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
-open Dap.Gui
-
-let NativeDecoratorKind = "SwitchCellNativeDecorator"
-
-type INativeDecorator =
-    inherit IFeature
-    abstract SetTextColor : SwitchCell -> Color -> unit
+open Dap.Fabulous.Controls
 
 type Decorator
         (?backgroundColor : Color, ?update : SwitchCell -> unit,
             ?textColor : Color, ?onColor : Color) =
     inherit Cell.Decorator<SwitchCell>
         (?backgroundColor = backgroundColor, ?update = update)
-    let native = base.TryCreateFeature<INativeDecorator> ()
-    let DecorateNative (widget : SwitchCell) (decorator : INativeDecorator) =
+    let native = base.TryGetNativeDecorator<ISwitchCellDecorator> ()
+    let DecorateNative (widget : SwitchCell) (decorator : ISwitchCellDecorator) =
         if textColor.IsSome then
             widget.Appearing.Add (fun _ ->
                 textColor
-                |> Option.iter (decorator.SetTextColor widget)
+                |> Option.iter (fun x -> decorator.SetTextColor (widget, x))
             )
 
     override __.Decorate (widget : SwitchCell) =

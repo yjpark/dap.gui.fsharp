@@ -49,9 +49,9 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Util.fs" />
-    <Compile Include="Feature/Decorator/Cell.fs" />
-    <Compile Include="Feature/Decorator/SwitchCell.fs" />
-    <Compile Include="Feature/Decorator/NavigationPage.fs" />
+    <Compile Include="Decorator/Cell.fs" />
+    <Compile Include="Decorator/SwitchCell.fs" />
+    <Compile Include="Decorator/NavigationPage.fs" />
     <Compile Include="Feature/FabulousAndroidPlatform.fs" />
     <Compile Include="Activity.fs" />
     <Compile Include="Helper.fs" />

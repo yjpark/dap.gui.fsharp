@@ -1,12 +1,12 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Mac.Feature.Decorator.Cell
+module Dap.Fabulous.iOS.Decorator.Cell
 
 open Foundation
 open CoreGraphics
-open AppKit
+open UIKit
 
 open Xamarin.Forms
-open Xamarin.Forms.Platform.MacOS
+open Xamarin.Forms.Platform.iOS
 
 open Dap.Prelude
 open Dap.Context
@@ -15,10 +15,10 @@ open Dap.Platform
 open Dap.Fabulous.Decorator
 open Xamarin.Forms
 
-// Xamarin.Forms.Platform.MacOS/Cells/CellRenderer.cs
+// Xamarin.Forms.Platform.iOS/Cells/CellRenderer.cs
 
 let getRealCell (logger : ILogger) (cell : Cell) =
-    Util.getBindableValue<CellRenderer, NSView> logger "s_realCellProperty" cell
+    Util.getBindableValue<CellRenderer, UITableViewCell> logger "RealCellProperty" cell
     |> Option.bind (fun cell ->
         if cell <> null then
             Some cell

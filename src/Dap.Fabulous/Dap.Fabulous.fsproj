@@ -37,6 +37,7 @@
     <Compile Include="Builder/Cells/TextActionCell.fs" />
     <Compile Include="Builder/Helper.fs" />
     <Compile Include="Decorator/Util.fs" />
+    <Compile Include="Decorator/Element.fs" />
     <Compile Include="Decorator/VisualElement.fs" />
     <Compile Include="Decorator/View.fs" />
     <Compile Include="Decorator/Label.fs" />

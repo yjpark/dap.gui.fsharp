@@ -1,6 +1,8 @@
 [<AutoOpen>]
 module Dap.Gui.BaseDecorator
 
+open System
+
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
@@ -11,16 +13,6 @@ type BaseDecorator<'widget> () =
     abstract member Decorate : 'widget -> unit
     member __.Kind = kind.Value
     member __.TargetType = typeof<'widget>
-    member __.TryCreateFeature<'feature when 'feature :> IFeature> () : 'feature option =
-        Feature.tryCreate<'feature> (getLogging ())
-        |> (fun feature ->
-            if feature.IsNone then
-                logError (getLogging ()) "TryCreateFeature" "Feature_Not_Exist" typeof<'feature>
-            feature
-        )
-    member this.CreateFeature<'feature when 'feature :> IFeature> () : 'feature =
-        this.TryCreateFeature<'feature> ()
-        |> Option.get
     interface IDecorator<'widget> with
         member this.Decorate widget = this.Decorate widget
     interface IDecorator with

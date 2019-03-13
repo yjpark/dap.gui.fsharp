@@ -168,7 +168,7 @@ type IGuiApp =
 
 type IGuiAppHook =
     inherit IHook
-    abstract Init : IGuiApp -> unit
+    abstract OnInit : IGuiApp -> unit
 
 [<AutoOpen>]
 module Extensions =

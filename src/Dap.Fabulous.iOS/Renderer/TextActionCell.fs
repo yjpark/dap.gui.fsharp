@@ -73,7 +73,7 @@ type Renderer () =
         base.HandleCellPropertyChanged (sender, args)
         let cell = sender :?> TextActionCell
         let tvc =
-            Dap.Fabulous.iOS.Feature.Decorator.Cell.getRealCell Renderer.Logger cell
+            Dap.Fabulous.iOS.Decorator.Cell.getRealCell Renderer.Logger cell
             |> Option.get
             :?> CellTableViewCell
         getActionButton tvc

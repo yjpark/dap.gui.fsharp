@@ -64,6 +64,6 @@
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <Import Project="..\..\src\Dap.Gui\Dap.Gui.reference" />
-  <Import Project="..\..\src\Dap.Fabulous\Xamarin.Essentials.reference" />
+  <Import Project="..\..\src\Dap.Fabulous\Xamarin.Essentials.packages" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.FSharp.targets" />
 </Project>

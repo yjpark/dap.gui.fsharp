@@ -7,18 +7,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Gui
-
-let NativeDecoratorKind = "NavigationPageNativeDecorator"
-
-type INativeDecorator =
-    inherit IFeature
-    //Note : Can NOT just use NavigationPage.BarTextColor, which has different behavior
-    //On Android and iOS
-    // iOS: Change both title and action
-    // Android: Change only title
-    //|> Option.iter (fun x -> widget.BarTextColor <- x)
-    abstract SetBarActionColor : NavigationPage -> Color -> unit
-    abstract UpdateBarStyle : NavigationPage -> unit
+open Dap.Fabulous.Controls
 
 type Decorator
         (?backgroundColor : Color, ?update : NavigationPage -> unit,
@@ -27,11 +16,11 @@ type Decorator
     inherit Page.Decorator<NavigationPage>
         (?backgroundColor = backgroundColor, ?update = update,
             ?padding = padding)
-    let native = base.TryCreateFeature<INativeDecorator> ()
-    let DecorateNative (widget : NavigationPage) (decorator : INativeDecorator) =
+    let native = base.TryGetNativeDecorator<INavigationPageDecorator> ()
+    let DecorateNative (widget : NavigationPage) (decorator : INavigationPageDecorator) =
         widget.Appearing.Add (fun _ ->
             barActionColor
-            |> Option.iter (decorator.SetBarActionColor widget)
+            |> Option.iter (fun x -> decorator.SetBarActionColor (widget, x))
             decorator.UpdateBarStyle widget
         )
 

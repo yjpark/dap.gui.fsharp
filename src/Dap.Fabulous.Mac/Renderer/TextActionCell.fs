@@ -57,7 +57,7 @@ type Renderer () =
         base.HandleCellPropertyChanged (sender, args)
         let cell = sender :?> TextActionCell
         let tvc =
-            Dap.Fabulous.Mac.Feature.Decorator.Cell.getRealCell Renderer.Logger cell
+            Dap.Fabulous.Mac.Decorator.Cell.getRealCell Renderer.Logger cell
             |> Option.get
             :?> CellNSView
         let prop = args.PropertyName

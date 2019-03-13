@@ -30,6 +30,7 @@ NUGET
       Dap.Context (>= 0.6.2) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       Elmish (>= 2.0.3) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       NodaTime (>= 2.4.4) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
+    Dap.Platform.Cli (0.6)
     Dap.Prelude (0.6.1)
       FSharp.Core (>= 4.6.2) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))
       Serilog (>= 2.8) - restriction: || (== netcoreapp2.1) (== netcoreapp2.2) (== netstandard2.0) (&& (== xamarinmac) (>= netstandard2.0))

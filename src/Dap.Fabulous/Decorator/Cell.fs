@@ -9,13 +9,12 @@ open Dap.Platform
 open Dap.Gui
 
 type Decorator<'widget when 'widget :> Cell>
-        (?backgroundColor : Color, ?update : 'widget -> unit) =
-    inherit BaseDecorator<'widget> ()
+        (?update : 'widget -> unit, ?backgroundColor : Color) =
+    inherit Element.Decorator<'widget> (?update = update)
     override __.Decorate (widget : 'widget) =
-        //TODO
-        ()
+        base.Decorate widget
 
 type Decorator
-        (?backgroundColor : Color, ?update : Cell -> unit) =
+        (?update : Cell -> unit, ?backgroundColor : Color) =
     inherit Decorator<Cell>
-        (?backgroundColor = backgroundColor, ?update = update)
+        (?update = update, ?backgroundColor = backgroundColor)

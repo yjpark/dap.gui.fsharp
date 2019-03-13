@@ -1,35 +1,29 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Mac.Feature.Decorator.NavigationPage
+module Dap.Fabulous.iOS.Decorator.NavigationPage
 
 open Foundation
 open CoreGraphics
-open AppKit
+open UIKit
 
 open Xamarin.Forms
-open Xamarin.Forms.Platform.MacOS
+open Xamarin.Forms.Platform.iOS
 
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
 open Dap.Fabulous.Decorator
-open Dap.Fabulous.Mac
+open Dap.Fabulous.iOS
 
-// Xamarin.Forms.Platform.MacOS/Renderers/NavigationRenderer.cs
+// Xamarin.Forms.Platform.iOS/Renderers/NavigationRenderer.cs
 
 
-type Decorator (logging : ILogging) =
-    inherit EmptyContext (logging, SwitchCell.NativeDecoratorKind)
-    interface NavigationPage.INativeDecorator with
-        member this.SetBarActionColor (widget : NavigationPage) (color : Color) =
-            () //TODO
-            (*
+type Decorator () =
+    interface INavigationPageDecorator with
+        member this.SetBarActionColor (widget : NavigationPage, color : Color) =
             let renderer = widget.GetRenderer<NavigationRenderer> ()
             renderer.NavigationBar.TintColor <- color.ToUIColor ()
-            *)
         member this.UpdateBarStyle (widget : NavigationPage) =
-            () //TODO
-            (*
             let renderer = widget.GetRenderer<NavigationRenderer> ()
             let barStyle =
                 if widget.BarTextColor.Luminosity <= 0.5 then
@@ -37,6 +31,5 @@ type Decorator (logging : ILogging) =
                 else
                     UIBarStyle.Black
             renderer.NavigationBar.BarStyle <- barStyle
-            *)
 
 

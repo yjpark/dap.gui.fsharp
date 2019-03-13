@@ -1,5 +1,5 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Android.Feature.Decorator.Cell
+module Dap.Fabulous.Android.Decorator.Cell
 
 open Xamarin.Forms
 open Xamarin.Forms.Platform.Android

@@ -36,7 +36,7 @@ type GuiApp (app : IBaseApp) =
             instance <- Some instance'
             hooks <- Hook.createAll<IGuiAppHook> instance'.App.Env.Logging
             hooks
-            |> List.iter (fun x -> x.Init instance')
+            |> List.iter (fun x -> x.OnInit instance')
     member __.Theme =
         if theme.IsNone then
             setTheme (new Theme (NoKey, null) :> ITheme)
