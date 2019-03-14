@@ -16,65 +16,79 @@ open Dap.Platform
 open Dap.Fabulous
 open Dap.Fabulous.Controls
 
+type Model = {
+    Cell : TextActionCell
+    View : NSStackView
+    Button : NSButton
+}
+
 type Renderer () =
     inherit TextCellRenderer ()
     static let mutable logger : ILogger option = None
-    let updateButton (tvc : NSView) (update : NSButton -> unit) =
-        ()
-        (*
-        match tvc.AccessoryView.Subviews[0] with
-        | :? NSButton as button -> update button
-        | _ -> ()
-        *)
-    static member Logger =
+    let mutable model : Model option = None
+    member __.Logger =
         if logger.IsNone then
             logger <- Some <| (getLogging ()) .GetLogger ("TextActionCell.Renderer")
         logger.Value
-    override __.GetCell (item : Cell, reusableCell : NSView, tv : NSTableView) : NSView =
+    member __.Cell = model.Value.Cell
+    member __.Button = model.Value.Button
+    member this.UpdateActionEnabled () =
+        this.Button.Enabled <- this.Cell.ActionEnabled
+    member this.UpdateActionText () =
+        let color = this.GetActionColor ()
+        if color = Color.Default then
+            this.Button.Title <- this.Cell.Action
+        else
+            let textWithColor =
+                new NSAttributedString (
+                    this.Cell.Action,
+                    foregroundColor = color.ToNSColor(),
+                    paragraphStyle = new NSMutableParagraphStyle (Alignment = NSTextAlignment.Center)
+                )
+            this.Button.AttributedTitle <- textWithColor
+    member this.GetActionColor () =
+        this.Cell.ActionColor
+    member this.UpdateActionBackgroundColor () =
+        this.Button.Cell.BackgroundColor <- this.Cell.ActionBackgroundColor.ToNSColor ()
+    member this.UpdateActionButton () =
+        this.UpdateActionEnabled ()
+        this.UpdateActionText ()
+        this.UpdateActionBackgroundColor ()
+    member this.CreateModel (cell : TextActionCell, tvc : NSView) =
+        let view = new NSStackView ()
+        view.Orientation <- NSUserInterfaceLayoutOrientation.Horizontal
+        view.AddArrangedSubview (tvc)
+        let button = new NSButton ()
+        button.Activated.Add (fun _ ->
+            cell.FireOnAction ()
+        )
+        view.SetViews([| button |], NSStackViewGravity.Trailing)
+        view.AddArrangedSubview (button)
+        {
+            Cell = cell
+            View = view
+            Button = button
+        }
+    override this.GetCell (item : Cell, reusableCell : NSView, tv : NSTableView) : NSView =
         let cell = item :?> TextActionCell
         let tvc = base.GetCell (item, reusableCell, tv)
-        logWip Renderer.Logger "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" (cell, tvc)
-        (*
-        let button =
-            match tvc.AccessoryView with
-            | :? NSButton as button -> button
-            | _ ->
-                let button = new NSButton ()
-                button.LineBreakMode <- UILineBreakMode.TailTruncation
-                button.TouchUpInside.Add (fun _ ->
-                    cell.FireOnAction ()
-                )
-                tvc.AccessoryView <- button
-                button
-        button.Enabled <- cell.ActionEnabled
-        button.TitleLabel.Text <- cell.Action
-        button.TitleLabel.TextColor <- cell.ActionColor.ToUIColor ()
-        button.BackgroundColor <- cell.ActionBackgroundColor.ToUIColor ()
-        *)
-        tvc
-    (*
-    override __.HandleCellPropertyChanged (sender : obj, args : PropertyChangedEventArgs) =
-        base.HandleCellPropertyChanged (sender, args)
-        let cell = sender :?> TextActionCell
-        let tvc =
-            Dap.Fabulous.Mac.Decorator.Cell.getRealCell Renderer.Logger cell
-            |> Option.get
-            :?> CellNSView
-        let prop = args.PropertyName
-        if prop = TextActionCell.ActionEnabledProperty.PropertyName then
-            updateButton tvc (fun button ->
-                button.Enabled <- cell.ActionEnabled
-            )
-        elif prop = TextActionCell.ActionProperty.PropertyName then
-            updateButton tvc (fun button ->
-                button.TitleLabel.Text <- cell.Action
-            )
-        elif prop = TextActionCell.ActionColorProperty.PropertyName then
-            updateButton tvc (fun button ->
-                button.TitleLabel.TextColor <- cell.ActionColor.ToUIColor ()
-            )
-        elif prop = TextActionCell.ActionBackgroundColorProperty.PropertyName then
-            updateButton tvc (fun button ->
-                button.BackgroundColor <- cell.ActionBackgroundColor.ToUIColor ()
-            )
-    *)
+        if model.IsNone then
+            model <- Some <| this.CreateModel (cell, tvc)
+        this.UpdateActionButton ()
+        model.Value.View :> NSView
+    override this.HandlePropertyChanged (sender : obj, args : PropertyChangedEventArgs) =
+        base.HandlePropertyChanged (sender, args)
+        model
+        |> Option.iter (fun _model ->
+            let prop = args.PropertyName
+            if prop = TextActionCell.ActionEnabledProperty.PropertyName then
+                this.UpdateActionEnabled ()
+            elif prop = TextActionCell.ActionProperty.PropertyName
+                    || prop = TextActionCell.ActionColorProperty.PropertyName
+                    || prop = TextActionCell.ActionPressedColorProperty.PropertyName
+                    || prop = TextActionCell.ActionDisabledColorProperty.PropertyName
+                    then
+                this.UpdateActionText ()
+            elif prop = TextActionCell.ActionBackgroundColorProperty.PropertyName then
+                this.UpdateActionBackgroundColor ()
+        )

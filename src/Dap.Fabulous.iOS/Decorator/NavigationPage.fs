@@ -12,6 +12,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
+open Dap.Fabulous.Controls
 open Dap.Fabulous.Decorator
 open Dap.Fabulous.iOS
 
@@ -19,6 +20,7 @@ open Dap.Fabulous.iOS
 
 
 type Decorator () =
+    let logger = (getLogging ()) .GetLogger ("NavigationPage.Decorator")
     interface INavigationPageDecorator with
         member this.SetBarActionColor (widget : NavigationPage, color : Color) =
             let renderer = widget.GetRenderer<NavigationRenderer> ()

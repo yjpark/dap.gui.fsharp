@@ -12,6 +12,7 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 
+open Dap.Fabulous.Controls
 open Dap.Fabulous.Decorator
 open Xamarin.Forms
 

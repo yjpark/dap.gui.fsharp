@@ -64,6 +64,7 @@
     <Compile Include="Decorator/SwitchCell.fs" />
     <Compile Include="Decorator/NavigationPage.fs" />
     <Compile Include="Feature/FabulousMacPlatform.fs" />
+    <Compile Include="Renderer/Cell.fs" />
     <Compile Include="Renderer/TextActionCell.fs" />
     <Compile Include="Renderer/Exports.fs" />
     <Compile Include="Helper.fs" />

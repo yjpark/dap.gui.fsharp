@@ -19,40 +19,40 @@ open Dap.Fabulous.Controls
 type Renderer () =
     inherit TextCellRenderer ()
     static let mutable logger : ILogger option = None
-    let getActionButton (tvc : CellTableViewCell) =
+    member __.Logger =
+        if logger.IsNone then
+            logger <- Some <| (getLogging ()) .GetLogger ("TextActionCell.Renderer")
+        logger.Value
+    member this.GetActionButton (tvc : CellTableViewCell) =
         match tvc.AccessoryView with
         | :? UIButton as button -> Some button
         | _ -> None
-    let updateForAlllStates (update : UIControlState -> unit) =
+    member this.UpdateForAlllStates (update : UIControlState -> unit) =
         update UIControlState.Normal
         update UIControlState.Highlighted
         update UIControlState.Disabled
         update UIControlState.Selected
-    let updateActionEnabled (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateActionEnabled (cell : TextActionCell) (button : UIButton) =
         button.Enabled <- cell.ActionEnabled
-    let updateAction (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateAction (cell : TextActionCell) (button : UIButton) =
         button.SetTitle (cell.Action, UIControlState.Normal)
         button.SizeToFit ()
-    let updateActionColor (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateActionColor (cell : TextActionCell) (button : UIButton) =
         button.SetTitleColor (cell.ActionColor.ToUIColor (), UIControlState.Normal)
-    let updateActionPressedColor (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateActionPressedColor (cell : TextActionCell) (button : UIButton) =
         button.SetTitleColor (cell.ActionPressedColor.ToUIColor (), UIControlState.Highlighted)
-    let updateActionDisabledColor (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateActionDisabledColor (cell : TextActionCell) (button : UIButton) =
         button.SetTitleColor (cell.ActionDisabledColor.ToUIColor (), UIControlState.Disabled)
-    let updateActionBackgroundColor (cell : TextActionCell) (button : UIButton) =
+    member this.UpdateActionBackgroundColor (cell : TextActionCell) (button : UIButton) =
         button.BackgroundColor <- cell.ActionBackgroundColor.ToUIColor ()
-    let updateActionButton (cell : TextActionCell) (button : UIButton) =
-        updateActionEnabled cell button
-        updateAction cell button
-        updateActionColor cell button
-        updateActionPressedColor cell button
-        updateActionDisabledColor cell button
-        updateActionBackgroundColor cell button
-    static member Logger =
-        if logger.IsNone then
-            logger <- Some <| (getLogging ()) .GetLogger ("TextActionCell.Renderer")
-        logger.Value
-    override __.GetCell (item : Cell, reusableCell : UITableViewCell, tv : UITableView) : UITableViewCell =
+    member this.UpdateActionButton (cell : TextActionCell) (button : UIButton) =
+        this.UpdateActionEnabled cell button
+        this.UpdateAction cell button
+        this.UpdateActionColor cell button
+        this.UpdateActionPressedColor cell button
+        this.UpdateActionDisabledColor cell button
+        this.UpdateActionBackgroundColor cell button
+    override this.GetCell (item : Cell, reusableCell : UITableViewCell, tv : UITableView) : UITableViewCell =
         let cell = item :?> TextActionCell
         let tvc = base.GetCell (item, reusableCell, tv) :?> CellTableViewCell
         let button =
@@ -67,28 +67,28 @@ type Renderer () =
                 )
                 tvc.AccessoryView <- button
                 button
-        updateActionButton cell button
+        this.UpdateActionButton cell button
         tvc :> UITableViewCell
-    override __.HandleCellPropertyChanged (sender : obj, args : PropertyChangedEventArgs) =
+    override this.HandleCellPropertyChanged (sender : obj, args : PropertyChangedEventArgs) =
         base.HandleCellPropertyChanged (sender, args)
         let cell = sender :?> TextActionCell
         let tvc =
-            Dap.Fabulous.iOS.Decorator.Cell.getRealCell Renderer.Logger cell
+            Dap.Fabulous.iOS.Decorator.Cell.getRealCell this.Logger cell
             |> Option.get
             :?> CellTableViewCell
-        getActionButton tvc
+        this.GetActionButton tvc
         |> Option.iter (fun button ->
             let prop = args.PropertyName
             if prop = TextActionCell.ActionEnabledProperty.PropertyName then
-                updateActionEnabled cell button
+                this.UpdateActionEnabled cell button
             elif prop = TextActionCell.ActionProperty.PropertyName then
-                updateAction cell button
+                this.UpdateAction cell button
             elif prop = TextActionCell.ActionColorProperty.PropertyName then
-                updateActionColor cell button
+                this.UpdateActionColor cell button
             elif prop = TextActionCell.ActionPressedColorProperty.PropertyName then
-                updateActionPressedColor cell button
+                this.UpdateActionPressedColor cell button
             elif prop = TextActionCell.ActionDisabledColorProperty.PropertyName then
-                updateActionDisabledColor cell button
+                this.UpdateActionDisabledColor cell button
             elif prop = TextActionCell.ActionBackgroundColorProperty.PropertyName then
-                updateActionBackgroundColor cell button
+                this.UpdateActionBackgroundColor cell button
         )
