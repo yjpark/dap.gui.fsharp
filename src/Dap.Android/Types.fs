@@ -16,6 +16,8 @@ type Widget = Android.Views.View
 type Activity = Android.App.Activity
 type Bundle = Android.OS.Bundle
 
+type JavaObject = Java.Lang.Object
+
 type IAndroidPlatform =
     inherit IGuiPlatform
     abstract Param : AndroidParam with get

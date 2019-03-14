@@ -1,4 +1,4 @@
-[<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Dap.Fabulous.iOS.Renderer.TextActionCell
 
 open System.ComponentModel
