@@ -9,6 +9,22 @@
     <Import_RootNamespace>Dap.Fabulous.UWP</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Renderer\TextActionCellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer\TextActionCellView.xaml.cs">
+        <DependentUpon>$(MSBuildThisFileDirectory)Renderer\TextActionCellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Resources.xaml.cs">
+        <DependentUpon>$(MSBuildThisFileDirectory)Resources.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Decorator\SwitchCellDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer\TextActionCellRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer\Exports.cs" />
   </ItemGroup>
 </Project>

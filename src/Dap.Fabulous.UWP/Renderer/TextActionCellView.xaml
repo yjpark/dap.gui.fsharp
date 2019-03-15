@@ -1,0 +1,39 @@
+<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:uwp="using:Xamarin.Forms.Platform.UWP"
+    x:Class="Dap.Fabulous.UWP.TextActionCellView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid HorizontalAlignment="Stretch" x:Name="ParentGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock
+                Text="{Binding Text}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Visibility="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}"
+                Foreground="{Binding TextColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}" />
+
+            <TextBlock
+                Text="{Binding Detail}"
+                Style="{ThemeResource BodyTextBlockStyle}"
+                Visibility="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}"
+                Foreground="{Binding DetailColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}"
+                x:Name="detail"/>
+        </StackPanel>
+
+        <Button Grid.Column="1" VerticalAlignment="Center" FlowDirection="{Binding FlowDirection, ElementName=ParentGrid }" IsEnabled="{Binding IsEnabled}"
+                Name="ActionButton"
+                Content="{Binding Action}"
+                Foreground="{Binding ActionColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}"
+                Click="OnActionButtonClicked"
+                />
+    </Grid>
+</UserControl>
