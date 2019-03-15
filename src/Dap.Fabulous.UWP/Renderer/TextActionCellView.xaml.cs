@@ -3,8 +3,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms.Platform.UWP;
 
-//Not sure why, if just using Controls, the 
-//Dap.Fabulous.TextActionCell got used, caused compiler error CS0723
+//Maybe related to namespace
+//if just using Controls,
+//Dap.Fabulous.TextActionCell become the default TextActionCell
+// caused compiler error CS0723
 using DTextActionCell = Dap.Fabulous.Controls.TextActionCell;
 
 namespace Dap.Fabulous.UWP {

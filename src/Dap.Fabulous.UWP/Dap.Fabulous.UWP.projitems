@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Resources.xaml.cs">
         <DependentUpon>$(MSBuildThisFileDirectory)Resources.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Decorator\DecoratorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Decorator\SwitchCellDecorator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Renderer\TextActionCellRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Renderer\Exports.cs" />
