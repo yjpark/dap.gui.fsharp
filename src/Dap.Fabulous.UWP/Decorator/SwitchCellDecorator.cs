@@ -17,14 +17,11 @@ using XColor = Xamarin.Forms.Color;
 
 namespace Dap.Fabulous.UWP {
     public class SwitchCellDecorator : ISwitchCellDecorator {
-        private TextBlock _Text = null;
-
-        public void SetTextColor(SwitchCell cell, XColor color) {
-            if (_Text == null) {
-                _Text = cell.GetCellControl()?.GetFirstDescendant<TextBlock>();
-            }
-            if (_Text != null) {
-                _Text.Foreground = color.ToBrush();
+        public async void SetTextColor(SwitchCell cell, XColor color) {
+            await Task.Yield(); //Needed, since CellControl calling Appearing before create content
+            var text = cell.GetCellControl()?.GetFirstDescendant<TextBlock>();
+            if (text != null) {
+                text.Foreground = color.ToBrush();
             }
         }
     }
