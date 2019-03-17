@@ -34,6 +34,9 @@ type FontIconCache (folder : string, glyphs : string list, paint : SKPaint, size
     member __.Paint = paint
     member __.Size = size
     member __.OffsetY = offsetY
+    member __.GetPath (glyph : string) =
+        let cacheKey = glyph.ToGlyphImageCacheKey ()
+        System.IO.Path.Combine (folder, cacheKey)
     member this.CreateOneCache (glyph : string) =
         canvas.Clear (SKColors.Transparent)
         canvas.DrawText (glyph, center, center + offsetY, paint)
@@ -44,8 +47,7 @@ type FontIconCache (folder : string, glyphs : string list, paint : SKPaint, size
         image.SaveTo stream
         stream.ToArray ()
     member this.EnsureOneCache (glyph : string) =
-        let cacheKey = glyph.ToGlyphImageCacheKey ()
-        let relPath = System.IO.Path.Combine (folder, cacheKey)
+        let relPath = this.GetPath glyph
         Cache.ensure relPath (fun () -> this.CreateOneCache glyph)
     member this.EnsureAllCache () =
         glyphs
