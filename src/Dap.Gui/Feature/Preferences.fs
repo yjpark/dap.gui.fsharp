@@ -1,15 +1,13 @@
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Feature.Preferences
+module Dap.Gui.Feature.Preferences
 
-open System.IO
-open FSharp.Control.Tasks.V2
 open Xamarin.Essentials
 
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
-open Dap.Fabulous
+open Dap.Gui
 
 type Provider = Xamarin.Essentials.Preferences
 type Fallback = Dap.Local.Feature.Preferences.Context
@@ -23,7 +21,7 @@ type Context (logging : ILogging) =
             Some <| new Fallback (logging)
     do (
         let owner = base.Owner
-        logInfo owner "SecureStorage" "hasEssentials" (Dap.Fabulous.Util.hasEssentials (), fallback)
+        logInfo owner "SecureStorage" "hasEssentials" (hasEssentials (), fallback)
         base.Has.SetupHandler (fun (luid : Luid) ->
             match fallback with
             | Some fallback ->

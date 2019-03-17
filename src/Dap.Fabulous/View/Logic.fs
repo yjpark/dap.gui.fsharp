@@ -8,7 +8,6 @@ open Fabulous.DynamicViews
 open Dap.Prelude
 open Dap.Platform
 open Dap.Fabulous
-open Dap.Fabulous.Feature
 open Dap.Fabulous.Internal
 
 open Dap.Fabulous.View.Types

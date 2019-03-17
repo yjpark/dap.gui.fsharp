@@ -1,15 +1,14 @@
 [<AutoOpen>]
 [<RequireQualifiedAccess>]
-module Dap.Fabulous.Feature.SecureStorage
+module Dap.Gui.Feature.SecureStorage
 
-open System.IO
 open FSharp.Control.Tasks.V2
 
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
-open Dap.Fabulous
+open Dap.Gui
 
 type Provider = Xamarin.Essentials.SecureStorage
 type Fallback = Dap.Local.Feature.SecureStorage.Context
@@ -23,7 +22,7 @@ type Context (logging : ILogging) =
             Some <| new Fallback (logging)
     do (
         let owner = base.Owner
-        logInfo owner "SecureStorage" "hasEssentials" (Dap.Fabulous.Util.hasEssentials (), fallback)
+        logInfo owner "SecureStorage" "hasEssentials" (hasEssentials (), fallback)
         base.HasAsync.SetupHandler (fun (luid : Luid) -> task {
             match fallback with
             | Some fallback ->

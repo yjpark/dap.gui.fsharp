@@ -9,6 +9,7 @@ open Dap.Prelude
 open Dap.Platform
 
 open Demo.App
+open Demo.Fabulous
 open Demo.Fabulous.View.Types
 open Demo.Fabulous.Page
 
@@ -16,6 +17,7 @@ type LayoutOptions = Xamarin.Forms.LayoutOptions
 
 let private init : Init<Initer, unit, Model, Msg> =
     fun initer () ->
+        Icons.EnsureCache ()
         ({
             Page = HomePage
             Ver = 1

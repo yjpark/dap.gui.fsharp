@@ -59,7 +59,6 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoggingProvider.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Util.fs" />
     <Compile Include="Prefab/Label.fs" />

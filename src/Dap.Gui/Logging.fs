@@ -1,4 +1,4 @@
-module Dap.iOS.LoggingProvider
+module Dap.Gui.Logging
 
 open System
 open System.IO
@@ -10,8 +10,10 @@ open Serilog.Formatting
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
+open Dap.Local
+open Dap.Local.Feature
 
-type ConsoleSink (textFormatter : ITextFormatter) =
+type GuiConsoleSink (textFormatter : ITextFormatter) =
     interface ILogEventSink with
         member __.Emit (evt : Serilog.Events.LogEvent) =
             let output = new StringWriter ()
@@ -19,19 +21,20 @@ type ConsoleSink (textFormatter : ITextFormatter) =
             Console.WriteLine (output.ToString ())
 
 type ConsoleSinkArgs with
-    static member ConsoleProvider (this : ConsoleSinkArgs) : AddSink =
+    static member GuiConsoleProvider (this : ConsoleSinkArgs) : AddSink =
         fun config ->
             let formatter = new Serilog.Formatting.Display.MessageTemplateTextFormatter (TextOutputTemplate, null)
-            let sink = new ConsoleSink (formatter)
+            let sink = new GuiConsoleSink (formatter)
             config.WriteTo.Sink(sink, this.MinLevel.ToSerilogLevel)
 
-type LoggingProvider (logging : ILogging) =
+type GuiLoggingProvider (logging : ILogging) =
     inherit BaseLoggingProvider (logging)
     override this.CreateLogging (args : LoggingArgs) =
-        let root = Path.Combine (Xamarin.Essentials.FileSystem.CacheDirectory, "log")
+        let cacheDirectory = IEnvironment.Instance.Properties.CacheDirectory.Value
+        let root = Path.Combine (cacheDirectory, "log")
         let newArgs = args.WithFolder(root)
-        let logging = newArgs.ToSerilogLogging (consoleProvider = ConsoleSinkArgs.ConsoleProvider)
-        logInfo logging "ConsoleLoggingProvider" "CreateLogging" (encodeJson 4 newArgs)
+        let logging = newArgs.ToSerilogLogging (consoleProvider = ConsoleSinkArgs.GuiConsoleProvider)
+        logInfo logging "GuiLoggingProvider" "CreateLogging" (encodeJson 4 newArgs)
         if newArgs.File.IsSome then
-            logInfo logging "ConsoleLoggingProvider" "Folder_Updated" (sprintf "%s -> %s", args.File.Value.Folder, newArgs.File.Value.Folder)
+            logInfo logging "GuiLoggingProvider" "Folder_Updated" (sprintf "%s -> %s", args.File.Value.Folder, newArgs.File.Value.Folder)
         logging :> ILogging

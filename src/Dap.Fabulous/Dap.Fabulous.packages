@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Import Project="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Fabulous\Xamarin.Essentials.packages" />
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
       <Version>3.6.0.220655</Version>

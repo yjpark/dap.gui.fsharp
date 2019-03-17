@@ -47,7 +47,6 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoggingProvider.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Extension.fs" />
     <Compile Include="Util.fs" />
@@ -62,6 +61,5 @@
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <Import Project="..\..\src\Dap.Gui\Dap.Gui.reference" />
-  <Import Project="..\..\src\Dap.Fabulous\Xamarin.Essentials.packages" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.FSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Dap.Fabulous.Feature.Runner
+module Dap.Fabulous.Runner
 
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2

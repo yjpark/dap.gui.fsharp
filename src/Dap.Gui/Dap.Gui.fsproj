@@ -14,6 +14,11 @@
     <Compile Include="_Gen/Palette/MaterialParam.fs" />
     <Compile Include="Palette/Scheme.fs" />
     <Compile Include="Palette/Material.fs" />
+    <Compile Include="Util.fs" />
+    <Compile Include="Feature/Environment.fs" />
+    <Compile Include="Feature/Preferences.fs" />
+    <Compile Include="Feature/SecureStorage.fs" />
+    <Compile Include="Logging.fs" />
     <Compile Include="Thread.fs" />
     <Compile Include="Dsl/Models.fs" />
     <Compile Include="_Gen/Models.fs" />
@@ -50,6 +55,9 @@
     <Compile Include="App/GuiPlatform.fs" />
     <Compile Include="App/Helper.fs" />
     <Compile Include="Helper.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dap.Skia\Dap.Skia.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-62925-02" PrivateAssets="All" />

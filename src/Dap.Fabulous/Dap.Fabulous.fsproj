@@ -10,15 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Util.fs" />
-    <Compile Include="Feature/FileSystem.fs" />
-    <Compile Include="Feature/Preferences.fs" />
-    <Compile Include="Feature/SecureStorage.fs" />
-    <Compile Include="Feature/Runner.fs" />
+    <Compile Include="Runner.fs" />
     <Compile Include="Palette/Types.fs" />
     <Compile Include="Palette/Material.fs" />
     <Compile Include="Cells/TextActionCell.fs" />
     <Compile Include="Builder/Types.fs" />
     <Compile Include="Builder/Element.fs" />
+    <Compile Include="Builder/MenuItem.fs" />
+    <Compile Include="Builder/ToolbarItem.fs" />
     <Compile Include="Builder/VisualElement.fs" />
     <Compile Include="Builder/View.fs" />
     <Compile Include="Builder/ScrollView.fs" />
