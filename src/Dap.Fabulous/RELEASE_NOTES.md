@@ -1,3 +1,6 @@
+## 0.6.6
+* add menu_item and toolbar_item builder
+
 ## 0.6.5
 * Use INativeDecorator from Dap.Fabulous.Controls
 

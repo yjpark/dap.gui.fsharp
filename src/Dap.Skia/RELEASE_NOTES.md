@@ -1,3 +1,6 @@
+## 0.6.2
+* Improve FontIconCache
+
 ## 0.6.1
 * FontIconCache to generate png from icon font support Ionicons now
 

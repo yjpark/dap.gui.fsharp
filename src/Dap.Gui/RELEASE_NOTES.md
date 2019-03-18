@@ -1,5 +1,4 @@
-## 0.6.5
-* TODO:RELEASE
+## 0.6.6
 * Update ITheme API
 
 ## 0.6.5
