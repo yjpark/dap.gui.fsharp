@@ -36,6 +36,7 @@ type CellView (cell : TextActionCell, renderer : CellRenderer, context : AContex
     let button = new AButton (context)
     let mutable pressed : bool = false
     do (
+        base.SetImageVisible false
         base.SetAccessoryView button
     )
     member this.SetPressed (pressed' : bool) =
