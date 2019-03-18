@@ -1,3 +1,6 @@
+## 0.6.7
+* Follow Dap.Lib api change with Preferences and SecureStorage
+
 ## 0.6.6
 * Update ITheme API
 

@@ -38,9 +38,9 @@ type Context (logging : ILogging) =
             | None ->
                 let! content = Provider.GetAsync (luid)
                 if System.String.IsNullOrEmpty (content) then
-                    return ""
+                    return None
                 else
-                    return content
+                    return Some content
             })
         base.SetAsync.SetupHandler (fun (req : SetTextReq) -> task {
             match fallback with

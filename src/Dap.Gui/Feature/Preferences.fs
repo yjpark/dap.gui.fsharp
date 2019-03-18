@@ -34,7 +34,11 @@ type Context (logging : ILogging) =
             | Some fallback ->
                 fallback.Get.Handle luid
             | None ->
-                Provider.Get (luid, "")
+                let content = Provider.Get (luid, "")
+                if System.String.IsNullOrEmpty (content) then
+                    None
+                else
+                    Some content
         )
         base.Set.SetupHandler (fun (req : SetTextReq) ->
             match fallback with

@@ -20,7 +20,7 @@
       <Version>0.6.10</Version>
     </PackageReference>
     <PackageReference Include="Dap.Local">
-      <Version>0.6.3</Version>
+      <Version>0.6.4</Version>
     </PackageReference>
   </ItemGroup>
 </Project>
