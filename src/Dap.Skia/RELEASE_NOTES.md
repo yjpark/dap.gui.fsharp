@@ -3,4 +3,3 @@
 
 ## 0.6.0
 * Dap.Gui with SkiaSharp
-* Mac not working yet: https://github.com/xamarin/xamarin-macios/issues/5265

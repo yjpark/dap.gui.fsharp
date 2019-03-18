@@ -5,7 +5,7 @@ cd `dirname $0`
 
 cd $PROJ
 
-cd bin/Debug/$APP.app/Contents/
+cd bin/Debug/$APP.app/cache/
 
 cd log
 cd `ls -1Ft | head -1`

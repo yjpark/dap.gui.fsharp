@@ -9,8 +9,11 @@ type Context (logging : ILogging) =
     inherit Dap.Local.Feature.Environment.Context<Context> (logging)
     do (
         if hasEssentials () then
-            base.Properties.DataDirectory.SetValue Xamarin.Essentials.FileSystem.AppDataDirectory
-            base.Properties.CacheDirectory.SetValue Xamarin.Essentials.FileSystem.CacheDirectory
+            let props = base.Properties
+            props.DataDirectory.SetValue Xamarin.Essentials.FileSystem.AppDataDirectory
+            props.CacheDirectory.SetValue Xamarin.Essentials.FileSystem.CacheDirectory
+            logWarn base.AsEnvironment "Data_Directory" props.DataDirectory.Value ()
+            logWarn base.AsEnvironment "Cache_Directory" props.CacheDirectory.Value ()
     )
     override this.Self = this
     override __.Spawn l = new Context (l)
