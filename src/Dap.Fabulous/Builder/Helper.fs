@@ -8,6 +8,10 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
+(* Elements *)
+let menu_item = new MenuItem.Builder ()
+let toolbar_item = new ToolbarItem.Builder ()
+
 (* Views *)
 let label = new Label.Builder ()
 let button = new Button.Builder ()

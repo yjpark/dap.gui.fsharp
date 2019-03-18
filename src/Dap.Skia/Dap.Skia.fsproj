@@ -13,7 +13,6 @@
   <ItemGroup>
     <Compile Include="Types.fs" />
     <Compile Include="Typeface.fs" />
-    <Compile Include="Cache.fs" />
     <Compile Include="Fonts\FontIconCache.fs" />
     <Compile Include="Fonts\IoniconsGlyph.fs" />
     <Compile Include="Fonts\Ionicons.fs" />

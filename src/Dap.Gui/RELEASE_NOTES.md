@@ -1,4 +1,8 @@
 ## 0.6.5
+* TODO:RELEASE
+* Update ITheme API
+
+## 0.6.5
 * Update IGuiAppHook
 
 ## 0.6.4

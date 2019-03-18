@@ -123,7 +123,7 @@ type internal Theme (logging : ILogging, key : string, param : obj) =
                     logError this "Decorator_Not_Allow_Multiple" kind (decorators, decorator)
     interface ITheme with
         member __.Key = key
-        member __.Param = param
+        member __.Param0 = param
 
         member this.CreateStyles (prefab : IPrefab) (kind : string) : IStyle list =
             this.CreateStyles' true prefab kind

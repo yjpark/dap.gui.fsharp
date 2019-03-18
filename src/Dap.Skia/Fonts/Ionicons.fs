@@ -25,10 +25,8 @@ let private getTypeface () =
 let private calcOffsetY (size : int) : float32 =
     ((float32)size) * 3.0f / 8.0f
 
-type IoniconsCache (folder : string, glyphs : string list, paint : SKPaint, size : int) =
-    inherit FontIconCache (folder, glyphs, paint, size, calcOffsetY size)
-
-type Ionicons () =
+type Ionicons (folder : string, glyphs : string list, size : int, color : SKColor,
+                ?setupPaint : SKPaint -> unit) =
     static let icons = new IoniconsGlyph.Icons ()
     static let android = new IoniconsGlyph.AndroidIcons ()
     static let iOS = new IoniconsGlyph.IOSIcons ()
@@ -53,17 +51,13 @@ type Ionicons () =
         style
         |> Option.iter (fun x -> paint.Style <- x)
         paint
-    static member EnsureCache
-        (folder : string, glyphs : string list,
-            textSize : int, color : SKColor,
-            ?isAntialias : bool, ?style : SKPaintStyle,
-            ?setupPaint : SKPaint -> unit) =
-        let paint =
-            Ionicons.GetPaint
-                (textSize = (float32)textSize, color = color,
-                ?isAntialias = isAntialias, ?style = style)
-        let setupPaint = defaultArg setupPaint ignore
-        setupPaint paint
-        let cache = new IoniconsCache (folder, glyphs, paint, textSize)
-        cache.EnsureAllCache ()
-        cache
+
+type IoniconsCache (folder : string, glyphs : string list, paint : SKPaint, size : int,
+                        ?clearColor : SKColor, ?format: SKEncodedImageFormat, ?quality : int) =
+    inherit FontIconCache (folder, glyphs, paint, size, calcOffsetY size,
+                            ?clearColor = clearColor, ?format = format, ?quality = quality)
+    new (folder : string, glyphs : string list, color : SKColor, size : int,
+                        ?clearColor : SKColor, ?format: SKEncodedImageFormat, ?quality : int) =
+        let paint = Ionicons.GetPaint ((float32) size, color)
+        new IoniconsCache (folder, glyphs, paint, size,
+                            ?clearColor = clearColor, ?format = format, ?quality = quality)

@@ -141,7 +141,7 @@ type IDecorator<'widget> =
 type ITheme =
     inherit IContext
     abstract Key : string with get
-    abstract Param : obj with get
+    abstract Param0 : obj with get
     abstract CreateStyles : IPrefab -> string -> IStyle list
     abstract InitStyles : IPrefab -> IStyle list
     abstract DecorateWidget : obj * string list -> unit

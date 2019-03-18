@@ -16,7 +16,7 @@ type Icons () =
     static member Help =
         Ionicons.Icons.Help
     static member EnsureCache () =
-        Ionicons.EnsureCache ("icons_white", [ Icons.Settings ; Icons.Help ], 128, SKColors.White)
-        |> ignore
-        Ionicons.EnsureCache ("icons_black", [ Icons.Settings ; Icons.Help ], 128, SKColors.Black)
-        |> ignore
+        let cache = new IoniconsCache ("icons_white", [ Icons.Settings ; Icons.Help ], SKColors.White, 128)
+        cache.EnsureAll ()
+        let cache = new IoniconsCache ("icons_black", [ Icons.Settings ; Icons.Help ], SKColors.Black, 128)
+        cache.EnsureAll ()

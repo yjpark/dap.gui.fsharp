@@ -2,6 +2,7 @@
 <Project>
   <Import Project="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.packages" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Skia\Dap.Skia.fsproj" />
     <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.fsproj" />
   </ItemGroup>
 </Project>
