@@ -11,7 +11,7 @@ open Dap.Platform
 open Dap.Gui.Internal
 
 type IGuiApp with
-    static member Instance = GuiApp.Instance
+    static member Instance = GuiApp.Instance :> IGuiApp
 
 type IRunner<'runner when 'runner :> IRunner> with
     member this.RunGuiFunc (func : Func<'runner, unit>) : unit =

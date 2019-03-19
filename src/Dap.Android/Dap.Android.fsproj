@@ -58,6 +58,7 @@
     <Compile Include="Container/VBox.fs" />
     <Compile Include="Container/Table.fs" />
     <Compile Include="Feature/AndroidPlatform.fs" />
+    <Compile Include="Activity.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <Import Project="..\..\src\Dap.Gui\Dap.Gui.reference" />

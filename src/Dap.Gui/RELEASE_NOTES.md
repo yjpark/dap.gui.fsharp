@@ -1,4 +1,5 @@
 ## 0.6.7
+* Add IGuiApp.State OnWillChangeState and OnDidChangeState
 * Follow Dap.Lib api change with Preferences and SecureStorage
 
 ## 0.6.6

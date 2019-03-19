@@ -11,6 +11,7 @@ open Dap.Platform
 
 open Dap.Gui
 open Dap.Gui.App
+open Dap.Gui.Internal
 open Dap.Mac
 
 [<AbstractClass>]
@@ -48,6 +49,12 @@ type AppDelegate (param : MacParam, window : NSWindow) =
     inherit NSApplicationDelegate ()
     override this.DidBecomeActive (notification : NSNotification) =
         window.MakeKeyAndOrderFront (this)
+    override this.WillHide (notification : NSNotification) =
+        GuiApp.Instance.SetState' GuiAppState.Background
+    override this.WillUnhide (notification : NSNotification) =
+        GuiApp.Instance.SetState' GuiAppState.Foreground
+    override this.WillTerminate (notification : NSNotification) =
+        GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
     inherit Context<AppDelegate> (logging, MacPlatformKind)

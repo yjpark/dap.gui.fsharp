@@ -14,6 +14,7 @@ open Dap.Platform
 
 open Dap.Gui
 open Dap.Gui.App
+open Dap.Gui.Internal
 open Dap.Fabulous
 open Dap.Fabulous.Mac
 open Dap.Mac
@@ -26,6 +27,15 @@ type AppDelegate (param : MacParam, window : NSWindow) =
         let fabulousParam = getFabulousParam ()
         this.LoadApplication (fabulousParam.Application)
         base.DidFinishLaunching (notification)
+    override this.WillHide (notification : NSNotification) =
+        base.WillHide (notification)
+        GuiApp.Instance.SetState' GuiAppState.Background
+    override this.WillUnhide (notification : NSNotification) =
+        base.WillUnhide (notification)
+        GuiApp.Instance.SetState' GuiAppState.Foreground
+    override this.WillTerminate (notification : NSNotification) =
+        base.WillTerminate (notification)
+        GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
     inherit MacPlatform.Context<NSApplicationDelegate> (logging, FabulousMacPlatformKind)

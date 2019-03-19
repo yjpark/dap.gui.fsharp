@@ -12,6 +12,7 @@ open Dap.Platform
 
 open Dap.Gui
 open Dap.Gui.App
+open Dap.Gui.Internal
 open Dap.iOS
 
 let mutable private instance : IIOSPlatform option = None
@@ -94,6 +95,12 @@ type AppDelegate () =
         let window = platform.Window.Value
         window.MakeKeyAndVisible ()
         window.BecomeFirstResponder () |> ignore
+    override this.DidEnterBackground (application : UIApplication) =
+        GuiApp.Instance.SetState' GuiAppState.Background
+    override this.WillEnterForeground (application : UIApplication) =
+        GuiApp.Instance.SetState' GuiAppState.Foreground
+    override this.WillTerminate (application : UIApplication) =
+        GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
     inherit Context<AppDelegate> (logging, IOSPlatformKind)

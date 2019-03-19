@@ -14,6 +14,7 @@ open Dap.Platform
 
 open Dap.Gui
 open Dap.Gui.App
+open Dap.Gui.Internal
 open Dap.Fabulous
 open Dap.Fabulous.iOS
 open Dap.iOS
@@ -30,6 +31,15 @@ type AppDelegate () =
         this.LoadApplication (fabulousParam.Application)
         platform.SetAppDelegate' this
         base.FinishedLaunching (application, launchOptions)
+    override this.DidEnterBackground (application : UIApplication) =
+        base.DidEnterBackground (application)
+        GuiApp.Instance.SetState' GuiAppState.Background
+    override this.WillEnterForeground (application : UIApplication) =
+        base.WillEnterForeground (application)
+        GuiApp.Instance.SetState' GuiAppState.Foreground
+    override this.WillTerminate (application : UIApplication) =
+        base.WillTerminate (application)
+        GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type ViewController = IOSPlatform.ViewController
 

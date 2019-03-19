@@ -156,9 +156,17 @@ type ITheme =
     abstract AddForceDecorator : string -> IDecorator -> unit
     abstract AddClassDecorator<'widget> : IDecorator<'widget> -> unit
 
+type GuiAppState =
+    | Foreground
+    | Background
+    | Terminated
+
 type IGuiApp =
     inherit ILogger
     abstract App : IBaseApp with get
+    abstract State : GuiAppState with get
+    abstract OnWillChangeState : IBus<GuiAppState> with get
+    abstract OnDidChangeState : IBus<unit> with get
     abstract Theme : ITheme with get
     abstract AddTheme<'param> : string -> 'param -> (ITheme -> 'param -> unit) -> unit
     abstract GetTheme : string option -> ITheme
