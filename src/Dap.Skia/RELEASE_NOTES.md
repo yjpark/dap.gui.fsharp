@@ -1,3 +1,6 @@
+## 0.6.3
+* Generate IoniconsGlyph for v4
+
 ## 0.6.2
 * Improve FontIconCache
 

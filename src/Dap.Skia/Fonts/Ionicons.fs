@@ -7,6 +7,8 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Local
+open SkiaSharp
+open SkiaSharp
 
 // Based on
 // https://github.com/joshuapolok/Xamarin-Font-Icons/blob/master/VectorIcon/VectorIcon.FormsPlugin.Abstractions/FontCodes/IonIconCode.cs
@@ -19,22 +21,25 @@ let mutable private typeface : SKTypeface option = None
 
 let private getTypeface () =
     if typeface.IsNone then
-        typeface <- EmbeddedResource.TryCreateTypeface Ionicons_Font_Path
-    typeface.Value
+        typeface <- EmbeddedResource.TryCreateTypeface (Ionicons_Font_Path)
+    typeface
+    |> Option.defaultWith (fun () ->
+        SKTypeface.Default
+    )
 
 let private calcOffsetY (size : int) : float32 =
     ((float32)size) * 3.0f / 8.0f
 
 type Ionicons (folder : string, glyphs : string list, size : int, color : SKColor,
                 ?setupPaint : SKPaint -> unit) =
-    static let icons = new IoniconsGlyph.Icons ()
-    static let android = new IoniconsGlyph.AndroidIcons ()
+    static let md = new IoniconsGlyph.MDIcons ()
     static let iOS = new IoniconsGlyph.IOSIcons ()
-    static let social = new IoniconsGlyph.SocialIcons ()
-    static member Icons = icons
-    static member Android = android
+    static let logo = new IoniconsGlyph.LogoIcons ()
+    static let other = new IoniconsGlyph.OtherIcons ()
+    static member MD = md
     static member IOS = iOS
-    static member Social = social
+    static member Logo = logo
+    static member Other = other
     static member Typeface = getTypeface ()
     static member GetPaint
         (?textSize : float32, ?color : SKColor,
