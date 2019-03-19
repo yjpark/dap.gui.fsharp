@@ -27,6 +27,9 @@ type ITheme with
         this.AddClassDecorator
             (new Button.Decorator
                 (textColor = param.Button.Normal, ?backgroundColor = param.Button.Surface))
+        this.AddClassDecorator
+            (new Entry.Decorator
+                (textColor = param.TextField.Normal, ?textBorderColor = param.TextField.Dimmed, ?textBackgroundColor = param.TextField.Surface, ?placeholderColor = param.TextField.Dimmed))
         // Cells
         this.AddClassDecorator
             (new Cell.Decorator
@@ -37,6 +40,9 @@ type ITheme with
         this.AddClassDecorator
             (new SwitchCell.Decorator
                 (textColor = param.Switch.Normal, ?onColor = param.Switch.Accent, ?backgroundColor = param.Switch.Surface))
+        this.AddClassDecorator
+            (new EntryCell.Decorator
+                (labelColor = param.Label.Normal, textColor = param.TextField.Normal, ?textBackgroundColor = param.TextField.Surface, ?placeholderColor = param.Label.Dimmed))
         // Custom Cells
         this.AddClassDecorator
             (new TextActionCell.Decorator

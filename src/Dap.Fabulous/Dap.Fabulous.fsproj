@@ -20,10 +20,12 @@
     <Compile Include="Builder/ToolbarItem.fs" />
     <Compile Include="Builder/VisualElement.fs" />
     <Compile Include="Builder/View.fs" />
+    <Compile Include="Builder/InputView.fs" />
     <Compile Include="Builder/ScrollView.fs" />
     <Compile Include="Builder/TableView.fs" />
     <Compile Include="Builder/Label.fs" />
     <Compile Include="Builder/Button.fs" />
+    <Compile Include="Builder/Entry.fs" />
     <Compile Include="Builder/Layout.fs" />
     <Compile Include="Builder/StackLayout.fs" />
     <Compile Include="Builder/Page.fs" />
@@ -32,6 +34,7 @@
     <Compile Include="Builder/Cells/Cell.fs" />
     <Compile Include="Builder/Cells/TextCell.fs" />
     <Compile Include="Builder/Cells/SwitchCell.fs" />
+    <Compile Include="Builder/Cells/EntryCell.fs" />
     <Compile Include="Builder/Cells/ViewCell.fs" />
     <Compile Include="Builder/Cells/TextActionCell.fs" />
     <Compile Include="Builder/Helper.fs" />
@@ -41,11 +44,13 @@
     <Compile Include="Decorator/View.fs" />
     <Compile Include="Decorator/Label.fs" />
     <Compile Include="Decorator/Button.fs" />
+    <Compile Include="Decorator/Entry.fs" />
     <Compile Include="Decorator/Page.fs" />
     <Compile Include="Decorator/NavigationPage.fs" />
     <Compile Include="Decorator/Cells/Cell.fs" />
     <Compile Include="Decorator/Cells/TextCell.fs" />
     <Compile Include="Decorator/Cells/SwitchCell.fs" />
+    <Compile Include="Decorator/Cells/EntryCell.fs" />
     <Compile Include="Decorator/Cells/TextActionCell.fs" />
     <Compile Include="Theme.fs" />
     <Compile Include="View/Types.fs" />

@@ -15,6 +15,8 @@ let toolbar_item = new ToolbarItem.Builder ()
 (* Views *)
 let label = new Label.Builder ()
 let button = new Button.Builder ()
+let entry = new Entry.Builder ()
+
 let scroll_view = new ScrollView.Builder ()
 let table_view = new TableView.Builder ()
 
@@ -23,6 +25,7 @@ let stack_layout = new StackLayout.Builder ()
 
 let text_cell = new TextCell.Builder ()
 let switch_cell = new SwitchCell.Builder ()
+let entry_cell = new EntryCell.Builder ()
 let view_cell = new ViewCell.Builder ()
 
 (* Pages *)

@@ -22,6 +22,13 @@ let FontIconCache_DefaultFormat = SKEncodedImageFormat.Png
 [<Literal>]
 let FontIconCache_DefaultQuality = 80
 
+let getFontIconFileName (glyph : string) =
+    Encoding.UTF8.GetBytes glyph
+    |> md5.ComputeHash
+    |> Array.map (fun b -> b.ToString ("X2"))
+    |> String.concat ""
+    |> sprintf "%s.png"
+
 type FontIconCache (folder : string, glyphs : string list, paint : SKPaint, size : int, offsetY : float32,
                     ?clearColor : SKColor, ?format : SKEncodedImageFormat, ?quality : int) =
     let clearColor' = defaultArg clearColor FontIconCache_DefaultClearColor
@@ -43,10 +50,7 @@ type FontIconCache (folder : string, glyphs : string list, paint : SKPaint, size
     member __.Format = format'
     member __.Quality = quality'
     member __.GetCacheKey (glyph : string) =
-        Encoding.UTF8.GetBytes glyph
-        |> md5.ComputeHash
-        |> Convert.ToBase64String
-        |> sprintf "%s.png"
+        getFontIconFileName glyph
         |> fun x -> System.IO.Path.Combine (folder, x)
     member this.GetCachePath (glyph : string) =
         Cache.getPath <| this.GetCacheKey glyph
