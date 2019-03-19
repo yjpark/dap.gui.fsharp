@@ -1,3 +1,6 @@
+## 0.6.7
+* Support entry and entry_cell in builder
+
 ## 0.6.6
 * add menu_item and toolbar_item builder
 

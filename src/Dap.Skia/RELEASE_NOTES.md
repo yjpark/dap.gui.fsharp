@@ -1,3 +1,6 @@
+## 0.6.4
+* better filename for FontIconCache files
+
 ## 0.6.3
 * Generate IoniconsGlyph for v4
 

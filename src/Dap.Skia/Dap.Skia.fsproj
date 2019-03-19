@@ -4,7 +4,7 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;gui;skia</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.3</Version>
+    <Version>0.6.4</Version>
     <Description>Dap with Skia</Description>
   </PropertyGroup>
   <ItemGroup>
