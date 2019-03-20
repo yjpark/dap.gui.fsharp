@@ -55,7 +55,7 @@ type Renderer () =
     override this.GetCell (item : Cell, reusableCell : UITableViewCell, tv : UITableView) : UITableViewCell =
         let cell = item :?> TextActionCell
         let tvc = base.GetCell (item, reusableCell, tv) :?> CellTableViewCell
-        //TODO: Reuse button when figured out how to remove old handler
+        //TODO: Reuse button in reusableCell when figured out how to remove old handler
         let button = new UIButton ()
         tvc.AccessoryView <- button
         button.TouchUpInside.Add (fun _ ->

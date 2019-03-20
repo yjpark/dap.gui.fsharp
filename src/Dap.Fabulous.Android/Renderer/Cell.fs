@@ -67,10 +67,12 @@ type CellRenderer<'cell, 'view when 'cell :> Cell and 'view :> CellView<'cell>> 
         let cell = cell' :?> 'cell
         let view =
             if cellView.IsNone then
+                (* Reuse convertView after figured out how to cleanup old handlers of view
                 match convertView with
                 | :? 'view as x -> x
-                | _ -> this.CreateView cell context
-                |> fun x -> cellView <- Some x
+                | _ ->
+                *)
+                cellView <- Some <| this.CreateView cell context
             cellView.Value
         view.DoUpdate ()
         view :> AView
