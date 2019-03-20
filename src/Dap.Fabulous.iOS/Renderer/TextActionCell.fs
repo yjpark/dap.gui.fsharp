@@ -55,18 +55,13 @@ type Renderer () =
     override this.GetCell (item : Cell, reusableCell : UITableViewCell, tv : UITableView) : UITableViewCell =
         let cell = item :?> TextActionCell
         let tvc = base.GetCell (item, reusableCell, tv) :?> CellTableViewCell
-        let button =
-            match tvc.AccessoryView with
-            | :? UIButton as button -> button
-            | _ ->
-                let button = new UIButton ()
-                button.TitleLabel.BackgroundColor <- button.BackgroundColor;
-                button.TouchUpInside.Add (fun _ ->
-                    if cell.ActionEnabled then
-                        cell.FireOnAction ()
-                )
-                tvc.AccessoryView <- button
-                button
+        //TODO: Reuse button when figured out how to remove old handler
+        let button = new UIButton ()
+        tvc.AccessoryView <- button
+        button.TouchUpInside.Add (fun _ ->
+            if cell.ActionEnabled then
+                cell.FireOnAction ()
+        )
         this.UpdateActionButton cell button
         tvc :> UITableViewCell
     override this.HandleCellPropertyChanged (sender : obj, args : PropertyChangedEventArgs) =
