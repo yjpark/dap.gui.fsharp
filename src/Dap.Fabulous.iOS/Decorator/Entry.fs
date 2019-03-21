@@ -31,5 +31,4 @@ type Decorator () =
             layer.BorderColor <- color.ToCGColor ()
         member this.SetTextBackgroundColor (widget : Entry, color : Color) =
             let renderer = widget.GetRenderer<EntryRenderer> ()
-            // Not really working
             renderer.Control.BackgroundColor <- color.ToUIColor ()

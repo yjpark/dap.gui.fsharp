@@ -133,7 +133,8 @@ type Params = MaterialParams with
             (normal, dimmed, surface, background,
                 ?primary, ?secondary,
                 ?action, ?actionDimmed, ?actionAccent, ?actionSurface,
-                ?switch, ?switchDimmed, ?switchAccent
+                ?switch, ?switchDimmed, ?switchAccent,
+                ?section, ?sectionDimmed, ?sectionSurface
                 ) : ColorSchemeParam =
         let primary = defaultArg primary background
         let secondary = defaultArg secondary surface
@@ -143,6 +144,9 @@ type Params = MaterialParams with
         let switch = defaultArg switch normal
         let switchDimmed = defaultArg switchDimmed dimmed
         let switchAccent = defaultArg switchAccent switch
+        let section = defaultArg section normal
+        let sectionDimmed = defaultArg sectionDimmed dimmed
+        let sectionSurface = defaultArg sectionSurface surface
         {
             Primary = SurfaceColorParam.Create
                 (brush = normal, normal = primary)
@@ -160,6 +164,8 @@ type Params = MaterialParams with
                 (normal = normal, dimmed = dimmed, surface = surface)
             Table = BrushColorParam.Create
                 (normal = normal, dimmed = dimmed, surface = surface)
+            Section = BrushColorParam.Create
+                (normal = section, dimmed = sectionDimmed, surface = sectionSurface)
             Panel = BrushColorParam.Create
                 (normal = normal, dimmed = dimmed, surface = surface)
             Toolbar = BrushColorParam.Create
@@ -177,7 +183,9 @@ type Params = MaterialParams with
                 background = Params.White,
                 action = Params.Blue.Normal500,
                 actionAccent = Params.Blue.Normal300,
-                switchAccent = Params.Green.Normal700
+                switchAccent = Params.Green.Normal700,
+                section = Params.Red.Normal600,
+                sectionDimmed = Params.Gray.Normal400
             )
     static member DarkScheme : ColorSchemeParam =
         Params.CreateScheme
@@ -188,7 +196,9 @@ type Params = MaterialParams with
                 background = Params.Black,
                 action = Params.Blue.Normal800,
                 actionAccent = Params.Blue.Normal900,
-                switchAccent = Params.Green.Normal500
+                switchAccent = Params.Green.Normal500,
+                section = Params.Red.Normal500,
+                sectionDimmed = Params.Gray.Normal700
             )
 
 // https://material.io/design/color/the-color-system.html

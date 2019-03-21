@@ -55,6 +55,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="Util.fs" />
     <Compile Include="Decorator/Entry.fs" />
+    <Compile Include="Decorator/TableView.fs" />
     <Compile Include="Decorator/Cell.fs" />
     <Compile Include="Decorator/SwitchCell.fs" />
     <Compile Include="Decorator/NavigationPage.fs" />

@@ -39,6 +39,7 @@ let ColorSchemeParam =
             var (M.custom (<@ BrushColorParam @>, "switch"))
             var (M.custom (<@ BrushColorParam @>, "box"))
             var (M.custom (<@ BrushColorParam @>, "table"))
+            var (M.custom (<@ BrushColorParam @>, "section"))
             var (M.custom (<@ BrushColorParam @>, "panel"))
             var (M.custom (<@ BrushColorParam @>, "toolbar"))
             var (M.custom (<@ BrushColorParam @>, "error"))

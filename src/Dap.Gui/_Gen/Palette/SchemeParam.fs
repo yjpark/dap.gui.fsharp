@@ -138,6 +138,7 @@ type ColorSchemeParam = {
     Switch : (* ColorSchemeParam *) BrushColorParam
     Box : (* ColorSchemeParam *) BrushColorParam
     Table : (* ColorSchemeParam *) BrushColorParam
+    Section : (* ColorSchemeParam *) BrushColorParam
     Panel : (* ColorSchemeParam *) BrushColorParam
     Toolbar : (* ColorSchemeParam *) BrushColorParam
     Error : (* ColorSchemeParam *) BrushColorParam
@@ -153,6 +154,7 @@ type ColorSchemeParam = {
             ?switch : (* ColorSchemeParam *) BrushColorParam,
             ?box : (* ColorSchemeParam *) BrushColorParam,
             ?table : (* ColorSchemeParam *) BrushColorParam,
+            ?section : (* ColorSchemeParam *) BrushColorParam,
             ?panel : (* ColorSchemeParam *) BrushColorParam,
             ?toolbar : (* ColorSchemeParam *) BrushColorParam,
             ?error : (* ColorSchemeParam *) BrushColorParam,
@@ -174,6 +176,8 @@ type ColorSchemeParam = {
             Box = (* ColorSchemeParam *) box
                 |> Option.defaultWith (fun () -> (BrushColorParam.Create ()))
             Table = (* ColorSchemeParam *) table
+                |> Option.defaultWith (fun () -> (BrushColorParam.Create ()))
+            Section = (* ColorSchemeParam *) section
                 |> Option.defaultWith (fun () -> (BrushColorParam.Create ()))
             Panel = (* ColorSchemeParam *) panel
                 |> Option.defaultWith (fun () -> (BrushColorParam.Create ()))
@@ -200,6 +204,8 @@ type ColorSchemeParam = {
         {this with Box = box}
     static member SetTable ((* ColorSchemeParam *) table : BrushColorParam) (this : ColorSchemeParam) =
         {this with Table = table}
+    static member SetSection ((* ColorSchemeParam *) section : BrushColorParam) (this : ColorSchemeParam) =
+        {this with Section = section}
     static member SetPanel ((* ColorSchemeParam *) panel : BrushColorParam) (this : ColorSchemeParam) =
         {this with Panel = panel}
     static member SetToolbar ((* ColorSchemeParam *) toolbar : BrushColorParam) (this : ColorSchemeParam) =
@@ -219,6 +225,7 @@ type ColorSchemeParam = {
                 "switch", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Switch
                 "box", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Box
                 "table", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Table
+                "section", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Section
                 "panel", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Panel
                 "toolbar", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Toolbar
                 "error", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Error
@@ -242,6 +249,8 @@ type ColorSchemeParam = {
                 Box = get.Optional.Field (* ColorSchemeParam *) "box" BrushColorParam.JsonDecoder
                     |> Option.defaultValue (BrushColorParam.Create ())
                 Table = get.Optional.Field (* ColorSchemeParam *) "table" BrushColorParam.JsonDecoder
+                    |> Option.defaultValue (BrushColorParam.Create ())
+                Section = get.Optional.Field (* ColorSchemeParam *) "section" BrushColorParam.JsonDecoder
                     |> Option.defaultValue (BrushColorParam.Create ())
                 Panel = get.Optional.Field (* ColorSchemeParam *) "panel" BrushColorParam.JsonDecoder
                     |> Option.defaultValue (BrushColorParam.Create ())
@@ -274,6 +283,8 @@ type ColorSchemeParam = {
         this |> ColorSchemeParam.SetBox box
     member this.WithTable ((* ColorSchemeParam *) table : BrushColorParam) =
         this |> ColorSchemeParam.SetTable table
+    member this.WithSection ((* ColorSchemeParam *) section : BrushColorParam) =
+        this |> ColorSchemeParam.SetSection section
     member this.WithPanel ((* ColorSchemeParam *) panel : BrushColorParam) =
         this |> ColorSchemeParam.SetPanel panel
     member this.WithToolbar ((* ColorSchemeParam *) toolbar : BrushColorParam) =

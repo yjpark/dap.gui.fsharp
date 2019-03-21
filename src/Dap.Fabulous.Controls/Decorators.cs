@@ -12,6 +12,10 @@ namespace Dap.Fabulous.Controls {
         void SetTextBackgroundColor(Entry widget, Color color);
     }
 
+    public interface ITableViewDecorator : INativeDecorator {
+        void SetSeparatorColor(TableView widget, Color color);
+    }
+
     public interface ISwitchCellDecorator : INativeDecorator {
         void SetTextColor(SwitchCell cell, Color color);
     }

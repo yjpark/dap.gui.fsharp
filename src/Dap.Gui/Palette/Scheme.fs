@@ -40,6 +40,7 @@ type ColorScheme<'color> = {
     Switch : BrushColor<'color>
     Box : BrushColor<'color>
     Table : BrushColor<'color>
+    Section : BrushColor<'color>
     Panel : BrushColor<'color>
     Toolbar : BrushColor<'color>
     Error : BrushColor<'color>
@@ -55,6 +56,7 @@ type ColorScheme<'color> = {
             Switch = BrushColor<'color>.Create factory param.Switch
             Box = BrushColor<'color>.Create factory param.Box
             Table = BrushColor<'color>.Create factory param.Table
+            Section = BrushColor<'color>.Create factory param.Section
             Panel = BrushColor<'color>.Create factory param.Panel
             Toolbar = BrushColor<'color>.Create factory param.Toolbar
             Error = BrushColor<'color>.Create factory param.Error

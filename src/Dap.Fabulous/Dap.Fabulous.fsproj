@@ -45,6 +45,7 @@
     <Compile Include="Decorator/Label.fs" />
     <Compile Include="Decorator/Button.fs" />
     <Compile Include="Decorator/Entry.fs" />
+    <Compile Include="Decorator/TableView.fs" />
     <Compile Include="Decorator/Page.fs" />
     <Compile Include="Decorator/NavigationPage.fs" />
     <Compile Include="Decorator/Cells/Cell.fs" />

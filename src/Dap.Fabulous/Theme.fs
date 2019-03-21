@@ -30,6 +30,9 @@ type ITheme with
         this.AddClassDecorator
             (new Entry.Decorator
                 (textColor = param.TextField.Normal, ?textBorderColor = param.TextField.Dimmed, ?textBackgroundColor = param.TextField.Surface, ?placeholderColor = param.TextField.Dimmed))
+        this.AddClassDecorator
+            (new TableView.Decorator
+                (sectionTextColor = param.Section.Normal, ?separatorColor = param.Section.Dimmed))
         // Cells
         this.AddClassDecorator
             (new Cell.Decorator
