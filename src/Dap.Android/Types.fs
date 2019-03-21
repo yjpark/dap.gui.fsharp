@@ -8,9 +8,6 @@ open Android.App
 open Dap.Prelude
 open Dap.Gui.App
 
-[<Literal>]
-let AndroidPlatformKind = "AndroidPlatform"
-
 type Widget = Android.Views.View
 
 type Activity = Android.App.Activity

@@ -161,9 +161,20 @@ type GuiAppState =
     | Background
     | Terminated
 
+type GuiRuntime =
+    | Xamarin_iOS
+    | Xamarin_Android
+    | Xamarin_Mac
+    | Windows_UWP
+    | DotNetCore_Gtk
+    | DotNetCore_Ooui
+    | DotNetCore_Myra
+    | OtherGuiRuntime of string
+
 type IGuiApp =
     inherit ILogger
     abstract App : IBaseApp with get
+    abstract Runtime : GuiRuntime with get
     abstract State : GuiAppState with get
     abstract OnWillChangeState : IBus<GuiAppState> with get
     abstract OnDidChangeState : IBus<unit> with get

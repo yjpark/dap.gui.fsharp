@@ -38,7 +38,7 @@ type AppDelegate (param : MacParam, window : NSWindow) =
         GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
-    inherit MacPlatform.Context<NSApplicationDelegate> (logging, FabulousMacPlatformKind)
+    inherit MacPlatform.Context<NSApplicationDelegate> (logging)
     override this.CreateDelegate (param : MacParam) (window : NSWindow) =
         if hasFabulousParam () then
             Forms.Init ()

@@ -7,9 +7,6 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
-[<Literal>]
-let UWPPlatformKind = "UWPPlatform"
-
 type IUWPPlatform =
     inherit IGuiPlatform
     abstract Param : UWPParam with get

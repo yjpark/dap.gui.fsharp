@@ -37,7 +37,7 @@ type GuiApp<'presenter, 'app when 'presenter :> IPresenter<'app> and 'app :> IBa
         platform.Value.Init app param
         setupGuiContext' platform.Value
         logWarn platform.Value "GuiApp.Run" (platform.Value.GetType() .FullName) (platform)
-        this.SetInstance ()
+        this.SetInstance (platform.Value.Runtime)
         app.OnSetup.AddWatcher platform.Value "OnSetup" (fun result ->
             logWarn platform.Value "GuiApp.Run" "App_OnSetup" (result)
             if result.IsOk then

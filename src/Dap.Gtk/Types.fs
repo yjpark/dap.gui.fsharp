@@ -9,9 +9,6 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
-[<Literal>]
-let GtkPlatformKind = "GtkPlatform"
-
 type Widget = Gtk.Widget
 
 type IGtkPlatform =

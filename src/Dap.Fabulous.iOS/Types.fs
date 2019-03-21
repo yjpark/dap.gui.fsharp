@@ -6,11 +6,4 @@ open CoreGraphics
 open UIKit
 
 open Dap.Prelude
-open Dap.Context
-open Dap.Platform
-open Dap.iOS
-
-[<Literal>]
-let FabulousIOSPlatformKind = "FabulousIOSPlatform"
-
 

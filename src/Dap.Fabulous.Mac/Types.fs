@@ -10,7 +10,3 @@ open Dap.Context
 open Dap.Platform
 open Dap.Mac
 
-[<Literal>]
-let FabulousMacPlatformKind = "FabulousMacPlatform"
-
-

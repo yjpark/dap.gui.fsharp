@@ -15,8 +15,8 @@ open Dap.Gui.Internal
 open Dap.Mac
 
 [<AbstractClass>]
-type Context<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging : ILogging, kind : string) =
-    inherit GuiPlatform.Context<MacParam, NSWindow> (logging, kind)
+type Context<'appDelegate when 'appDelegate :> NSApplicationDelegate> (logging : ILogging) =
+    inherit GuiPlatform.Context<MacParam, NSWindow> (logging, Xamarin_Mac)
     let mutable appDelegate : 'appDelegate option = None
     let mutable window : NSWindow option = None
     abstract member CreateDelegate : MacParam -> NSWindow -> 'appDelegate
@@ -57,7 +57,7 @@ type AppDelegate (param : MacParam, window : NSWindow) =
         GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
-    inherit Context<AppDelegate> (logging, MacPlatformKind)
+    inherit Context<AppDelegate> (logging)
     override this.CreateDelegate (param : MacParam) (window : NSWindow) =
         new AppDelegate (param, window)
     interface IFallback

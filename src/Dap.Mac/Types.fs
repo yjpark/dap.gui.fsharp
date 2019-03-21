@@ -9,9 +9,6 @@ open AppKit
 open Dap.Prelude
 open Dap.Gui.App
 
-[<Literal>]
-let MacPlatformKind = "MacPlatform"
-
 type Color = NSColor
 type Widget = NSView
 

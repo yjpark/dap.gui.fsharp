@@ -7,9 +7,6 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
-[<Literal>]
-let OouiPlatformKind = "OouiPlatform"
-
 type IOouiPlatform =
     inherit IGuiPlatform
     abstract Param : OouiParam with get

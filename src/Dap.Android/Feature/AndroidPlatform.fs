@@ -12,10 +12,8 @@ open Dap.Gui
 open Dap.Gui.App
 open Dap.Android
 
-type Context (logging : ILogging, kind : string) =
-    inherit GuiPlatform.Context<AndroidParam, Activity> (logging, kind)
-    new (l) =
-        new Context (l, AndroidPlatformKind)
+type Context (logging : ILogging) =
+    inherit GuiPlatform.Context<AndroidParam, Activity> (logging, Xamarin_Android)
     override this.DoInit (param : AndroidParam) =
         ()
     override this.DoShow (param : AndroidParam, presenter : IPresenter) =

@@ -8,8 +8,10 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
+[<AbstractClass>]
 type GuiApp (app : IBaseApp) =
     static let mutable instance : GuiApp option = None
+    let mutable runtime : GuiRuntime option = None
     let logger = app.Env.Logging.GetLogger "GuiApp"
     let mutable state : GuiAppState = Foreground
     let onWillChangeState = new Bus<GuiAppState> (app.Env, "OnWillChangeState")
@@ -31,7 +33,8 @@ type GuiApp (app : IBaseApp) =
         else
             ()
     static member Instance = instance.Value
-    member internal this.SetInstance () : unit =
+    member internal this.SetInstance (runtime' : GuiRuntime) : unit =
+        runtime <- Some runtime'
         if instance.IsSome then
             logError logger "Singleton_Violated" "Instance_Exist" (instance.Value, this)
         else
@@ -47,6 +50,7 @@ type GuiApp (app : IBaseApp) =
             state <- state'
             onDidChangeState.Trigger ()
     member __.App = app
+    member __.Runtime = runtime.Value
     member __.State = state
     member __.Theme =
         if theme.IsNone then
@@ -67,6 +71,7 @@ type GuiApp (app : IBaseApp) =
             )
     interface IGuiApp with
         member __.App = app
+        member __.Runtime = runtime.Value
         member this.State = this.State
         member __.OnWillChangeState = onWillChangeState.Publish
         member __.OnDidChangeState = onDidChangeState.Publish

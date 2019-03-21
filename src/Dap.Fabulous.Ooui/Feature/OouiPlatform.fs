@@ -15,7 +15,7 @@ open Dap.Fabulous.Ooui
 
 let private onExit (logging : ILogging) (logger : ILogger) (exited : AutoResetEvent) =
     fun (_sender : obj) (cancelArgs : ConsoleCancelEventArgs) ->
-        logWarn logger OouiPlatformKind "Quitting ..." cancelArgs
+        logWarn logger "Ooui" "Quitting ..." cancelArgs
         logging.Close ()
         exited.Set() |> ignore
 
@@ -26,7 +26,7 @@ let private waitForExit (logging : ILogging) (logger : ILogger) =
     exited.WaitOne() |> ignore
 
 type Context (logging : ILogging) =
-    inherit GuiPlatform.Context<OouiParam, int> (logging, OouiPlatformKind)
+    inherit GuiPlatform.Context<OouiParam, int> (logging, DotNetCore_Ooui)
     override this.DoInit (param : OouiParam) =
         Ooui.UI.Port <- param.Port
         Xamarin.Forms.Forms.Init ()

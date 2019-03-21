@@ -8,6 +8,7 @@ open Dap.Gui
 //Note: It's IGuiPlatform's responsibility to start the app at right time
 type IGuiPlatform =
     inherit IFeature
+    abstract Runtime : GuiRuntime with get
     abstract App : IBaseApp with get
     abstract Param0 : obj with get
     abstract Display : IDisplay option with get

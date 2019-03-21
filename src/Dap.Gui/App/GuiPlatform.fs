@@ -8,8 +8,8 @@ open Dap.Platform
 open Dap.Gui
 
 [<AbstractClass>]
-type Context<'param, 'output> (logging : ILogging, kind : string) =
-    inherit EmptyContext (logging, kind)
+type Context<'param, 'output> (logging : ILogging, runtime : GuiRuntime) =
+    inherit EmptyContext (logging, runtime.ToString ())
     let mutable app : IBaseApp option = None
     let mutable param : 'param option = None
     let mutable output : 'output option = None
@@ -21,11 +21,13 @@ type Context<'param, 'output> (logging : ILogging, kind : string) =
     abstract member OnDidAttach : IPack -> unit
     default __.ShouldStartAppBeforeRun () = true
     default __.OnDidAttach (_app : IPack) = ()
+    member __.Runtime = runtime
     member __.App = app.Value
     member __.Param = param.Value
     member __.Output = output.Value
     member __.Display = display
     interface IGuiPlatform with
+        member __.Runtime = runtime
         member __.App = app.Value
         member __.Param0 = param.Value :> obj
         member __.Display = display

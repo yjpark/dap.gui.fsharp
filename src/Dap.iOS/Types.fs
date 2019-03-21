@@ -10,9 +10,6 @@ open Dap.Prelude
 open Dap.Gui
 open Dap.Gui.App
 
-[<Literal>]
-let IOSPlatformKind = "IOSPlatform"
-
 type Color = UIColor
 type Widget = UIView
 

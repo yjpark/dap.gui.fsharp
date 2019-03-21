@@ -10,7 +10,7 @@ open Dap.Gui.App
 open Dap.Gtk
 
 type Context (logging : ILogging) =
-    inherit GuiPlatform.Context<GtkParam, Gtk.Window> (logging, GtkPlatformKind)
+    inherit GuiPlatform.Context<GtkParam, Gtk.Window> (logging, DotNetCore_Gtk)
     let mutable application : Gtk.Application option = None
     let mutable window : Gtk.Window option = None
     override this.DoInit (param : GtkParam) =

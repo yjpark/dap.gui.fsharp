@@ -24,8 +24,8 @@ let onUnhandledException (logger : ILogger) (args : UnhandledExceptionEventArgs)
     logError logger "CurrentDomain" "OnUnhandledException" args
 
 [<AbstractClass>]
-type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging : ILogging, kind : string) =
-    inherit GuiPlatform.Context<IOSParam, UIWindow option> (logging, kind)
+type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging : ILogging) =
+    inherit GuiPlatform.Context<IOSParam, UIWindow option> (logging, Xamarin_iOS)
     let mutable window : UIWindow option = None
     let mutable presenter : IPresenter option = None
     let mutable appDelegate : 'appDelegate option = None
@@ -103,7 +103,7 @@ type AppDelegate () =
         GuiApp.Instance.SetState' GuiAppState.Terminated
 
 type Context (logging : ILogging) =
-    inherit Context<AppDelegate> (logging, IOSPlatformKind)
+    inherit Context<AppDelegate> (logging)
     static member DoCreateWindow (logger : ILogger) (param : IOSParam) =
         //Create Window
         let window = new UIWindow (UIScreen.MainScreen.Bounds)

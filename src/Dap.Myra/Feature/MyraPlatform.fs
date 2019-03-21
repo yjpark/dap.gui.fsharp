@@ -17,9 +17,6 @@ open Dap.Gui.App
 open Dap.Myra
 
 [<Literal>]
-let MyraPlatformKind = "MyraPlatform"
-
-[<Literal>]
 let ContentRoot = "Content"
 
 type MyraWindow (platform : IMyraPlatform, param : MyraParam) =
@@ -90,7 +87,7 @@ type MyraWindow (platform : IMyraPlatform, param : MyraParam) =
         member __.Quitting = quitting
 
 type Context (logging : ILogging) =
-    inherit GuiPlatform.Context<MyraParam, IMyraWindow> (logging, MyraPlatformKind)
+    inherit GuiPlatform.Context<MyraParam, IMyraWindow> (logging, DotNetCore_Myra)
     let mutable window : MyraWindow option = None
     override this.DoInit (param : MyraParam) =
         let window' = new MyraWindow (this, param)

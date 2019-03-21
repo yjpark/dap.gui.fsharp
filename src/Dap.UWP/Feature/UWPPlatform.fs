@@ -12,10 +12,8 @@ open Dap.Gui
 open Dap.Gui.App
 open Dap.UWP
 
-type Context (logging : ILogging, kind : string) =
-    inherit GuiPlatform.Context<UWPParam, string> (logging, kind)
-    new (l) =
-        new Context (l, UWPPlatformKind)
+type Context (logging : ILogging) =
+    inherit GuiPlatform.Context<UWPParam, string> (logging, Windows_UWP)
     override this.DoInit (param : UWPParam) =
         ()
     override this.DoShow (param : UWPParam, presenter : IPresenter) =

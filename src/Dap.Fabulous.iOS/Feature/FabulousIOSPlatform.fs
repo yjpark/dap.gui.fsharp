@@ -44,7 +44,7 @@ type AppDelegate () =
 type ViewController = IOSPlatform.ViewController
 
 type Context (logging : ILogging) =
-    inherit IOSPlatform.Context<UIApplicationDelegate> (logging, FabulousIOSPlatformKind)
+    inherit IOSPlatform.Context<UIApplicationDelegate> (logging)
     override this.GetDelegateType () =
         if hasFabulousParam () then
             AppDelegate.Type

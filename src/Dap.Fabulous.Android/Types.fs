@@ -6,7 +6,4 @@ open Dap.Context
 open Dap.Platform
 open Dap.Android
 
-[<Literal>]
-let FabulousAndroidPlatformKind = "FabulousAndroidPlatform"
-
 
