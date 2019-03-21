@@ -1,3 +1,6 @@
+## 0.6.9
+* Update material color scheme
+
 ## 0.6.8
 * Add IGuiApp.Runtime for GuiRuntime
 

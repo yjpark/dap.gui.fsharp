@@ -1,3 +1,6 @@
+## 0.6.8
+* TableView Decorator
+
 ## 0.6.7
 * Support entry and entry_cell in builder
 

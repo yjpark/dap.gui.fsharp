@@ -1,3 +1,6 @@
+## 0.6.3
+* ITableViewDecorator
+
 ## 0.6.2
 * Add IEntryDecorator and IEntryCellDecorator
 
