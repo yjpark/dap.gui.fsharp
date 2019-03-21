@@ -1,3 +1,6 @@
+## 0.6.8
+* Add IGuiApp.Runtime for GuiRuntime
+
 ## 0.6.7
 * Add IGuiApp.State OnWillChangeState and OnDidChangeState
 * Follow Dap.Lib api change with Preferences and SecureStorage
