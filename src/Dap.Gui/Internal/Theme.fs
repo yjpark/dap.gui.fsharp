@@ -30,8 +30,6 @@ type internal Theme (logging : ILogging, key : string, param : obj) =
     inherit EmptyContext (logging, GuiThemeKind)
     let mutable styles : Map<string, StyleFactory list> = Map.empty
     let mutable decorators : Map<string, IDecorator list> = Map.empty
-    new (k, p) =
-        new Theme (getLogging (), k, p)
     member __.Styles = styles
     member __.Decorators = decorators
 

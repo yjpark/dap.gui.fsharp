@@ -1,3 +1,6 @@
+## 0.6.10
+* Add ILocale related API
+
 ## 0.6.9
 * Update material color scheme
 

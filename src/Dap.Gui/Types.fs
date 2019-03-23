@@ -2,6 +2,7 @@
 module Dap.Gui.Types
 
 open System
+open System.Globalization
 
 open Dap.Prelude
 open Dap.Context
@@ -9,6 +10,9 @@ open Dap.Platform
 
 [<Literal>]
 let GuiThemeKind = "GuiTheme"
+
+[<Literal>]
+let GuiLocaleKind = "GuiLocale"
 
 type IStyle =
     abstract Kind : string with get
@@ -156,6 +160,12 @@ type ITheme =
     abstract AddForceDecorator : string -> IDecorator -> unit
     abstract AddClassDecorator<'widget> : IDecorator<'widget> -> unit
 
+type ILocale =
+    inherit IContext
+    abstract Key : string with get
+    abstract Param0 : obj with get
+    abstract Culture : CultureInfo with get
+
 type GuiAppState =
     | Foreground
     | Background
@@ -179,11 +189,19 @@ type IGuiApp =
     abstract OnWillChangeState : IBus<GuiAppState> with get
     abstract OnDidChangeState : IBus<unit> with get
     abstract Theme : ITheme with get
+    abstract Themes : Map<string, ITheme> with get
     abstract AddTheme<'param> : string -> 'param -> (ITheme -> 'param -> unit) -> unit
     abstract GetTheme : string option -> ITheme
     abstract SwitchTheme : string -> unit
     abstract OnWillSwitchTheme : IBus<ITheme> with get
     abstract OnDidSwitchTheme : IBus<unit> with get
+    abstract Locale : ILocale with get
+    abstract Locales : Map<string, ILocale> with get
+    abstract AddLocale<'param> : string -> 'param -> unit
+    abstract GetLocale : string option -> ILocale
+    abstract SwitchLocale : string -> unit
+    abstract OnWillSwitchLocale : IBus<ILocale> with get
+    abstract OnDidSwitchLocale : IBus<unit> with get
 
 type IGuiAppHook =
     inherit IHook

@@ -33,4 +33,4 @@ type BaseDecorator<'widget> () =
             | _ ->
                 let section = sprintf "<%s>.Decorate0" <| (this.GetType ()) .FullName
                 logError (getLogging ()) section "Type_Mismatched"
-                    (typeof<'widget>.FullName, widget.GetType().FullName, widget)
+                    (kind.Value, typeof<'widget>.FullName, widget.GetType().FullName, widget)

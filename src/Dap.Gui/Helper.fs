@@ -1,6 +1,9 @@
 [<AutoOpen>]
 module Dap.Gui.Helper
 
+open System.IO
+open System.Text
+open System.Reflection
 open System.Threading
 open System.Threading.Tasks
 open FSharp.Control.Tasks.V2
@@ -8,11 +11,39 @@ open FSharp.Control.Tasks.V2
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform
+open Dap.Local
 open Dap.Gui.Internal
+
+// List of supported language and region codes
+// https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/a9eac961-e77d-41a6-90a5-ce1a8b0cdb9c
+
+let private decodeLocaleFromStream<'param> (decoder : JsonDecoder<'param>) (stream : Stream) =
+    use reader = new StreamReader (stream, Encoding.UTF8)
+    reader.ReadToEnd ()
+    |> decodeJson decoder
 
 type IGuiApp with
     static member Instance = GuiApp.Instance :> IGuiApp
-
+    member this.AddDefaultLocale<'param> (param : 'param) =
+        this.AddLocale<'param> NoKey param
+    member this.LoadLocalesFromEmbeddedResource<'param> (prefix : string, decoder : JsonDecoder<'param>, ?assembly : Assembly) =
+        let assembly = assembly |> Option.defaultValue (Assembly.GetCallingAssembly ())
+        EmbeddedResource.DecodeMultiple<'param> (prefix, decoder, logger = this, assembly = assembly)
+        |> Array.iter (fun (key, param) ->
+            let key = key.Replace (".json", "")
+            this.AddLocale<'param> key param
+        )
+    member this.SwitchLanguage (language : string) =
+        if Map.containsKey language this.Locales then
+            this.SwitchLocale language
+        else
+            this.SwitchLocale NoKey
+    member this.SwitchRegion (language : string, region : string) =
+        let key = sprintf "%s-%s" language region
+        if Map.containsKey key this.Locales then
+            this.SwitchLocale key
+        else
+            this.SwitchLanguage language
 
 type IRunner<'runner when 'runner :> IRunner> with
     member this.RunGuiFunc (func : Func<'runner, unit>) : unit =
