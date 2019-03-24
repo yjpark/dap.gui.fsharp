@@ -45,6 +45,13 @@ type IGuiApp with
         else
             this.SwitchLanguage language
 
+type ILocale with
+    member this.TextForSwitch =
+        let nativeName = Locale.getNativeName this.Culture
+        let englishName = this.Culture.EnglishName
+        let detail = if nativeName = englishName then "" else englishName
+        nativeName, detail, Locale.getSwitchText this.Culture
+
 type IRunner<'runner when 'runner :> IRunner> with
     member this.RunGuiFunc (func : Func<'runner, unit>) : unit =
         runGuiFunc (fun () -> func this.Runner)

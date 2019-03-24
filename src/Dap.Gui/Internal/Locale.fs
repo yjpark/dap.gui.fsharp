@@ -9,6 +9,26 @@ open Dap.Context
 open Dap.Platform
 open Dap.Gui
 
+[<Literal>]
+let EN = "en"
+
+[<Literal>]
+let ZH_CN = "zh-CN"
+
+let getNativeName (culture : CultureInfo) =
+    let name = culture.NativeName
+    if name <> culture.EnglishName then
+        name
+    else
+        match culture.Name with
+        | ZH_CN -> "简体中文"
+        | _ -> name
+
+let getSwitchText (culture : CultureInfo) =
+    match culture.Name with
+    | ZH_CN -> "切换"
+    | _ -> "Switch"
+
 type internal Locale (logging : ILogging, culture : CultureInfo, param : obj) =
     inherit EmptyContext (logging, GuiLocaleKind)
     static member LanguageOfKey (key : string) =
