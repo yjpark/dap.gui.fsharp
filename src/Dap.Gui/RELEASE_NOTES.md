@@ -1,3 +1,6 @@
+## 0.6.11
+* add ILocale.TextForSwitch for better display in locale settings
+
 ## 0.6.10
 * Add ILocale related API
 
