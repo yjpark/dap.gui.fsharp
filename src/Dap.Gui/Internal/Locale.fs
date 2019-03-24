@@ -1,4 +1,5 @@
 [<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Dap.Gui.Internal.Locale
 
 open System
