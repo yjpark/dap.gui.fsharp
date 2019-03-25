@@ -1,3 +1,6 @@
+## 0.6.9
+* Support change background color for LoadingForm
+
 ## 0.6.8
 * TableView Decorator
 
