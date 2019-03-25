@@ -1,3 +1,6 @@
+## 0.6.12
+* Tweak default action color in themes
+
 ## 0.6.11
 * add ILocale.TextForSwitch for better display in locale settings
 
