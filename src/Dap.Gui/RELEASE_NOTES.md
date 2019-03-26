@@ -1,3 +1,6 @@
+## 0.6.13
+* Add IGuiApp.HasInstance
+
 ## 0.6.12
 * Tweak default action color in themes
 
