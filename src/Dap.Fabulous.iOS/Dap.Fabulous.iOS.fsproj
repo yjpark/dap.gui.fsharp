@@ -4,6 +4,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;gui;ios</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.6.0</Version>
+    <Description>Fabulous App on iOS</Description>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CCC2A3DB-CD6B-450D-A18D-E1BD21C75798}</ProjectGuid>

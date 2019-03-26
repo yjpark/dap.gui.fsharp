@@ -4,6 +4,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;gui;android</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.6.0</Version>
+    <Description>Fabulous App on Android</Description>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CD37BA6D-EB83-46C8-A406-2008A6D91A22}</ProjectGuid>

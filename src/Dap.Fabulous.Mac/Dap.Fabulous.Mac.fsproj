@@ -5,6 +5,13 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;gui;mac</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.6.0</Version>
+    <Description>Fabulous App on Mac</Description>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A3074337-E0E1-496C-AFC6-CA0411AD71AA}</ProjectGuid>
