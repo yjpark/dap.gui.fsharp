@@ -33,10 +33,12 @@ type DapActivity () =
         base.OnRequestPermissionsResult(requestCode, permissions, grantResults)
     override this.OnResume () =
         base.OnResume ()
-        GuiApp.Instance.SetState' GuiAppState.Foreground
+        if GuiApp.HasInstance then
+            GuiApp.Instance.SetState' GuiAppState.Foreground
     override this.OnPause () =
         base.OnPause ()
-        GuiApp.Instance.SetState' GuiAppState.Background
+        if GuiApp.HasInstance then
+            GuiApp.Instance.SetState' GuiAppState.Background
     member this.SwitchTheme (theme : int32) =
         this.SetTheme (theme)
     (*

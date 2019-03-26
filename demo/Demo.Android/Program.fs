@@ -20,7 +20,9 @@ type MainActivity () =
     inherit FabulousActivity ()
     override this.UseFabulous () = useFabulous
     override this.DoSetup (bundle : Bundle) =
-        let param = AndroidParam.Create ("Demo", this, backgroundColor = Android.Graphics.Color.Black)
+        let view = this.GetContentView ()
+        view.SetBackgroundColor (Android.Graphics.Color.Black)
+        let param = AndroidParam.Create ("Demo", this)
         if useFabulous then
             setFabulousAndroidParam param
             App.RunFabulous ("demo-.log")

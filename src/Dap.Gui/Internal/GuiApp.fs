@@ -48,6 +48,7 @@ type GuiApp (app : IBaseApp) =
             onDidSwitchLocale.Trigger ()
         else
             ()
+    static member HasInstance = instance.IsSome
     static member Instance = instance.Value
     member internal this.SetInstance (runtime' : GuiRuntime) : unit =
         runtime <- Some runtime'

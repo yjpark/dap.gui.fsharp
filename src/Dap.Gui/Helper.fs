@@ -23,6 +23,7 @@ let private decodeLocaleFromStream<'param> (decoder : JsonDecoder<'param>) (stre
     |> decodeJson decoder
 
 type IGuiApp with
+    static member HasInstance = GuiApp.HasInstance
     static member Instance = GuiApp.Instance :> IGuiApp
     member this.AddDefaultLocale<'param> (param : 'param) =
         this.AddLocale<'param> NoKey param

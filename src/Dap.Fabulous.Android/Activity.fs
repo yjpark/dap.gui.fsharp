@@ -51,13 +51,20 @@ type FabulousActivity () =
         base.OnRequestPermissionsResult(requestCode, permissions, grantResults)
     override this.OnResume () =
         base.OnResume ()
-        GuiApp.Instance.SetState' GuiAppState.Foreground
+        if GuiApp.HasInstance then
+            GuiApp.Instance.SetState' GuiAppState.Foreground
     override this.OnPause () =
         base.OnPause ()
-        GuiApp.Instance.SetState' GuiAppState.Background
+        if GuiApp.HasInstance then
+            GuiApp.Instance.SetState' GuiAppState.Background
     member this.SwitchTheme (theme : int32) =
         this.SetTheme (theme)
     member this.SwitchDarkTheme () =
         this.SwitchTheme (Resource.Style.Base_Theme_AppCompat)
     member this.SwitchLightTheme () =
         this.SwitchTheme (Resource.Style.Base_Theme_AppCompat_Light)
+    member this.TryGetContentView () =
+        let logger = (getLogging ()) .GetLogger "FabulousActivity.TryGetContentView"
+        Dap.Fabulous.Decorator.Util.getInstanceValue<FormsAppCompatActivity, ARelativeLayout> logger "_layout" this
+    member this.GetContentView () =
+        this.TryGetContentView () |> Option.get

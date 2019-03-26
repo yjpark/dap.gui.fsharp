@@ -9,14 +9,8 @@ open Dap.Platform
 open Dap.Local
 open Dap.Skia
 
-type Icons () =
-    //TODO: Different icons for ios and android
-    static member Settings =
-        Ionicons.Icons.Settings
-    static member Help =
-        Ionicons.Icons.Help
-    static member EnsureCache () =
-        let cache = new IoniconsCache ("icons_white", [ Icons.Settings ; Icons.Help ], SKColors.White, 128)
-        cache.EnsureAll ()
-        let cache = new IoniconsCache ("icons_black", [ Icons.Settings ; Icons.Help ], SKColors.Black, 128)
-        cache.EnsureAll ()
+type Icons (folder : string, color : SKColor) =
+    inherit IoniconsCache (folder, [ Icons.Settings ; Icons.Help ], color, Icons.Size)
+    static member Size = 128
+    static member Settings = Ionicons.MD.Settings
+    static member Help = Ionicons.MD.Help

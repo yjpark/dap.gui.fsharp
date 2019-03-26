@@ -17,7 +17,6 @@ type LayoutOptions = Xamarin.Forms.LayoutOptions
 
 let private init : Init<Initer, unit, Model, Msg> =
     fun initer () ->
-        Icons.EnsureCache ()
         ({
             Page = HomePage
             Ver = 1
