@@ -20,10 +20,6 @@ type Context (logging : ILogging) =
         logWarn this "DoShow" param.Name (presenter)
         let view = presenter.Prefab0.Widget0 :?> Widget
         param.Activity.SetContentView (view)
-        param.BackgroundColor
-        |> Option.iter (fun color ->
-            view.SetBackgroundColor (color)
-        )
         param.Activity
     override this.DoRun (param : AndroidParam) =
         param.Actions

@@ -23,15 +23,13 @@ type IAndroidPlatform =
 and AndroidParam = {
     Name : string
     Activity : Activity
-    BackgroundColor : Color option
     Actions : (IAndroidPlatform -> unit) list
 } with
     static member Create
-            (name : string, activity : Activity, ?backgroundColor : Color) : AndroidParam =
+            (name : string, activity : Activity) : AndroidParam =
         {
             Name = name
             Activity = activity
-            BackgroundColor = backgroundColor
             Actions = []
         }
 

@@ -39,16 +39,6 @@ type DapActivity () =
         GuiApp.Instance.SetState' GuiAppState.Background
     member this.SwitchTheme (theme : int32) =
         this.SetTheme (theme)
-        (*
-        let logger = (getLogging ()) .GetLogger "DapActivity.SwitchTheme"
-        Dap.Fabulous.Decorator.Util.getInstanceValue<FormsAppCompatActivity, ARelativeLayout> logger "_layout" this
-        |> Option.iter (fun content ->
-            let loading = new Android.Widget.TextView (Android.App.Application.Context)
-            this.SetContentView (loading)
-            this.SetTheme (theme)
-            this.SetContentView (content)
-        )
-        *)
     (*
     member this.SwitchDarkTheme () =
         this.SwitchTheme (Resource.Style.Base_Theme_AppCompat)
