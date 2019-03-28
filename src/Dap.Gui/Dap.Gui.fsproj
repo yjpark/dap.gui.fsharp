@@ -4,7 +4,7 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;gui;</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.13</Version>
+    <Version>0.6.14</Version>
     <Description>Gui Libs</Description>
   </PropertyGroup>
   <ItemGroup>

@@ -1,3 +1,6 @@
+## 0.6.14
+* update Dap.Local
+
 ## 0.6.13
 * Add IGuiApp.HasInstance
 
