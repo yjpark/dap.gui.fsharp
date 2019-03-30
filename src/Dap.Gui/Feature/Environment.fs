@@ -11,7 +11,9 @@ type Context (logging : ILogging) =
         if hasEssentials () then
             let props = base.Properties
             props.DataDirectory.SetValue Xamarin.Essentials.FileSystem.AppDataDirectory
+            props.DataDirectory.Seal ()
             props.CacheDirectory.SetValue Xamarin.Essentials.FileSystem.CacheDirectory
+            props.CacheDirectory.Seal ()
             logWarn base.AsEnvironment "Data_Directory" props.DataDirectory.Value ()
             logWarn base.AsEnvironment "Cache_Directory" props.CacheDirectory.Value ()
     )

@@ -1,16 +1,46 @@
 {
 	"folders": [
 		{
-			"path": "src""
+			"path": "src/Dap.Skia"
+		},
+		{
+			"path": "src/Dap.Gui"
+		},
+		{
+			"path": "src/Dap.Android"
+		},
+		{
+			"path": "src/Dap.iOS"
+		},
+		{
+			"path": "src/Dap.Mac"
+		},
+		{
+			"path": "src/Dap.Myra"
+		},
+		{
+			"path": "src/Dap.Gtk"
+		},
+		{
+			"path": "src/Dap.UWP.Cli"
+		},
+		{
+			"path": "src/Dap.UWP"
+		},
+		{
+			"path": "src/Dap.Yoga"
+		},
+		{
+			"path": "src/Dap.Yoga.Mac"
+		},
+		{
+			"path": "src/Dap.Yoga.Myra"
+		},
+		{
+			"path": "src/Dap.Yoga.Gtk"
 		},
 		{
 			"path": "demo"
-		},
-		{
-			"path": "old"
-		},
-		{
-			"path": "faker"
 		},
 	],
     "settings": {

@@ -7,32 +7,10 @@ open Dap.Prelude
 open Dap.Context
 open Dap.Platform
 open Dap.Android
-open Dap.Fabulous.Android
 
 open Demo.App
 open Demo.Gui
-open Demo.Fabulous
 
-let useFabulous = true
-
-[<Activity (Label = "Gui.Demo", MainLauncher = true, Icon = "@mipmap/icon", Theme = "@style/MainTheme")>]
-type MainActivity () =
-    inherit FabulousActivity ()
-    override this.UseFabulous () = useFabulous
-    override this.DoSetup (bundle : Bundle) =
-        let view = this.GetContentView ()
-        view.SetBackgroundColor (Android.Graphics.Color.Black)
-        let param = AndroidParam.Create ("Demo", this)
-        if useFabulous then
-            setFabulousAndroidParam param
-            App.RunFabulous ("demo-.log")
-        else
-            this.SetContentView (Resources.Layout.Main)
-            setAndroidParam param
-            App.RunGui ("demo-.log")
-        |> ignore
-
-(* Without Fabulous
 [<Activity (Label = "Gui.Demo", MainLauncher = true, Icon = "@mipmap/icon", Theme = "@style/MainTheme")>]
 type MainActivity () =
     inherit Activity ()
@@ -42,4 +20,3 @@ type MainActivity () =
         setAndroidParam <| AndroidParam.Create ("Demo", this, backgroundColor = Android.Graphics.Color.Black)
         App.RunGui ("demo-.log")
         |> ignore
-*)
