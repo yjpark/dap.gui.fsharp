@@ -85,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Dap.Android\Dap.Android.fsproj" />
-    <ProjectReference Include="..\..\src\Dap.Fabulous.Android\Dap.Fabulous.Android.fsproj" />
     <ProjectReference Include="..\Demo.App\Demo.App.fsproj">
       <Project>{31E851C3-E4DE-40C7-8078-A055955B4819}</Project>
       <Name>Demo.App</Name>
@@ -93,10 +92,6 @@
     <ProjectReference Include="..\Demo.Gui\Demo.Gui.fsproj">
       <Project>{8290E674-0831-465D-AA03-7848E96521A6}</Project>
       <Name>Demo.Gui</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Demo.Fabulous\Demo.Fabulous.fsproj">
-      <Project>{C91D9B4C-D561-4AE2-A50E-E97ABE1A4BA0}</Project>
-      <Name>Demo.Fabulous</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.FSharp.targets" />
