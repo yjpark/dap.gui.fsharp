@@ -17,6 +17,6 @@ type MainActivity () =
     override this.OnCreate (bundle: Bundle) =
         base.OnCreate (bundle)
         this.SetContentView (Resources.Layout.Main)
-        setAndroidParam <| AndroidParam.Create ("Demo", this, backgroundColor = Android.Graphics.Color.Black)
+        setAndroidParam <| AndroidParam.Create ("Demo", this)
         App.RunGui ("demo-.log")
         |> ignore
