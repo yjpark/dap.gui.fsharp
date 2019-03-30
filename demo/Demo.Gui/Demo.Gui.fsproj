@@ -13,6 +13,7 @@
     <Compile Include="Helper.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Dap.Gui\Dap.Gui.fsproj" />
     <ProjectReference Include="..\Demo.App\Demo.App.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

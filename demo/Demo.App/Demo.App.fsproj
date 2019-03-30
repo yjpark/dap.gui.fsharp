@@ -10,8 +10,5 @@
     <Compile Include="Feature/AddressBook.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Dap.Gui\Dap.Gui.fsproj" />
-  </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
