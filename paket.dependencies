@@ -12,6 +12,9 @@ nuget Dap.Platform.Cli 0.6.0
 nuget Dap.Platform 0.6.10
 nuget Dap.Local 0.6.9
 
+//Gui
+nuget Xamarin.Essentials
+
 //Skia
 nuget SkiaSharp
 nuget SkiaSharp.Views
