@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
     <PackageTags>fsharp;dap;gui;mac</PackageTags>
     <Authors>YJ Park</Authors>
-    <Version>0.6.0</Version>
+    <Version>0.7.0</Version>
     <Description>Dap with Xamarin.Mac</Description>
   </PropertyGroup>
   <PropertyGroup>

@@ -22,7 +22,8 @@ type AppKeys () =
     static member AddressBook (* ICorePack *) = ""
 
 type IApp =
-    inherit IApp<IApp>
+    inherit IBaseApp
+    inherit IRunner<IApp>
     inherit ICorePack
     abstract Args : AppArgs with get
     abstract AsCorePack : ICorePack with get
