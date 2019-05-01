@@ -48,7 +48,7 @@ let projects =
     ++ "src/Dap.Yoga.Gtk/*.fsproj"
     ++ "src/Dap.Yoga.Myra/*.fsproj"
 
-DotNet.create DotNet.release projects
+NuGet.create NuGet.release feed projects
 
 DotNet.createPrepares [
     ["Dap.Gui"], fun _ ->
@@ -78,8 +78,8 @@ Target.create "IoniconsGlyph" (fun _ ->
     let glyphs =
         ionicons.Defs.Font.Glyphs
         |> Array.map (fun glyph ->
-            ((int) glyph.Unicode.[0]) .ToString ("x")
-            |> Glyph.Create glyph.GlyphName
+            let code = ((int) glyph.Unicode.[0]) .ToString ("x")
+            Glyph.Create glyph.GlyphName code
         )
     let filterGlyphs (prefix : string) =
         glyphs
