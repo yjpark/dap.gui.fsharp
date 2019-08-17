@@ -330,3 +330,4 @@ ASALocalRun/
 bin
 obj
 log
+.ionide/
