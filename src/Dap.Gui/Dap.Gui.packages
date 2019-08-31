@@ -2,10 +2,10 @@
 <Project>
   <ItemGroup>
     <PackageReference Include="FSharp.Core">
-      <Version>4.6.2</Version>
+      <Version>4.7</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.1.0</Version>
+      <Version>1.2</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp">
       <Version>1.68</Version>
