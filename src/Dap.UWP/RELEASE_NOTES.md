@@ -1,3 +1,6 @@
+## 0.8.1
+* Follow DapGui changes
+
 ## 0.8.0
 * log API changes
 
