@@ -53,7 +53,7 @@ type Context<'appDelegate when 'appDelegate :> UIApplicationDelegate> (logging :
         let delegate' = delegate' :?> 'appDelegate
         appDelegate <- Some delegate'
         window <- Some <| this.CreateWindow (delegate')
-        Feature.tryStartApp this.App
+        this.App.Env.RunTask0 raiseOnFailed (fun _ -> Feature.tryStartAppAsync this.App)
         this.TryShow ()
     interface IIOSPlatform with
         member this.Param = this.Param

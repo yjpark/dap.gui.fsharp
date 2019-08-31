@@ -49,6 +49,6 @@ type Context<'param, 'output> (logging : ILogging, runtime : GuiRuntime) =
         member this.OnDidAttach app = this.OnDidAttach app
         member this.Run () =
             if this.ShouldStartAppBeforeRun () then
-                Feature.tryStartApp app.Value
+                this.App.Env.RunTask0 raiseOnFailed (fun _ -> Feature.tryStartAppAsync this.App)
             this.DoRun param.Value
     member this.AsGuiPlatform = this :> IGuiPlatform
