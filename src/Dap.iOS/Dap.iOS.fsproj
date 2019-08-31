@@ -69,6 +69,8 @@
     <Compile Include="Feature/IOSPlatform.fs" />
     <Compile Include="Helper.fs" />
   </ItemGroup>
-  <Import Project="..\..\src\Dap.Gui\Dap.Gui.reference" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\yjpark\dap.gui.fsharp\src\Dap.Gui\Dap.Gui.fsproj" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.FSharp.targets" />
 </Project>
