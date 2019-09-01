@@ -61,13 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <!-- Got issue when restore, use dll for now
-    <PackageReference Include="Xamarin.Android.FSharp.ResourceProvider">
-      <Version>1.0.0.25</Version>
-    </PackageReference>
-    -->
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -84,6 +77,7 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Dap.Gui\Dap.Gui.fsproj" />
     <ProjectReference Include="..\..\src\Dap.Android\Dap.Android.fsproj" />
     <ProjectReference Include="..\Demo.App\Demo.App.fsproj">
       <Project>{31E851C3-E4DE-40C7-8078-A055955B4819}</Project>
