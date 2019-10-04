@@ -1,4 +1,4 @@
-(* FAKE: 5.13.3 *)
+(* FAKE: 5.16.1 *)
 #r "paket: groupref Build //"
 #load ".fake/build.fsx/intellisense.fsx"
 
@@ -25,9 +25,6 @@ open Dap.Build
 open FSharp.Data
 open Dap.Prelude
 open Dap.Context.Generator.Util
-
-[<Literal>]
-let Prepare = "Prepare"
 
 let feed =
     NuGet.Feed.Create (
