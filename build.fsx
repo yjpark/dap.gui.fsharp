@@ -40,10 +40,12 @@ let projects =
     ++ "src/Dap.iOS/*.fsproj"
     ++ "src/Dap.Android/*.fsproj"
     ++ "src/Dap.Mac/*.fsproj"
-    ++ "src/Dap.Myra/*.fsproj"
     ++ "src/Dap.Yoga/*.fsproj"
     ++ "src/Dap.Yoga.Gtk/*.fsproj"
+    (*
+    ++ "src/Dap.Myra/*.fsproj"
     ++ "src/Dap.Yoga.Myra/*.fsproj"
+    *)
 
 NuGet.create NuGet.release feed projects
 
