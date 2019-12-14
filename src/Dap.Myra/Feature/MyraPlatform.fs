@@ -71,7 +71,7 @@ type MyraWindow (platform : IMyraPlatform, param : MyraParam) =
             |> Option.iter (fun color ->
                 this.GraphicsDevice.Clear (color)
             )
-            desktop.Value.Bounds <- new Rectangle(0, 0, this.Width, this.Height)
+            //desktop.Value.Bounds <- new Rectangle(0, 0, this.Width, this.Height)
             desktop.Value.Render ()
             base.Draw (gameTime)
     member __.Desktop = desktop.Value

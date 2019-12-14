@@ -27,8 +27,8 @@ type Widget = Myra.Graphics2D.UI.Widget
 
 type MyraPanel = Myra.Graphics2D.UI.Panel
 
-type Proportion = Myra.Graphics2D.UI.Grid.Proportion
-type ProportionType = Myra.Graphics2D.UI.Grid.ProportionType
+type Proportion = Myra.Graphics2D.UI.Proportion
+type ProportionType = Myra.Graphics2D.UI.ProportionType
 
 type IMyraWindow =
     abstract Xna : Microsoft.Xna.Framework.Game with get
