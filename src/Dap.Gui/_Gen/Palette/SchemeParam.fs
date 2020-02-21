@@ -35,9 +35,10 @@ type SurfaceColorParam = {
     static member JsonEncoder : JsonEncoder<SurfaceColorParam> =
         fun (this : SurfaceColorParam) ->
             E.object [
-                "brush", E.string (* SurfaceColorParam *) this.Brush
-                "normal", E.string (* SurfaceColorParam *) this.Normal
-                "variant", (E.option E.string) (* SurfaceColorParam *) this.Variant
+                yield "brush", E.string (* SurfaceColorParam *) this.Brush
+                yield "normal", E.string (* SurfaceColorParam *) this.Normal
+                if this.Variant.IsSome then
+                    yield "variant", (E.option E.string) (* SurfaceColorParam *) this.Variant
             ]
     static member JsonDecoder : JsonDecoder<SurfaceColorParam> =
         D.object (fun get ->
@@ -96,10 +97,13 @@ type BrushColorParam = {
     static member JsonEncoder : JsonEncoder<BrushColorParam> =
         fun (this : BrushColorParam) ->
             E.object [
-                "normal", E.string (* BrushColorParam *) this.Normal
-                "dimmed", (E.option E.string) (* BrushColorParam *) this.Dimmed
-                "accent", (E.option E.string) (* BrushColorParam *) this.Accent
-                "surface", (E.option E.string) (* BrushColorParam *) this.Surface
+                yield "normal", E.string (* BrushColorParam *) this.Normal
+                if this.Dimmed.IsSome then
+                    yield "dimmed", (E.option E.string) (* BrushColorParam *) this.Dimmed
+                if this.Accent.IsSome then
+                    yield "accent", (E.option E.string) (* BrushColorParam *) this.Accent
+                if this.Surface.IsSome then
+                    yield "surface", (E.option E.string) (* BrushColorParam *) this.Surface
             ]
     static member JsonDecoder : JsonDecoder<BrushColorParam> =
         D.object (fun get ->
@@ -217,19 +221,19 @@ type ColorSchemeParam = {
     static member JsonEncoder : JsonEncoder<ColorSchemeParam> =
         fun (this : ColorSchemeParam) ->
             E.object [
-                "primary", SurfaceColorParam.JsonEncoder (* ColorSchemeParam *) this.Primary
-                "secondary", SurfaceColorParam.JsonEncoder (* ColorSchemeParam *) this.Secondary
-                "label", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Label
-                "button", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Button
-                "text_field", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.TextField
-                "switch", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Switch
-                "box", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Box
-                "table", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Table
-                "section", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Section
-                "panel", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Panel
-                "toolbar", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Toolbar
-                "error", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Error
-                "background", E.string (* ColorSchemeParam *) this.Background
+                yield "primary", SurfaceColorParam.JsonEncoder (* ColorSchemeParam *) this.Primary
+                yield "secondary", SurfaceColorParam.JsonEncoder (* ColorSchemeParam *) this.Secondary
+                yield "label", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Label
+                yield "button", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Button
+                yield "text_field", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.TextField
+                yield "switch", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Switch
+                yield "box", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Box
+                yield "table", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Table
+                yield "section", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Section
+                yield "panel", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Panel
+                yield "toolbar", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Toolbar
+                yield "error", BrushColorParam.JsonEncoder (* ColorSchemeParam *) this.Error
+                yield "background", E.string (* ColorSchemeParam *) this.Background
             ]
     static member JsonDecoder : JsonDecoder<ColorSchemeParam> =
         D.object (fun get ->

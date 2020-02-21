@@ -85,17 +85,17 @@ type GrayPaletteParam = {
     static member JsonEncoder : JsonEncoder<GrayPaletteParam> =
         fun (this : GrayPaletteParam) ->
             E.object [
-                "middle_shade_normal", E.int (* GrayPaletteParam *) this.MiddleShadeNormal
-                "normal_50", E.string (* GrayPaletteParam *) this.Normal50
-                "normal_100", E.string (* GrayPaletteParam *) this.Normal100
-                "normal_200", E.string (* GrayPaletteParam *) this.Normal200
-                "normal_300", E.string (* GrayPaletteParam *) this.Normal300
-                "normal_400", E.string (* GrayPaletteParam *) this.Normal400
-                "normal_500", E.string (* GrayPaletteParam *) this.Normal500
-                "normal_600", E.string (* GrayPaletteParam *) this.Normal600
-                "normal_700", E.string (* GrayPaletteParam *) this.Normal700
-                "normal_800", E.string (* GrayPaletteParam *) this.Normal800
-                "normal_900", E.string (* GrayPaletteParam *) this.Normal900
+                yield "middle_shade_normal", E.int (* GrayPaletteParam *) this.MiddleShadeNormal
+                yield "normal_50", E.string (* GrayPaletteParam *) this.Normal50
+                yield "normal_100", E.string (* GrayPaletteParam *) this.Normal100
+                yield "normal_200", E.string (* GrayPaletteParam *) this.Normal200
+                yield "normal_300", E.string (* GrayPaletteParam *) this.Normal300
+                yield "normal_400", E.string (* GrayPaletteParam *) this.Normal400
+                yield "normal_500", E.string (* GrayPaletteParam *) this.Normal500
+                yield "normal_600", E.string (* GrayPaletteParam *) this.Normal600
+                yield "normal_700", E.string (* GrayPaletteParam *) this.Normal700
+                yield "normal_800", E.string (* GrayPaletteParam *) this.Normal800
+                yield "normal_900", E.string (* GrayPaletteParam *) this.Normal900
             ]
     static member JsonDecoder : JsonDecoder<GrayPaletteParam> =
         D.object (fun get ->
@@ -262,22 +262,22 @@ type PaletteParam = {
     static member JsonEncoder : JsonEncoder<PaletteParam> =
         fun (this : PaletteParam) ->
             E.object [
-                "middle_shade_normal", E.int (* GrayPaletteParam *) this.MiddleShadeNormal
-                "normal_50", E.string (* GrayPaletteParam *) this.Normal50
-                "normal_100", E.string (* GrayPaletteParam *) this.Normal100
-                "normal_200", E.string (* GrayPaletteParam *) this.Normal200
-                "normal_300", E.string (* GrayPaletteParam *) this.Normal300
-                "normal_400", E.string (* GrayPaletteParam *) this.Normal400
-                "normal_500", E.string (* GrayPaletteParam *) this.Normal500
-                "normal_600", E.string (* GrayPaletteParam *) this.Normal600
-                "normal_700", E.string (* GrayPaletteParam *) this.Normal700
-                "normal_800", E.string (* GrayPaletteParam *) this.Normal800
-                "normal_900", E.string (* GrayPaletteParam *) this.Normal900
-                "middle_shade_accent", E.int (* PaletteParam *) this.MiddleShadeAccent
-                "accent_100", E.string (* PaletteParam *) this.Accent100
-                "accent_200", E.string (* PaletteParam *) this.Accent200
-                "accent_400", E.string (* PaletteParam *) this.Accent400
-                "accent_700", E.string (* PaletteParam *) this.Accent700
+                yield "middle_shade_normal", E.int (* GrayPaletteParam *) this.MiddleShadeNormal
+                yield "normal_50", E.string (* GrayPaletteParam *) this.Normal50
+                yield "normal_100", E.string (* GrayPaletteParam *) this.Normal100
+                yield "normal_200", E.string (* GrayPaletteParam *) this.Normal200
+                yield "normal_300", E.string (* GrayPaletteParam *) this.Normal300
+                yield "normal_400", E.string (* GrayPaletteParam *) this.Normal400
+                yield "normal_500", E.string (* GrayPaletteParam *) this.Normal500
+                yield "normal_600", E.string (* GrayPaletteParam *) this.Normal600
+                yield "normal_700", E.string (* GrayPaletteParam *) this.Normal700
+                yield "normal_800", E.string (* GrayPaletteParam *) this.Normal800
+                yield "normal_900", E.string (* GrayPaletteParam *) this.Normal900
+                yield "middle_shade_accent", E.int (* PaletteParam *) this.MiddleShadeAccent
+                yield "accent_100", E.string (* PaletteParam *) this.Accent100
+                yield "accent_200", E.string (* PaletteParam *) this.Accent200
+                yield "accent_400", E.string (* PaletteParam *) this.Accent400
+                yield "accent_700", E.string (* PaletteParam *) this.Accent700
             ]
     static member JsonDecoder : JsonDecoder<PaletteParam> =
         D.object (fun get ->
@@ -494,27 +494,27 @@ type PalettesParam = {
     static member JsonEncoder : JsonEncoder<PalettesParam> =
         fun (this : PalettesParam) ->
             E.object [
-                "black", E.string (* PalettesParam *) this.Black
-                "white", E.string (* PalettesParam *) this.White
-                "red", PaletteParam.JsonEncoder (* PalettesParam *) this.Red
-                "pink", PaletteParam.JsonEncoder (* PalettesParam *) this.Pink
-                "purple", PaletteParam.JsonEncoder (* PalettesParam *) this.Purple
-                "deep_purple", PaletteParam.JsonEncoder (* PalettesParam *) this.DeepPurple
-                "indigo", PaletteParam.JsonEncoder (* PalettesParam *) this.Indigo
-                "blue", PaletteParam.JsonEncoder (* PalettesParam *) this.Blue
-                "light_blue", PaletteParam.JsonEncoder (* PalettesParam *) this.LightBlue
-                "cyan", PaletteParam.JsonEncoder (* PalettesParam *) this.Cyan
-                "teal", PaletteParam.JsonEncoder (* PalettesParam *) this.Teal
-                "green", PaletteParam.JsonEncoder (* PalettesParam *) this.Green
-                "light_green", PaletteParam.JsonEncoder (* PalettesParam *) this.LightGreen
-                "lime", PaletteParam.JsonEncoder (* PalettesParam *) this.Lime
-                "yellow", PaletteParam.JsonEncoder (* PalettesParam *) this.Yellow
-                "amber", PaletteParam.JsonEncoder (* PalettesParam *) this.Amber
-                "orange", PaletteParam.JsonEncoder (* PalettesParam *) this.Orange
-                "deep_orange", PaletteParam.JsonEncoder (* PalettesParam *) this.DeepOrange
-                "brown", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.Brown
-                "gray", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.Gray
-                "blue_gray", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.BlueGray
+                yield "black", E.string (* PalettesParam *) this.Black
+                yield "white", E.string (* PalettesParam *) this.White
+                yield "red", PaletteParam.JsonEncoder (* PalettesParam *) this.Red
+                yield "pink", PaletteParam.JsonEncoder (* PalettesParam *) this.Pink
+                yield "purple", PaletteParam.JsonEncoder (* PalettesParam *) this.Purple
+                yield "deep_purple", PaletteParam.JsonEncoder (* PalettesParam *) this.DeepPurple
+                yield "indigo", PaletteParam.JsonEncoder (* PalettesParam *) this.Indigo
+                yield "blue", PaletteParam.JsonEncoder (* PalettesParam *) this.Blue
+                yield "light_blue", PaletteParam.JsonEncoder (* PalettesParam *) this.LightBlue
+                yield "cyan", PaletteParam.JsonEncoder (* PalettesParam *) this.Cyan
+                yield "teal", PaletteParam.JsonEncoder (* PalettesParam *) this.Teal
+                yield "green", PaletteParam.JsonEncoder (* PalettesParam *) this.Green
+                yield "light_green", PaletteParam.JsonEncoder (* PalettesParam *) this.LightGreen
+                yield "lime", PaletteParam.JsonEncoder (* PalettesParam *) this.Lime
+                yield "yellow", PaletteParam.JsonEncoder (* PalettesParam *) this.Yellow
+                yield "amber", PaletteParam.JsonEncoder (* PalettesParam *) this.Amber
+                yield "orange", PaletteParam.JsonEncoder (* PalettesParam *) this.Orange
+                yield "deep_orange", PaletteParam.JsonEncoder (* PalettesParam *) this.DeepOrange
+                yield "brown", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.Brown
+                yield "gray", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.Gray
+                yield "blue_gray", GrayPaletteParam.JsonEncoder (* PalettesParam *) this.BlueGray
             ]
     static member JsonDecoder : JsonDecoder<PalettesParam> =
         D.object (fun get ->
