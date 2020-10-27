@@ -12,7 +12,7 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type TextFieldWidget = Myra.Graphics2D.UI.TextField
+type TextFieldWidget = Myra.Graphics2D.UI.TextBox
 
 //SILP: PREFAB_HEADER_MIDDLE(TextField)
 type TextField (logging : ILogging) =                                            //__SILP__

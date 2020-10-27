@@ -12,7 +12,7 @@ open Dap.Gui.Prefab                                                   //__SILP__
 open Dap.Gui.Container                                                //__SILP__
 open Dap.Gui.Internal                                                 //__SILP__
 
-type LabelWidget = Myra.Graphics2D.UI.TextBlock
+type LabelWidget = Myra.Graphics2D.UI.TextBox
 
 //SILP: PREFAB_HEADER_MIDDLE(Label)
 type Label (logging : ILogging) =                                     //__SILP__
