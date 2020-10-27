@@ -37,8 +37,8 @@ type Contact = {
     static member JsonEncoder : JsonEncoder<Contact> =
         fun (this : Contact) ->
             E.object [
-                "name", E.string (* Contact *) this.Name
-                "phone", E.string (* Contact *) this.Phone
+                yield "name", E.string (* Contact *) this.Name
+                yield "phone", E.string (* Contact *) this.Phone
             ]
     static member JsonDecoder : JsonDecoder<Contact> =
         D.object (fun get ->
