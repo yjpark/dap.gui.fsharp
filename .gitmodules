@@ -1,3 +1,0 @@
-[submodule "External/yoga"]
-	path = External/yoga
-	url = git@github.com:facebook/yoga.git

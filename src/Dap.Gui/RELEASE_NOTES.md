@@ -1,3 +1,6 @@
+## 0.9.0
+* Update for DotNet 7.0
+
 ## 0.8.1
 * Bugfix with startApp
 

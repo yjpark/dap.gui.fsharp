@@ -13,7 +13,7 @@ open Dap.Context
 open Dap.Platform
 open Dap.Local
 
-let private md5 = new MD5CryptoServiceProvider()
+let private md5 = MD5.Create()
 
 let FontIconCache_DefaultClearColor = SKColors.Transparent
 

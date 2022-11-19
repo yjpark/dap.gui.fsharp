@@ -2,8 +2,6 @@
 [<RequireQualifiedAccess>]
 module Dap.Gui.Feature.SecureStorage
 
-open FSharp.Control.Tasks.V2
-
 open Dap.Prelude
 open Dap.Context
 open Dap.Platform

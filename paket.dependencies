@@ -1,4 +1,4 @@
-version 5.241.2
+version 7.1.5
 
 source https://www.nuget.org/api/v2
 storage: none
@@ -34,19 +34,7 @@ nuget Microsoft.SourceLink.GitHub
 nuget Microsoft.Build.Tasks.Git
 nuget Microsoft.SourceLink.Common
 
-group Build
-    source https://www.nuget.org/api/v2
-    framework: netstandard2.0
-    storage:none
-
-    nuget Dap.Build
-
-    nuget Dap.Prelude
-    nuget Dap.Context
-    nuget Dap.Platform
-    nuget Dap.Local
-
-    # For Glyph Generator
-    nuget FSharp.Data
-
-
+# Build
+nuget Dap.Build
+# For Glyph Generator
+nuget FSharp.Data

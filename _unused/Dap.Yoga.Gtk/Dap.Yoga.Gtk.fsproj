@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/yjpark/dap.gui.fsharp</PackageProjectUrl>
+    <PackageTags>fsharp;dap;gui;</PackageTags>
+    <Authors>YJ Park</Authors>
+    <Version>0.1.0</Version>
+    <Description>Gui Libs</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Adaptor.fs" />
+    <Compile Include="Helper.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dap.Yoga\Dap.Yoga.fsproj" />
+    <ProjectReference Include="..\Dap.Gtk\Dap.Gtk.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
