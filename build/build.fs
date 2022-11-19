@@ -31,7 +31,7 @@ type Glyph = {
             Code = code
         }
 
-let createProjects () =
+let createTargets () =
     NuGet.create NuGet.release feed projects
 
     DotNet.createPrepares [
@@ -108,4 +108,13 @@ let createProjects () =
         |> Dap.Local.TextFile.save "../src/Dap.Skia/Fonts/IoniconsGlyph.fs"
     )
 
-Target.runOrDefault DotNet.Build
+[<EntryPoint>]
+let main argv =
+    argv
+    |> Array.toList
+    |> Context.FakeExecutionContext.Create false "build.fsx"
+    |> Context.RuntimeContext.Fake
+    |> Context.setExecutionContext
+    createTargets ()
+    Target.runOrDefaultWithArguments DotNet.Build
+    0
