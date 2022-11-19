@@ -24,11 +24,11 @@ type DapActivity () =
     abstract member DoSetup : Bundle -> unit
     override this.OnCreate (bundle: Bundle) =
         base.OnCreate (bundle)
-        Xamarin.Essentials.Platform.Init (this, bundle)
+        Microsoft.Maui.Essentials.Platform.Init (this, bundle)
         logWarn (getLogging ()) "DapActivity.OnCreated" (this.GetType() .FullName) (this)
         this.DoSetup bundle
     override this.OnRequestPermissionsResult (requestCode: int, permissions: string[], [<GeneratedEnum>] grantResults: Android.Content.PM.Permission[]) =
-        Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults)
+        Microsoft.Maui.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults)
         base.OnRequestPermissionsResult(requestCode, permissions, grantResults)
     override this.OnResume () =
         base.OnResume ()

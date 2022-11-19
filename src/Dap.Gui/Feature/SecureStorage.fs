@@ -8,7 +8,7 @@ open Dap.Platform
 open Dap.Local
 open Dap.Gui
 
-type Provider = Xamarin.Essentials.SecureStorage
+type Provider = Microsoft.Maui.Essentials.SecureStorage
 type Fallback = Dap.Local.Feature.SecureStorage.Context
 
 type Context (logging : ILogging) =

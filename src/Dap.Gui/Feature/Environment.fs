@@ -10,9 +10,9 @@ type Context (logging : ILogging) =
     do (
         if hasEssentials () then
             let props = base.Properties
-            props.DataDirectory.SetValue Xamarin.Essentials.FileSystem.AppDataDirectory
+            props.DataDirectory.SetValue Microsoft.Maui.Essentials.FileSystem.AppDataDirectory
             props.DataDirectory.Seal ()
-            props.CacheDirectory.SetValue Xamarin.Essentials.FileSystem.CacheDirectory
+            props.CacheDirectory.SetValue Microsoft.Maui.Essentials.FileSystem.CacheDirectory
             props.CacheDirectory.Seal ()
             logWarn base.AsEnvironment "Data_Directory" props.DataDirectory.Value ()
             logWarn base.AsEnvironment "Cache_Directory" props.CacheDirectory.Value ()

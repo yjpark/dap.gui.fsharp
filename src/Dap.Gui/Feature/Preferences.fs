@@ -1,7 +1,7 @@
 [<RequireQualifiedAccess>]
 module Dap.Gui.Feature.Preferences
 
-open Xamarin.Essentials
+open Microsoft.Maui.Essentials
 
 open Dap.Prelude
 open Dap.Context
@@ -9,7 +9,7 @@ open Dap.Platform
 open Dap.Local
 open Dap.Gui
 
-type Provider = Xamarin.Essentials.Preferences
+type Provider = Microsoft.Maui.Essentials.Preferences
 type Fallback = Dap.Local.Feature.Preferences.Context
 
 type Context (logging : ILogging) =

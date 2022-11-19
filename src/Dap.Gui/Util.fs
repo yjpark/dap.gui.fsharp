@@ -1,7 +1,7 @@
 [<AutoOpen>]
 module Dap.Gui.Util
 
-open Xamarin.Essentials
+open Microsoft.Maui.Essentials
 
 open Dap.Prelude
 open Dap.Platform

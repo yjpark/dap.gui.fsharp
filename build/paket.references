@@ -1,4 +1,5 @@
 FSharp.Core
 
 Dap.Build
+Dap.Local
 FSharp.Data

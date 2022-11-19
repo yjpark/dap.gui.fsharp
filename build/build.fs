@@ -20,7 +20,7 @@ let projects =
     ++ "../src/Dap.UWP.Cli/*.csproj"
     ++ "../src/Dap.UWP/*.fsproj"
 
-type Ionicons = XmlProvider<"src/Dap.Skia/Data/ionicons.svg">
+type Ionicons = XmlProvider<"../src/Dap.Skia/Data/ionicons.svg">
 type Glyph = {
     Name : string
     Code : string
